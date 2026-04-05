@@ -1,0 +1,123 @@
+
+{
+  "entities": {
+    "TravelOffer": {
+      "title": "Travel Offer",
+      "description": "Premium travel package curated for the Algerian market",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "country": { "type": "string" },
+        "city": { "type": "array", "items": { "type": "string" } },
+        "slug": { "type": "string", "description": "SEO-friendly URL path" },
+        "duration": { "type": "string", "description": "e.g., '7 Days / 6 Nights'" },
+        "base_price": { "type": "number", "description": "Starting price in DZD (usually price_double of first hotel)" },
+        "tags": { "type": "array", "items": { "type": "string" }, "description": "e.g., 'Best Seller', 'Luxury'" },
+        "departure_dates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "start": { "type": "string", "format": "date" },
+              "end": { "type": "string", "format": "date" }
+            }
+          }
+        },
+        "highlights": { "type": "array", "items": { "type": "string" } },
+        "includes": { "type": "array", "items": { "type": "string" } },
+        "program": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "day": { "type": "number" },
+              "title": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "hotels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "stars": { "type": "number" },
+              "type": { "type": "string", "description": "e.g., 'All Inclusive Soft'" },
+              "price_double": { "type": "number" },
+              "price_child": { "type": "number" },
+              "price_baby": { "type": "number" },
+              "is_premium": { "type": "boolean" }
+            },
+            "required": ["name", "stars", "type", "price_double"]
+          }
+        },
+        "flights": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "airline": { "type": "string" },
+              "route": { "type": "string" },
+              "class": { "type": "string", "enum": ["economy", "business", "private"] }
+            }
+          }
+        },
+        "featured": { "type": "boolean" },
+        "seats_left": { "type": "number" },
+        "images": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "slug", "base_price", "country"]
+    },
+    "Lead": {
+      "title": "Lead",
+      "description": "Customer inquiry for a travel experience",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "message": { "type": "string" },
+        "offerRef": { "type": "string" },
+        "source": { "type": "string", "enum": ["web_form", "whatsapp", "itinerary_gen"] },
+        "status": { "type": "string", "enum": ["new", "contacted", "qualified", "closed"], "default": "new" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "phone", "source"]
+    },
+    "BlogPost": {
+      "title": "Blog Post",
+      "description": "SEO content to drive organic traffic",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "content": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "author": { "type": "string" },
+        "coverImage": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "publishedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "slug", "content"]
+    }
+  },
+  "auth": {
+    "providers": ["google.com"]
+  },
+  "firestore": {
+    "/offers/{offerId}": {
+      "schema": "TravelOffer",
+      "description": "Available travel inventory"
+    },
+    "/leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Captured customer inquiries"
+    },
+    "/blog_posts/{postId}": {
+      "schema": "BlogPost",
+      "description": "SEO and marketing content"
+    }
+  }
+}

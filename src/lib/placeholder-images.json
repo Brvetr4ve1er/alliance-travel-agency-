@@ -1,0 +1,52 @@
+{
+  "placeholderImages": [
+    {
+      "id": "istanbul-bg",
+      "description": "Blurred Istanbul street background",
+      "imageUrl": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&q=80&w=1200",
+      "imageHint": "Istanbul street"
+    },
+    {
+      "id": "tunisia-bg",
+      "description": "Blurred Tunisia beach background",
+      "imageUrl": "https://images.unsplash.com/photo-1534430480872-3498386e7a56?auto=format&fit=crop&q=80&w=1200",
+      "imageHint": "Tunisia beach"
+    },
+    {
+      "id": "sahara-bg",
+      "description": "Blurred Algerian Sahara dunes",
+      "imageUrl": "https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&q=80&w=1200",
+      "imageHint": "Sahara dunes"
+    },
+    {
+      "id": "malaysia-bg",
+      "description": "Blurred Kuala Lumpur skyline",
+      "imageUrl": "https://images.unsplash.com/photo-1528181304800-2f140819ad9c?auto=format&fit=crop&q=80&w=1200",
+      "imageHint": "Kuala Lumpur"
+    },
+    {
+      "id": "landmark-blue-mosque",
+      "description": "Blue Mosque Istanbul",
+      "imageUrl": "https://images.unsplash.com/photo-1541432901042-2dad8bd9c791?auto=format&fit=crop&q=80&w=800",
+      "imageHint": "Blue Mosque"
+    },
+    {
+      "id": "landmark-sidi-bou-said",
+      "description": "Sidi Bou Said Tunisia",
+      "imageUrl": "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&q=80&w=800",
+      "imageHint": "Sidi Bou Said"
+    },
+    {
+      "id": "landmark-taghit",
+      "description": "Taghit Algeria Oasis",
+      "imageUrl": "https://images.unsplash.com/photo-1445217143695-46712403d779?auto=format&fit=crop&q=80&w=800",
+      "imageHint": "Oasis desert"
+    },
+    {
+      "id": "landmark-petronas",
+      "description": "Petronas Twin Towers Malaysia",
+      "imageUrl": "https://images.unsplash.com/photo-1596422846543-75c6fc18a594?auto=format&fit=crop&q=80&w=800",
+      "imageHint": "Petronas Towers"
+    }
+  ]
+}
