@@ -1,3 +1,34 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-bg",
+      "description": "Giza Pyramids at sunset",
+      "imageUrl": "https://picsum.photos/seed/egypt-hero/1920/1080",
+      "imageHint": "Egypt Pyramids"
+    },
+    {
+      "id": "cairo-sphinx",
+      "description": "The Great Sphinx of Giza",
+      "imageUrl": "https://picsum.photos/seed/sphinx/800/600",
+      "imageHint": "Sphinx Egypt"
+    },
+    {
+      "id": "sharm-beach",
+      "description": "Crystal clear waters of Sharm El Sheikh",
+      "imageUrl": "https://picsum.photos/seed/sharm/800/600",
+      "imageHint": "Red Sea"
+    },
+    {
+      "id": "hotel-luxury",
+      "description": "Luxury resort in Sharm El Sheikh",
+      "imageUrl": "https://picsum.photos/seed/resort/800/600",
+      "imageHint": "Luxury Hotel"
+    },
+    {
+      "id": "nile-cruise",
+      "description": "Nile river cruise at night",
+      "imageUrl": "https://picsum.photos/seed/nile/800/600",
+      "imageHint": "Nile Cruise"
+    }
+  ]
 }
