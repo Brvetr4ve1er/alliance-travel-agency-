@@ -2,69 +2,69 @@
   "placeholderImages": [
     {
       "id": "hero-bg",
-      "description": "Giza Pyramids at sunset",
-      "imageUrl": "https://picsum.photos/seed/egypt-hero/1920/1080",
+      "description": "Vue aérienne des Pyramides de Gizeh au coucher du soleil",
+      "imageUrl": "https://picsum.photos/seed/egypt-landscape/1920/1080",
       "imageHint": "Egypt Pyramids"
     },
     {
       "id": "pyramids",
-      "description": "The Great Pyramids of Giza",
-      "imageUrl": "https://picsum.photos/seed/pyramids/800/600",
+      "description": "Les Grandes Pyramides de Gizeh",
+      "imageUrl": "https://picsum.photos/seed/giza-plateau/800/600",
       "imageHint": "Giza Pyramids"
     },
     {
       "id": "sharm-beach",
-      "description": "Crystal clear waters of Sharm El Sheikh",
-      "imageUrl": "https://picsum.photos/seed/sharm/800/600",
-      "imageHint": "Red Sea"
+      "description": "Eaux turquoise de Sharm El Sheikh",
+      "imageUrl": "https://picsum.photos/seed/red-sea-coast/800/600",
+      "imageHint": "Sharm Beach"
     },
     {
       "id": "nile-cruise",
-      "description": "Nile river cruise boat",
-      "imageUrl": "https://picsum.photos/seed/nile/800/600",
-      "imageHint": "Nile River"
+      "description": "Croisière sur le Nil au crépuscule",
+      "imageUrl": "https://picsum.photos/seed/nile-boat/800/600",
+      "imageHint": "Nile Cruise"
     },
     {
       "id": "khan-el-khalili",
-      "description": "Historic bazaar in Cairo",
-      "imageUrl": "https://picsum.photos/seed/bazaar/800/600",
+      "description": "Bazar historique Khan El Khalili",
+      "imageUrl": "https://picsum.photos/seed/cairo-market/800/600",
       "imageHint": "Cairo Bazaar"
     },
     {
       "id": "naama-bay",
-      "description": "Naama Bay coastline",
-      "imageUrl": "https://picsum.photos/seed/naama/800/600",
+      "description": "Baie de Naama à Sharm",
+      "imageUrl": "https://picsum.photos/seed/sharm-bay-view/800/600",
       "imageHint": "Naama Bay"
     },
     {
       "id": "sahaba-mosque",
-      "description": "Sahaba Mosque architecture",
-      "imageUrl": "https://picsum.photos/seed/mosque/800/600",
+      "description": "Détails de la Mosquée Al Sahaba",
+      "imageUrl": "https://picsum.photos/seed/islamic-art/800/600",
       "imageHint": "Egyptian Mosque"
     },
     {
       "id": "soho-square",
-      "description": "Soho Square entertainment area",
-      "imageUrl": "https://picsum.photos/seed/soho/800/600",
-      "imageHint": "Modern Egypt"
+      "description": "Divertissement au Soho Square",
+      "imageUrl": "https://picsum.photos/seed/modern-city-lights/800/600",
+      "imageHint": "Soho Square"
     },
     {
       "id": "snorkeling",
-      "description": "Snorkeling in the Red Sea",
-      "imageUrl": "https://picsum.photos/seed/snorkel/800/600",
-      "imageHint": "Red Sea Snorkeling"
+      "description": "Plongée sous-marine en Mer Rouge",
+      "imageUrl": "https://picsum.photos/seed/coral-reef-dive/800/600",
+      "imageHint": "Sea Snorkeling"
     },
     {
       "id": "museum",
-      "description": "The Grand Egyptian Museum",
-      "imageUrl": "https://picsum.photos/seed/museum/800/600",
+      "description": "Le Grand Musée Égyptien",
+      "imageUrl": "https://picsum.photos/seed/museum-exterior/800/600",
       "imageHint": "Egyptian Museum"
     },
     {
       "id": "old-market",
-      "description": "Old Market in Sharm",
-      "imageUrl": "https://picsum.photos/seed/market/800/600",
-      "imageHint": "Traditional Market"
+      "description": "Marché traditionnel de Sharm",
+      "imageUrl": "https://picsum.photos/seed/sharm-market-stalls/800/600",
+      "imageHint": "Old Market"
     }
   ]
 }
