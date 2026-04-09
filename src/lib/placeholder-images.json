@@ -7,10 +7,10 @@
       "imageHint": "Egypt Pyramids"
     },
     {
-      "id": "cairo-sphinx",
-      "description": "The Great Sphinx of Giza",
-      "imageUrl": "https://picsum.photos/seed/sphinx/800/600",
-      "imageHint": "Sphinx Egypt"
+      "id": "pyramids",
+      "description": "The Great Pyramids of Giza",
+      "imageUrl": "https://picsum.photos/seed/pyramids/800/600",
+      "imageHint": "Giza Pyramids"
     },
     {
       "id": "sharm-beach",
@@ -19,16 +19,52 @@
       "imageHint": "Red Sea"
     },
     {
-      "id": "hotel-luxury",
-      "description": "Luxury resort in Sharm El Sheikh",
-      "imageUrl": "https://picsum.photos/seed/resort/800/600",
-      "imageHint": "Luxury Hotel"
+      "id": "nile-cruise",
+      "description": "Nile river cruise boat",
+      "imageUrl": "https://picsum.photos/seed/nile/800/600",
+      "imageHint": "Nile River"
     },
     {
-      "id": "nile-cruise",
-      "description": "Nile river cruise at night",
-      "imageUrl": "https://picsum.photos/seed/nile/800/600",
-      "imageHint": "Nile Cruise"
+      "id": "khan-el-khalili",
+      "description": "Historic bazaar in Cairo",
+      "imageUrl": "https://picsum.photos/seed/bazaar/800/600",
+      "imageHint": "Cairo Bazaar"
+    },
+    {
+      "id": "naama-bay",
+      "description": "Naama Bay coastline",
+      "imageUrl": "https://picsum.photos/seed/naama/800/600",
+      "imageHint": "Naama Bay"
+    },
+    {
+      "id": "sahaba-mosque",
+      "description": "Sahaba Mosque architecture",
+      "imageUrl": "https://picsum.photos/seed/mosque/800/600",
+      "imageHint": "Egyptian Mosque"
+    },
+    {
+      "id": "soho-square",
+      "description": "Soho Square entertainment area",
+      "imageUrl": "https://picsum.photos/seed/soho/800/600",
+      "imageHint": "Modern Egypt"
+    },
+    {
+      "id": "snorkeling",
+      "description": "Snorkeling in the Red Sea",
+      "imageUrl": "https://picsum.photos/seed/snorkel/800/600",
+      "imageHint": "Red Sea Snorkeling"
+    },
+    {
+      "id": "museum",
+      "description": "The Grand Egyptian Museum",
+      "imageUrl": "https://picsum.photos/seed/museum/800/600",
+      "imageHint": "Egyptian Museum"
+    },
+    {
+      "id": "old-market",
+      "description": "Old Market in Sharm",
+      "imageUrl": "https://picsum.photos/seed/market/800/600",
+      "imageHint": "Traditional Market"
     }
   ]
 }
