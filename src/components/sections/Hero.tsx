@@ -3,7 +3,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Plane, Calendar, ShieldCheck, MapPin, Sparkles, ArrowRight } from "lucide-react";
+import { Plane, Calendar, ShieldCheck, MapPin, Sparkles } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 
 const HERO_INFO_DATA = [
@@ -14,7 +14,7 @@ const HERO_INFO_DATA = [
 ];
 
 export function Hero() {
-  const { t, isRtl } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <section className="relative pt-32 pb-20 px-6 flex flex-col items-center text-center overflow-hidden">
@@ -34,15 +34,9 @@ export function Hero() {
         {t('hero_desc')}
       </p>
 
-      {/* Primary CTAs for direct funnel traffic */}
+      {/* Primary CTA for direct funnel traffic */}
       <div className="relative z-10 animate-fade-up opacity-0 delay-400 flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 w-full max-w-lg px-6">
-        <Button size="lg" className="bg-gold hover:bg-gold/90 text-gold-foreground h-14 px-8 text-lg font-bold w-full sm:w-auto shadow-xl" asChild>
-          <a href="#reservation">
-            {t('hero_cta_primary')}
-            <ArrowRight className={isRtl ? "ms-2 h-5 w-5 rotate-180" : "ms-2 h-5 w-5"} />
-          </a>
-        </Button>
-        <Button size="lg" variant="outline" className="border-gold/30 text-gold hover:bg-gold/5 h-14 px-8 text-lg w-full sm:w-auto" asChild>
+        <Button size="lg" variant="outline" className="border-gold/30 text-gold hover:bg-gold/5 h-14 px-12 text-lg w-full sm:w-auto shadow-xl" asChild>
           <a href="#hotels">
             {t('hero_cta_secondary')}
           </a>
