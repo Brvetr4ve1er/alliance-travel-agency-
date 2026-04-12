@@ -16,6 +16,8 @@ export const translations = {
     hero_desc: `Sept nuits inoubliables — entre les merveilles du Caire antique et les eaux cristallines de Sharm El Sheikh. Vol Egyptair, hôtels All Inclusive, excursions incluses.`,
     hero_price_label: "À partir de",
     hero_price_value: TRIP_CONFIG.basePrice,
+    hero_cta_primary: "Découvrir l'offre",
+    hero_cta_secondary: "Questions ? Parlez à notre IA",
     
     // Quick Info
     info_duree: "Durée",
@@ -121,9 +123,9 @@ export const translations = {
     final_cta_secondary: "Appeler un conseiller",
     
     // Assistant
-    ai_title: "Assistant Voyage IA",
-    ai_welcome: "Bonjour ! Je suis votre assistant Alliance Travel. Posez-moi vos questions sur notre voyage en Égypte 2026.",
-    ai_placeholder: "Posez votre question...",
+    ai_title: "Expert Voyage Alliance IA",
+    ai_welcome: "Bonjour ! Je suis votre assistant expert pour ce voyage. Posez-moi vos questions sur les hôtels, les vols ou le programme.",
+    ai_placeholder: "Posez votre question sur le séjour...",
     ai_error: "Désolé, j'ai rencontré une erreur. Veuillez réessayer.",
     
     // Footer
@@ -144,6 +146,8 @@ export const translations = {
     hero_desc: `سبع ليالٍ لا تُنسى — بين عجائب القاهرة القديمة ومياه شرم الشيخ الكريستالية. طيران مصر للطيران، فنادق شاملة كلياً، ورحلات متضمنة.`,
     hero_price_label: "ابتداءً من",
     hero_price_value: TRIP_CONFIG.basePrice,
+    hero_cta_primary: "اكتشف العرض",
+    hero_cta_secondary: "أسئلة؟ تحدث إلى ذكاؤنا الاصطناعي",
     
     // Quick Info
     info_duree: "المدة",
@@ -249,9 +253,9 @@ export const translations = {
     final_cta_secondary: "اتصل بمستشار",
     
     // Assistant
-    ai_title: "مساعد السفر الذكي",
-    ai_welcome: "مرحباً ! أنا مساعدك من أليانس ترافل. اسألني عن رحلتنا إلى مصر 2026.",
-    ai_placeholder: "اسأل سؤالك هنا...",
+    ai_title: "مساعد السفر الخبير",
+    ai_welcome: "مرحباً ! أنا خبير السفر الخاص بك. اسألني أي شيء عن الفنادق، الطيران أو البرنامج.",
+    ai_placeholder: "اسأل سؤالك عن الرحلة هنا...",
     ai_error: "عذراً، حدث خطأ. يرجى المحاولة مرة أخرى.",
     
     // Footer
