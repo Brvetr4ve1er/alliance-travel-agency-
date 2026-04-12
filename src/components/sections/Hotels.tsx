@@ -168,9 +168,18 @@ const HOTELS_DATA = [
     name: "Pickalbatros Laguna Vista", 
     stars: 5, 
     type: "Prestige Chain", 
-    price: "265 000 DA", 
+    price: "306 000 DA", 
     premium: true, 
     imageId: "hotel-7",
+    durationOverride: "10 Jours / 08 Nuits",
+    pricingGrid: {
+      triple: "303 000 DA",
+      double: "306 000 DA",
+      single: "460 000 DA",
+      child1: "115 000 DA",
+      child2: "207 000 DA",
+      baby: "25 000 DA"
+    },
     description: {
       fr: "Fleuron de la chaîne Pickalbatros, cet hôtel offre une plage de sable fin unique et un design inspiré des lagons naturels.",
       ar: "جوهر سلسلة بيك الباتروس، يقدم هذا الفندق شاطئاً رملياً ناعماً فريداً وتصميماً مستوحى من البحيرات الطبيعية."
@@ -436,3 +445,4 @@ export function Hotels() {
     </div>
   );
 }
+
