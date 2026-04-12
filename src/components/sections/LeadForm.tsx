@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -8,11 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Send, FileUp } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
-import { db, storage } from "@/lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { storage } from "@/lib/firebase";
+import { collection, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { errorEmitter } from "@/firebase/error-emitter";
-import { FirestorePermissionError } from "@/firebase/errors";
+import { useFirestore, addDocumentNonBlocking } from "@/firebase";
 
 export function LeadForm() {
   const { toast } = useToast();
@@ -20,6 +20,7 @@ export function LeadForm() {
   const [loading, setLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
+  const firestore = useFirestore();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -40,14 +41,15 @@ export function LeadForm() {
     try {
       let documentUrl = "";
 
-      // 1. Handle File Upload if exists
-      if (file) {
+      // 1. Handle File Upload to Firebase Storage
+      // We await this because the URL is required for the WhatsApp message template
+      if (file && storage) {
         const storageRef = ref(storage, `leads_documents/${Date.now()}_${file.name}`);
         const uploadResult = await uploadBytes(storageRef, file);
         documentUrl = await getDownloadURL(uploadResult.ref);
       }
 
-      // 2. Compile data for Firestore
+      // 2. Prepare Firestore Lead Data
       const leadData = {
         name,
         phone,
@@ -59,21 +61,21 @@ export function LeadForm() {
         createdAt: serverTimestamp(),
       };
 
-      const leadsRef = collection(db, "leads");
+      // 3. Persist to Firestore using non-blocking utility
+      if (firestore) {
+        const leadsRef = collection(firestore, "leads");
+        addDocumentNonBlocking(leadsRef, leadData);
+      }
 
-      // 3. Persist to Firestore
-      await addDoc(leadsRef, leadData);
-
-      // 4. Compile data for WhatsApp message
+      // 4. Construct WhatsApp Message with formatted data and document link
       const docString = documentUrl ? `\n📄 *Document:* ${documentUrl}` : "";
       const whatsappMsg = language === 'ar' 
         ? `مرحباً أليانس ترافل! 🇪🇬\n\nأود حجز عرض مصر 2026.\n\n👤 *الاسم:* ${name}\n📞 *الهاتف:* ${phone}\n📅 *التاريخ:* ${selectedDate}\n👥 *عدد المسافرين:* ${travelers}\n📍 *الوجهة:* مصر${docString}\n\n💬 *ملاحظة:* ${message || "لا يوجد"}`
         : `Bonjour Alliance Travel! 🇪🇬\n\nJe souhaite réserver l'offre Égypte 2026.\n\n👤 *Nom:* ${name}\n📞 *Tél:* ${phone}\n📅 *Date:* ${selectedDate}\n👥 *Voyageurs:* ${travelers}\n📍 *Destination:* Égypte${docString}\n\n💬 *Note:* ${message || "Aucune"}`;
       
-      const encodedMsg = encodeURIComponent(whatsappMsg);
-      const whatsappUrl = `https://wa.me/213561616267?text=${encodedMsg}`;
+      const whatsappUrl = `https://wa.me/213561616267?text=${encodeURIComponent(whatsappMsg)}`;
 
-      // 5. Success UI Feedback
+      // 5. Update UI state and trigger redirect
       setLoading(false);
       window.open(whatsappUrl, "_blank");
 
@@ -82,18 +84,18 @@ export function LeadForm() {
         description: t('form_toast_desc'),
       });
 
-      // 6. Reset Form state
+      // Reset local state
       (e.target as HTMLFormElement).reset();
       setSelectedDate("");
       setFile(null);
 
     } catch (error: any) {
       setLoading(false);
-      const permissionError = new FirestorePermissionError({
-        path: "leads",
-        operation: 'create',
+      toast({
+        variant: "destructive",
+        title: language === 'ar' ? 'خطأ' : 'Erreur',
+        description: error.message || (language === 'ar' ? 'فشل إرسال الطلب' : 'Échec de l\'envoi de la demande'),
       });
-      errorEmitter.emit('permission-error', permissionError);
     }
   };
 

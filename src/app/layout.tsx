@@ -2,6 +2,7 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { LanguageProvider } from '@/components/providers/LanguageProvider';
+import { FirebaseClientProvider } from '@/firebase';
 import { Cormorant_Garamond, DM_Sans, Noto_Sans_Arabic } from 'next/font/google';
 
 const cormorant = Cormorant_Garamond({
@@ -35,10 +36,12 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`dark ${cormorant.variable} ${dmSans.variable} ${notoArabic.variable}`}>
       <body className="font-body antialiased bg-background text-foreground">
-        <LanguageProvider>
-          <div className="fixed inset-0 z-[-1] luxury-gradient-bg pointer-events-none" />
-          {children}
-        </LanguageProvider>
+        <FirebaseClientProvider>
+          <LanguageProvider>
+            <div className="fixed inset-0 z-[-1] luxury-gradient-bg pointer-events-none" />
+            {children}
+          </LanguageProvider>
+        </FirebaseClientProvider>
       </body>
     </html>
   );
