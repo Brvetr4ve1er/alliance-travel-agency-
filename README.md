@@ -6,7 +6,7 @@ This is a premium, high-conversion landing page built with Next.js, Shadcn UI, a
 
 ## 🚀 How to Connect & Push to GitHub
 
-To push your code, open the **Terminal** in your editor (usually at the bottom) and follow these steps:
+To push your code to your repository (**alliance-travel-agency-**), open the **Terminal** in your editor (usually at the bottom) and follow these steps:
 
 ### 1. Initialize Git
 ```bash
@@ -28,14 +28,12 @@ The easiest way is using the GitHub CLI (already installed in most environments)
 ```bash
 gh auth login
 ```
-*Follow the prompts to log in via your browser.*
+*Follow the prompts to log in via your browser. Select 'GitHub.com', 'HTTPS', and 'Yes' to log in with a web browser.*
 
-### 5. Create a Remote Repo & Push
-1. Go to [GitHub.com](https://github.com/new) and create a **new empty repository**.
-2. Copy the URL (e.g., `https://github.com/your-username/your-repo.git`).
-3. Run:
+### 5. Link to your Remote Repo & Push
+Run these commands to connect to your specific repository and push the code:
 ```bash
-git remote add origin <your-repository-url>
+git remote add origin https://github.com/Brvetr4ve1er/alliance-travel-agency-.git
 git branch -M main
 git push -u origin main
 ```
