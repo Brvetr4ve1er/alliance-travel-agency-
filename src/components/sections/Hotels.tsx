@@ -4,7 +4,7 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Waves, CheckCircle2, Info, MapPin, Coffee, Utensils, Wifi, Wind, ShieldCheck } from "lucide-react";
+import { Star, Waves, CheckCircle2, Info, MapPin, Coffee, Utensils, Wifi, Wind, ShieldCheck, Clock, Users, User, Baby } from "lucide-react";
 import Image from "next/image";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
@@ -20,7 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-// Hoisted static data for performance
+// Performance hoisting of static data
 const HOTELS_DATA = [
   { 
     id: "verginia",
@@ -41,8 +41,17 @@ const HOTELS_DATA = [
     name: "Tivoli Aqua Park", 
     stars: 4, 
     type: "Aqua Park", 
-    price: "185 000 DA", 
+    price: "155 000 DA", 
     imageId: "hotel-2",
+    durationOverride: "10 Jours / 08 Nuits",
+    pricingGrid: {
+      triple: "150 000 DA",
+      double: "155 000 DA",
+      single: "180 000 DA",
+      child1: "110 000 DA",
+      child2: "130 000 DA",
+      baby: "25 000 DA"
+    },
     description: {
       fr: "Un paradis pour les amateurs de glisse ! Le Tivoli offre une expérience dynamique avec ses multiples toboggans et ses activités sportives quotidiennes.",
       ar: "جنة لعشاق الألعاب المائية! يقدم تيفولي تجربة ديناميكية مع منزلقاته المتعددة وأنشطته الرياضية اليومية."
@@ -119,7 +128,7 @@ const HOTELS_DATA = [
     imageId: "hotel-7",
     description: {
       fr: "Fleuron de la chaîne Pickalbatros, cet hôtel offre une plage de sable fin unique et un design inspiré des lagons naturels.",
-      ar: "جوهرة سلسلة بيك الباتروس، يقدم هذا الفندق شاطئاً رملياً ناعماً فريداً وتصميماً مستوحى من البحيرات الطبيعية."
+      ar: "جوهر سلسلة بيك الباتروس، يقدم هذا الفندق شاطئاً رملياً ناعماً فريداً وتصميماً مستوحى من البحيرات الطبيعية."
     },
     amenities: ["Sandy Lagoon", "Premium Bedding", "Yoga Studio", "Live Cooking", "Super High-speed WiFi"],
     highlights: ["Lagoon Beach", "Award Winning Spa", "Best for Couples"]
@@ -193,7 +202,7 @@ export function Hotels() {
                         </Badge>
                       )}
                       <div className="bg-background/80 backdrop-blur-md px-3 py-1 rounded-full border border-gold/20 flex items-center gap-1.5">
-                        <Star className="h-3 w-3 fill-gold text-gold" />
+                        <Star className="h-3.5 w-3.5 fill-gold text-gold" />
                         <span className="text-[11px] font-bold text-gold">{hotel.stars} ★</span>
                       </div>
                     </div>
@@ -219,7 +228,7 @@ export function Hotels() {
                       </div>
                       <div className="text-end flex flex-col items-end gap-2">
                         <div className="text-[11px] text-teal-400 font-bold uppercase tracking-tight bg-teal-400/10 px-2 py-1 rounded">
-                          {t('hotels_child_price')}
+                          {hotel.pricingGrid ? `${t('hotels_child_1')} : ${hotel.pricingGrid.child1}` : t('hotels_child_price')}
                         </div>
                         <Button variant="ghost" size="sm" className="text-gold h-auto p-0 hover:bg-transparent hover:text-gold/80 flex items-center gap-1">
                           <Info className="h-4 w-4" />
@@ -262,6 +271,51 @@ export function Hotels() {
                         {language === 'ar' ? hotel.description.ar : hotel.description.fr}
                       </SheetDescription>
                     </div>
+
+                    {hotel.durationOverride && (
+                      <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl flex items-center gap-4">
+                        <Clock className="h-6 w-6 text-gold" />
+                        <div>
+                          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Durée du séjour</p>
+                          <p className="text-lg font-bold text-gold">{hotel.durationOverride}</p>
+                        </div>
+                      </div>
+                    )}
+
+                    {hotel.pricingGrid && (
+                      <div className="space-y-6">
+                        <div className="flex items-center gap-2 text-gold">
+                          <ShieldCheck className="h-5 w-5" />
+                          <h5 className="text-lg font-headline font-bold tracking-wide uppercase">{t('hotels_price_grid')}</h5>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                            <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Users className="h-3 w-3" /> {t('hotels_triple')}</p>
+                            <p className="text-sm font-bold text-gold">{hotel.pricingGrid.triple}</p>
+                          </div>
+                          <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                            <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Users className="h-3 w-3" /> {t('hotels_double')}</p>
+                            <p className="text-sm font-bold text-gold">{hotel.pricingGrid.double}</p>
+                          </div>
+                          <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                            <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><User className="h-3 w-3" /> {t('hotels_single')}</p>
+                            <p className="text-sm font-bold text-gold">{hotel.pricingGrid.single}</p>
+                          </div>
+                          <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                            <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Baby className="h-3 w-3" /> {t('hotels_child_1')}</p>
+                            <p className="text-sm font-bold text-gold">{hotel.pricingGrid.child1}</p>
+                          </div>
+                          <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                            <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Baby className="h-3 w-3" /> {t('hotels_child_2')}</p>
+                            <p className="text-sm font-bold text-gold">{hotel.pricingGrid.child2}</p>
+                          </div>
+                          <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                            <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Baby className="h-3 w-3" /> {t('hotels_baby')}</p>
+                            <p className="text-sm font-bold text-gold">{hotel.pricingGrid.baby}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     <div className="space-y-6">
                       <div className="flex items-center gap-2 text-gold">

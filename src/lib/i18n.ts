@@ -52,6 +52,13 @@ export const translations = {
     hotels_drawer_amenities: "Équipements & Services",
     hotels_drawer_highlights: "Points Forts",
     hotels_drawer_cta: "Choisir cet hôtel",
+    hotels_price_grid: "Grille Tarifaire",
+    hotels_triple: "Triple",
+    hotels_double: "Double",
+    hotels_single: "Single",
+    hotels_child_1: "1er Enfant",
+    hotels_child_2: "2ème Enfant",
+    hotels_baby: "Bébé (0-2 ans)",
     
     // Itinerary
     itin_title: "Votre Itinéraire",
@@ -163,6 +170,13 @@ export const translations = {
     hotels_drawer_amenities: "المرافق والخدمات",
     hotels_drawer_highlights: "أبرز المميزات",
     hotels_drawer_cta: "اختر هذا الفندق",
+    hotels_price_grid: "جدول الأسعار",
+    hotels_triple: "ثلاثية",
+    hotels_double: "مزدوجة",
+    hotels_single: "فردية",
+    hotels_child_1: "الطفل الأول",
+    hotels_child_2: "الطفل الثاني",
+    hotels_baby: "رضيع (0-2 سنة)",
     
     // Itinerary
     itin_title: "مسار رحلتك",
