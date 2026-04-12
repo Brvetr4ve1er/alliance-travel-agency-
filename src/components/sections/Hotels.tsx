@@ -27,8 +27,17 @@ const HOTELS_DATA = [
     name: "Verginia Sharm Resort & Aqua Park", 
     stars: 4, 
     type: "Resort & Aqua Park", 
-    price: "180 000 DA", 
+    price: "160 000 DA", 
     imageId: "hotel-1",
+    durationOverride: "10 Jours / 08 Nuits",
+    pricingGrid: {
+      triple: "158 000 DA",
+      double: "160 000 DA",
+      single: "205 000 DA",
+      child1: "110 000 DA",
+      child2: "140 000 DA",
+      baby: "25 000 DA"
+    },
     description: {
       fr: "Situé à Sharm El Sheikh, ce complexe dispose d'une grande piscine extérieure avec cascade, d'un spa complet et d'une plage privée accessible par navette gratuite. L'ambiance y est familiale et relaxante.",
       ar: "يقع هذا المنتجع في شرم الشيخ، ويتميز بمسبح خارجي كبير مع شلال، وسبا كامل، وشاطئ خاص يمكن الوصول إليه عبر حافلة مجانية. الأجواء عائلية ومريحة."
