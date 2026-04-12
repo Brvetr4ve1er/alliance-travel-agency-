@@ -28,12 +28,12 @@ export function Hotels() {
         {t('hotels_note').split(':')[1]}
       </div>
       
-      <div className="grid grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {hotels.map((hotel, idx) => {
           const hotelImage = PlaceHolderImages.find(img => img.id === hotel.imageId);
           return (
-            <Card key={idx} className={`glass-panel overflow-hidden transition-all duration-300 hover:shadow-gold/10 flex flex-col md:flex-row ${hotel.premium ? 'border-gold/30' : 'border-gold/10'}`}>
-              <div className="relative w-full md:w-72 h-48 md:h-auto shrink-0 group overflow-hidden">
+            <Card key={idx} className={`glass-panel overflow-hidden transition-all duration-300 hover:shadow-gold/20 flex flex-col h-full ${hotel.premium ? 'border-gold/30' : 'border-gold/10'}`}>
+              <div className="relative w-full aspect-[16/10] shrink-0 group overflow-hidden">
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors z-10" />
                 {hotelImage && (
                   <Image
@@ -46,33 +46,40 @@ export function Hotels() {
                 )}
                 {hotel.premium && (
                   <div className={`absolute top-4 ${isRtl ? 'right-4' : 'left-4'} z-20`}>
-                    <Badge className="bg-gold text-gold-foreground border-none text-[10px] uppercase tracking-tighter shadow-lg">
+                    <Badge className="bg-gold text-gold-foreground border-none text-[10px] uppercase tracking-tighter shadow-lg font-bold">
                       {t('hotels_premium_badge')}
                     </Badge>
                   </div>
                 )}
               </div>
               
-              <CardContent className="flex-1 p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <h4 className="text-xl font-headline font-bold text-foreground">{hotel.name}</h4>
+              <CardContent className="flex-1 p-6 flex flex-col justify-between">
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <h4 className="text-xl font-headline font-bold text-foreground leading-tight">{hotel.name}</h4>
+                    <div className="flex gap-0.5 shrink-0 mt-1">
+                      {Array.from({ length: hotel.stars }).map((_, i) => (
+                        <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
+                      ))}
+                    </div>
                   </div>
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: hotel.stars }).map((_, i) => (
-                      <Star key={i} className="h-3 w-3 fill-gold text-gold" />
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground uppercase tracking-widest">
-                    <Waves className="h-3 w-3 text-gold/60" />
+                  
+                  <div className="flex items-center gap-2 text-[10px] text-muted-foreground uppercase tracking-[0.2em] font-medium">
+                    <Waves className="h-3.5 w-3.5 text-gold/60" />
                     {hotel.type}
                   </div>
                 </div>
                 
-                <div className="text-left sm:text-right rtl:text-right">
-                  <div className="text-xs text-muted-foreground mb-1">{t('hotels_price_sub')}</div>
-                  <div className="text-3xl font-headline font-bold text-gold">{hotel.price}</div>
-                  <div className="text-[10px] text-teal-400 mt-1 font-medium">{t('hotels_child_price')}</div>
+                <div className="mt-8 pt-6 border-t border-gold/10 flex items-end justify-between">
+                  <div className="space-y-1">
+                    <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">{t('hotels_price_sub')}</div>
+                    <div className="text-3xl font-headline font-bold text-gold">{hotel.price}</div>
+                  </div>
+                  <div className={`text-right ${isRtl ? 'text-left' : 'text-right'}`}>
+                    <div className="text-[11px] text-teal-400 font-bold uppercase tracking-tight bg-teal-400/10 px-2 py-1 rounded">
+                      {t('hotels_child_price')}
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -80,12 +87,12 @@ export function Hotels() {
         })}
       </div>
       
-      <Card className="bg-gold/5 border-dashed border-gold/40">
+      <Card className="bg-gold/5 border-dashed border-gold/40 mt-12">
         <CardContent className="p-6 flex items-start gap-4">
           <CheckCircle2 className="h-6 w-6 text-gold flex-shrink-0" />
           <div className="text-sm">
-            <h5 className="font-bold text-gold mb-1">{t('hotels_cairo_title')}</h5>
-            <p className="text-muted-foreground">{t('hotels_cairo_desc')}</p>
+            <h5 className="font-bold text-gold mb-1 uppercase tracking-wide">{t('hotels_cairo_title')}</h5>
+            <p className="text-muted-foreground leading-relaxed">{t('hotels_cairo_desc')}</p>
           </div>
         </CardContent>
       </Card>
