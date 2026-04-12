@@ -49,6 +49,9 @@ export const translations = {
     hotels_child_price: "1er Enfant : 115 000 DA",
     hotels_cairo_title: "Hébergement au Caire inclus",
     hotels_cairo_desc: "Le séjour comprend également 2 nuits au Marwa Palace Hotel (4★) en formule petit déjeuner.",
+    hotels_drawer_amenities: "Équipements & Services",
+    hotels_drawer_highlights: "Points Forts",
+    hotels_drawer_cta: "Choisir cet hôtel",
     
     // Itinerary
     itin_title: "Votre Itinéraire",
@@ -157,6 +160,9 @@ export const translations = {
     hotels_child_price: "الطفل الأول: 115,000 دج",
     hotels_cairo_title: "الإقامة في القاهرة مشمولة",
     hotels_cairo_desc: "تشمل الرحلة أيضاً ليلتين في فندق مروة بالاس (4★) مع وجبة الإفطار.",
+    hotels_drawer_amenities: "المرافق والخدمات",
+    hotels_drawer_highlights: "أبرز المميزات",
+    hotels_drawer_cta: "اختر هذا الفندق",
     
     // Itinerary
     itin_title: "مسار رحلتك",
