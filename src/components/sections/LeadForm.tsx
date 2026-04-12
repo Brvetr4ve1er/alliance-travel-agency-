@@ -43,32 +43,35 @@ export function LeadForm() {
 
     const leadsRef = collection(db, "leads");
 
-    // 2. Persist to Firestore first
+    // 2. Persist to Firestore
     addDoc(leadsRef, leadData)
       .then(() => {
         setLoading(false);
         
-        // 3. Compile data for WhatsApp
-        const whatsappMsg = `Bonjour Alliance Travel! 🇪🇬\n\nJe souhaite réserver l'offre Égypte 2026.\n\n👤 *Nom:* ${name}\n📞 *Tél:* ${phone}\n📅 *Date:* ${selectedDate}\n👥 *Voyageurs:* ${travelers}\n📍 *Destination:* Égypte\n\n💬 *Note:* ${message || "Aucune"}`;
+        // 3. Compile data for WhatsApp message
+        const whatsappMsg = language === 'ar' 
+          ? `مرحباً أليانس ترافل! 🇪🇬\n\nأود حجز عرض مصر 2026.\n\n👤 *الاسم:* ${name}\n📞 *الهاتف:* ${phone}\n📅 *التاريخ:* ${selectedDate}\n👥 *عدد المسافرين:* ${travelers}\n📍 *الوجهة:* مصر\n\n💬 *ملاحظة:* ${message || "لا يوجد"}`
+          : `Bonjour Alliance Travel! 🇪🇬\n\nJe souhaite réserver l'offre Égypte 2026.\n\n👤 *Nom:* ${name}\n📞 *Tél:* ${phone}\n📅 *Date:* ${selectedDate}\n👥 *Voyageurs:* ${travelers}\n📍 *Destination:* Égypte\n\n💬 *Note:* ${message || "Aucune"}`;
         
         const encodedMsg = encodeURIComponent(whatsappMsg);
         const whatsappUrl = `https://wa.me/213561616267?text=${encodedMsg}`;
 
-        // 4. Open WhatsApp
+        // 4. Open WhatsApp in a new tab
         window.open(whatsappUrl, "_blank");
 
-        // 5. Provide UI Feedback
+        // 5. Success UI Feedback
         toast({
           title: t('form_toast_title'),
           description: t('form_toast_desc'),
         });
 
-        // 6. Reset Form
+        // 6. Reset Form state
         (e.target as HTMLFormElement).reset();
         setSelectedDate("");
       })
       .catch(async (error) => {
         setLoading(false);
+        // Using the project's standardized error handling architecture
         const permissionError = new FirestorePermissionError({
           path: leadsRef.path,
           operation: 'create',
