@@ -34,6 +34,7 @@ export function LeadForm() {
 
     const formData = new FormData(e.currentTarget);
     const name = formData.get("fullName") as string;
+    const email = formData.get("email") as string;
     const phone = formData.get("phone") as string;
     const travelers = formData.get("travelerCount") as string;
     const message = formData.get("message") as string;
@@ -42,7 +43,6 @@ export function LeadForm() {
       let documentUrl = "";
 
       // 1. Handle File Upload to Firebase Storage
-      // We await this because the URL is required for the WhatsApp message template
       if (file && storage) {
         const storageRef = ref(storage, `leads_documents/${Date.now()}_${file.name}`);
         const uploadResult = await uploadBytes(storageRef, file);
@@ -52,6 +52,7 @@ export function LeadForm() {
       // 2. Prepare Firestore Lead Data
       const leadData = {
         name,
+        email,
         phone,
         date: selectedDate,
         travelers: Number(travelers),
@@ -61,21 +62,20 @@ export function LeadForm() {
         createdAt: serverTimestamp(),
       };
 
-      // 3. Persist to Firestore using non-blocking utility
+      // 3. Persist to Firestore
       if (firestore) {
         const leadsRef = collection(firestore, "leads");
         addDocumentNonBlocking(leadsRef, leadData);
       }
 
-      // 4. Construct WhatsApp Message with formatted data and document link
+      // 4. Construct WhatsApp Message
       const docString = documentUrl ? `\n📄 *Document:* ${documentUrl}` : "";
       const whatsappMsg = language === 'ar' 
-        ? `مرحباً أليانس ترافل! 🇪🇬\n\nأود حجز عرض مصر 2026.\n\n👤 *الاسم:* ${name}\n📞 *الهاتف:* ${phone}\n📅 *التاريخ:* ${selectedDate}\n👥 *عدد المسافرين:* ${travelers}\n📍 *الوجهة:* مصر${docString}\n\n💬 *ملاحظة:* ${message || "لا يوجد"}`
-        : `Bonjour Alliance Travel! 🇪🇬\n\nJe souhaite réserver l'offre Égypte 2026.\n\n👤 *Nom:* ${name}\n📞 *Tél:* ${phone}\n📅 *Date:* ${selectedDate}\n👥 *Voyageurs:* ${travelers}\n📍 *Destination:* Égypte${docString}\n\n💬 *Note:* ${message || "Aucune"}`;
+        ? `مرحباً أليانس ترافل! 🇪🇬\n\nأود حجز عرض مصر 2026.\n\n👤 *الاسم:* ${name}\n📧 *البريد:* ${email}\n📞 *الهاتف:* ${phone}\n📅 *التاريخ:* ${selectedDate}\n👥 *عدد المسافرين:* ${travelers}\n📍 *الوجهة:* مصر${docString}\n\n💬 *ملاحظة:* ${message || "لا يوجد"}`
+        : `Bonjour Alliance Travel! 🇪🇬\n\nJe souhaite réserver l'offre Égypte 2026.\n\n👤 *Nom:* ${name}\n📧 *Email:* ${email}\n📞 *Tél:* ${phone}\n📅 *Date:* ${selectedDate}\n👥 *Voyageurs:* ${travelers}\n📍 *Destination:* Égypte${docString}\n\n💬 *Note:* ${message || "Aucune"}`;
       
       const whatsappUrl = `https://wa.me/213561616267?text=${encodeURIComponent(whatsappMsg)}`;
 
-      // 5. Update UI state and trigger redirect
       setLoading(false);
       window.open(whatsappUrl, "_blank");
 
@@ -84,7 +84,6 @@ export function LeadForm() {
         description: t('form_toast_desc'),
       });
 
-      // Reset local state
       (e.target as HTMLFormElement).reset();
       setSelectedDate("");
       setFile(null);
@@ -112,6 +111,19 @@ export function LeadForm() {
           />
         </div>
         <div className="space-y-2">
+          <label className="text-xs uppercase tracking-widest font-bold">{t('form_email')}</label>
+          <Input 
+            name="email"
+            type="email"
+            required 
+            placeholder="Ex: jean@example.com"
+            className="bg-white/5 border-gold/10" 
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-2">
           <label className="text-xs uppercase tracking-widest font-bold">{t('form_phone')}</label>
           <Input 
             name="phone"
@@ -120,9 +132,6 @@ export function LeadForm() {
             className="bg-white/5 border-gold/10" 
           />
         </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="text-xs uppercase tracking-widest font-bold">{t('form_date')}</label>
           <Select required onValueChange={setSelectedDate} value={selectedDate}>
@@ -137,6 +146,9 @@ export function LeadForm() {
             </SelectContent>
           </Select>
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="text-xs uppercase tracking-widest font-bold">{t('form_v_count')}</label>
           <Input 
@@ -147,20 +159,19 @@ export function LeadForm() {
             className="bg-white/5 border-gold/10" 
           />
         </div>
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-xs uppercase tracking-widest font-bold">
-          {language === 'ar' ? 'الوثائق (جواز السفر، إلخ)' : 'Documents (Passeport, etc.)'}
-        </label>
-        <div className="relative group">
-          <Input 
-            type="file"
-            onChange={handleFileChange}
-            className="bg-white/5 border-gold/10 file:bg-gold file:text-gold-foreground file:border-none file:rounded file:px-2 file:py-1 file:mr-4 file:text-xs file:cursor-pointer"
-            accept="image/*,.pdf"
-          />
-          <FileUp className="absolute right-3 top-2.5 h-4 w-4 text-gold/50 group-hover:text-gold transition-colors pointer-events-none" />
+        <div className="space-y-2">
+          <label className="text-xs uppercase tracking-widest font-bold">
+            {language === 'ar' ? 'الوثائق (جواز السفر، إلخ)' : 'Documents (Passeport, etc.)'}
+          </label>
+          <div className="relative group">
+            <Input 
+              type="file"
+              onChange={handleFileChange}
+              className="bg-white/5 border-gold/10 file:bg-gold file:text-gold-foreground file:border-none file:rounded file:px-2 file:py-1 file:mr-4 file:text-xs file:cursor-pointer"
+              accept="image/*,.pdf"
+            />
+            <FileUp className="absolute right-3 top-2.5 h-4 w-4 text-gold/50 group-hover:text-gold transition-colors pointer-events-none" />
+          </div>
         </div>
       </div>
 
