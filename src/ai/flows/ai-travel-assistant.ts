@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview An AI assistant flow that answers questions about the Egypt tour package.
@@ -73,8 +74,6 @@ Voici les informations détaillées sur l'offre de voyage "Égypte 2026 - Allian
 - **Cleopatra Luxury Resort** (★★★★★, Complexe de luxe): 250 000 DA. 1er enfant : 115 000 DA · Bébé : 25 000 DA.
 - **Pickalbatros — Laguna Vista / Royal Moderna** (★★★★★, Chaîne Pickalbatros): 265 000 DA. 1er enfant : 115 000 DA · Bébé : 25 000 DA.
 
-**Note sur les tarifs Sharm El Sheikh**: Les tarifs indiqués sont par personne en chambre double. Check-in toujours à 14h. Capacité max. chambre standard : 2 adultes + 2 enfants (1 extra bed). Pour groupes de 3 adultes : 2 chambres obligatoires ou Family Room (sous réserve de disponibilité). Les tarifs en chambre simple (single) et triple sont disponibles sur demande.
-
 **Hébergement au Caire**:
 - **Marwa Palace Hotel** (★★★★): Formule Petit Déjeuner, 2 nuits. Compris dans le forfait.
 
@@ -85,28 +84,6 @@ Voici les informations détaillées sur l'offre de voyage "Égypte 2026 - Allian
 - **Calcul du tarif (exemple famille)**: Configuration type famille : (Double + 1er enfant) + (Single + 1er enfant). Calculé par configuration.
 - **Réservation & renseignements (Contacts WhatsApp)**: 0550 737 434 · 0672 021 651 · 0770 545 737 · 0770 311 099
 - **Agence Alliance Travel**: 05 Rue des Frères Habbache, Sétif — Face à Park Mall.
-
-**Plans de vol — Egyptair (MS)**:
-**Départ 05 Avril 2026**:
-- MS 846: Alger (ALG) → Caire (CAI) - 05 Avr - 12:55 → 17:40
-- MS 028: Caire (CAI) → Sharm (SSH) - 05 Avr - 19:50 → 20:50
-- MS 029: Sharm (SSH) → Caire (CAI) - 10 Avr - 21:30 → 22:30
-- MS 845: Caire (CAI) → Alger (ALG) - 12 Avr - 08:45 → 11:55
-**Départ 19 Avril 2026**:
-- MS 846: Alger (ALG) → Caire (CAI) - 19 Avr - 12:55 → 17:40
-- MS 028: Caire (CAI) → Sharm (SSH) - 19 Avr - 19:50 → 20:50
-- MS 025: Sharm (SSH) → Caire (CAI) - 24 Avr - 08:40 → 09:40
-- MS 845: Caire (CAI) → Alger (ALG) - 26 Avr - 09:45 → 11:55
-**Départ 01 Mai 2026**:
-- MS 846: Alger (ALG) → Caire (CAI) - 01 Mai - 12:55 → 18:40
-- MS 028: Caire (CAI) → Sharm (SSH) - 01 Mai - 20:50 → 21:50
-- MS 025: Sharm (SSH) → Caire (CAI) - 06 Mai - 08:40 → 09:40
-- MS 845: Caire (CAI) → Alger (ALG) - 08 Mai - 09:45 → 11:55
-**Départ 09 Mai 2026**:
-- MS 846: Alger (ALG) → Caire (CAI) - 09 Mai - 12:55 → 18:40
-- MS 028: Caire (CAI) → Sharm (SSH) - 09 Mai - 20:50 → 21:50
-- MS 025: Sharm (SSH) → Caire (CAI) - 14 Mai - 08:40 → 09:40
-- MS 845: Caire (CAI) → Alger (ALG) - 16 Mai - 09:45 → 11:55
 `;
 
 const aiTravelAssistantPrompt = ai.definePrompt({
@@ -115,6 +92,7 @@ const aiTravelAssistantPrompt = ai.definePrompt({
   output: { schema: AiTravelAssistantOutputSchema },
   prompt: `You are an AI travel assistant providing information about the "Egypt 2026 - Alliance Travel" tour package.
 Your task is to answer user questions based *only* on the provided tour information.
+Answer in the same language as the user's question (French, Arabic, or English).
 If the information required to answer a question is not available in the provided context, please state that you don't have that information.
 Do not make up any information. Be concise and helpful.
 

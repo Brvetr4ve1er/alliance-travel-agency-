@@ -39,6 +39,15 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-headline;
   }
+
+  .font-arabic {
+    font-family: 'Noto Sans Arabic', 'DM Sans', sans-serif;
+  }
+
+  /* Support for RTL in Tailwind */
+  [dir="rtl"] .font-headline {
+    font-family: 'Noto Sans Arabic', serif;
+  }
 }
 
 .luxury-gradient-bg {

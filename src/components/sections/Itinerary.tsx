@@ -2,32 +2,35 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Palmtree, Landmark, ShoppingBag, Waves, Utensils, Camera } from "lucide-react";
+import { Palmtree, Landmark, ShoppingBag, Waves, Utensils, Camera } from "lucide-react";
 import Image from "next/image";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 export function Itinerary() {
+  const { t, language } = useLanguage();
+
   const sections = [
     {
-      title: "Sharm El Sheikh — 5 nuits",
+      title: t('itin_sharm'),
       icon: Palmtree,
       items: [
-        { name: "Naama Bay", desc: "Balade sur le front de mer et boutiques emblématiques.", icon: Waves, imageId: "naama-bay" },
-        { name: "Sahaba Mosque", desc: "Architecture impressionnante et centre spirituel.", icon: Landmark, imageId: "sahaba-mosque" },
-        { name: "Old Market", desc: "Ambiance locale et artisanat traditionnel.", icon: ShoppingBag, imageId: "old-market" },
-        { name: "Soho Square", desc: "Complexe de divertissement et fontaines musicales.", icon: Utensils, imageId: "soho-square" },
-        { name: "Snorkeling", desc: "Exploration des récifs coralliens de la Mer Rouge.", icon: Camera, imageId: "snorkeling" },
+        { name: language === 'ar' ? "خليج نعمة" : "Naama Bay", desc: language === 'ar' ? "جولة على شاطئ البحر والمحلات الشهيرة." : "Balade sur le front de mer et boutiques emblématiques.", icon: Waves, imageId: "naama-bay" },
+        { name: language === 'ar' ? "مسجد الصحابة" : "Sahaba Mosque", desc: language === 'ar' ? "عمارة مذهلة ومركز روحي." : "Architecture impressionnante et centre spirituel.", icon: Landmark, imageId: "sahaba-mosque" },
+        { name: language === 'ar' ? "السوق القديم" : "Old Market", desc: language === 'ar' ? "أجواء محلية وحرف يدوية تقليدية." : "Ambiance locale et artisanat traditionnel.", icon: ShoppingBag, imageId: "old-market" },
+        { name: language === 'ar' ? "سوهو سكوير" : "Soho Square", desc: language === 'ar' ? "مجمع ترفيهي ونوافير موسيقية." : "Complexe de divertissement et fontaines musicales.", icon: Utensils, imageId: "soho-square" },
+        { name: language === 'ar' ? "الغطس" : "Snorkeling", desc: language === 'ar' ? "استكشاف الشعاب المرجانية في البحر الأحمر." : "Exploration des récifs coralliens de la Mer Rouge.", icon: Camera, imageId: "snorkeling" },
       ]
     },
     {
-      title: "Le Caire — 2 nuits",
+      title: t('itin_cairo'),
       icon: Landmark,
       items: [
-        { name: "Pyramides & Sphinx", desc: "La merveille du monde antique à portée de main.", icon: Landmark, imageId: "pyramids" },
-        { name: "Khan El Khalili", desc: "L'âme historique du Caire islamique.", icon: ShoppingBag, imageId: "khan-el-khalili" },
-        { name: "Mosquée Al-Azhar", desc: "Plus de 1000 ans d'histoire et de spiritualité.", icon: Landmark, imageId: "sahaba-mosque" },
-        { name: "Croisière sur le Nil", desc: "Dîner-spectacle sur le fleuve légendaire.", icon: Utensils, imageId: "nile-cruise" },
-        { name: "Grand Egyptian Museum", desc: "Le plus grand musée archéologique du monde.", icon: Landmark, imageId: "museum" },
+        { name: language === 'ar' ? "الأهرامات وأبو الهول" : "Pyramides & Sphinx", desc: language === 'ar' ? "عجيبة العالم القديم في متناول يدك." : "La merveille du monde antique à portée de main.", icon: Landmark, imageId: "pyramids" },
+        { name: language === 'ar' ? "خان الخليلي" : "Khan El Khalili", desc: language === 'ar' ? "روح القاهرة التاريخية." : "L'âme historique du Caire islamique.", icon: ShoppingBag, imageId: "khan-el-khalili" },
+        { name: language === 'ar' ? "جامع الأزهر" : "Mosquée Al-Azhar", desc: language === 'ar' ? "أكثر من 1000 عام من التاريخ والروحانية." : "Plus de 1000 ans d'histoire et de spiritualité.", icon: Landmark, imageId: "sahaba-mosque" },
+        { name: language === 'ar' ? "رحلة نيلية" : "Croisière sur le Nil", desc: language === 'ar' ? "عشاء استعراضي على النهر الأسطوري." : "Dîner-spectacle sur le fleuve légendaire.", icon: Utensils, imageId: "nile-cruise" },
+        { name: language === 'ar' ? "المتحف المصري الكبير" : "Grand Egyptian Museum", desc: language === 'ar' ? "أكبر متحف أثري في العالم." : "Le plus grand musée archéologique du monde.", icon: Landmark, imageId: "museum" },
       ]
     }
   ];

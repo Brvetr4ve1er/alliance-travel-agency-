@@ -4,31 +4,34 @@
 import { Camera, Waves, Landmark, Sparkles } from "lucide-react";
 import Image from "next/image";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 export function Experience() {
+  const { t } = useLanguage();
+
   const highlights = [
     {
       icon: Landmark,
-      title: "Éternité de Gizeh",
-      desc: "Contemplez les Pyramides et le Sphinx, ultimes témoins des merveilles antiques.",
+      title: t('exp_h1'),
+      desc: t('exp_h1_desc'),
       imageId: "pyramids"
     },
     {
       icon: Waves,
-      title: "Pureté de la Mer Rouge",
-      desc: "Plongez dans les eaux cristallines de Sharm El Sheikh pour un repos absolu.",
+      title: t('exp_h2'),
+      desc: t('exp_h2_desc'),
       imageId: "sharm-beach"
     },
     {
       icon: Sparkles,
-      title: "Magie du Nil",
-      desc: "Vivez une soirée d'exception lors d'un dîner-croisière sur le fleuve légendaire.",
+      title: t('exp_h3'),
+      desc: t('exp_h3_desc'),
       imageId: "nile-cruise"
     },
     {
       icon: Camera,
-      title: "Contrastes Égyptiens",
-      desc: "De l'effervescence des bazars du Caire à la sérénité des récifs coralliens.",
+      title: t('exp_h4'),
+      desc: t('exp_h4_desc'),
       imageId: "khan-el-khalili"
     },
   ];
@@ -36,9 +39,9 @@ export function Experience() {
   return (
     <section className="space-y-16">
       <div className="text-center max-w-3xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-headline mb-6">L'Expérience Alliance Travel</h2>
+        <h2 className="text-4xl md:text-5xl font-headline mb-6">{t('exp_title')}</h2>
         <p className="text-muted-foreground text-lg leading-relaxed">
-          Plus qu'un simple voyage, nous vous offrons une immersion sensorielle au cœur de l'histoire, sublimée par un confort moderne.
+          {t('exp_desc')}
         </p>
       </div>
 

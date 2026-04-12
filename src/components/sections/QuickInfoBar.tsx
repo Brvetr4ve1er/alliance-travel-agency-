@@ -2,14 +2,17 @@
 "use client";
 
 import { Clock, Star, Plane, ShieldCheck, Coffee } from "lucide-react";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 export function QuickInfoBar() {
+  const { t } = useLanguage();
+
   const info = [
-    { icon: Clock, label: "Durée", value: "8 Jours / 7 Nuits" },
-    { icon: Star, label: "Hôtels", value: "4★ à 5★ Luxe" },
-    { icon: Plane, label: "Vols", value: "Egyptair Inclus" },
-    { icon: ShieldCheck, label: "Visa", value: "Support Inclus" },
-    { icon: Coffee, label: "Pension", value: "All Inclusive Soft" },
+    { icon: Clock, label: t('info_duree'), value: t('info_duree_val') },
+    { icon: Star, label: t('info_hotels'), value: t('info_hotels_val') },
+    { icon: Plane, label: t('info_vols'), value: t('info_vols_val') },
+    { icon: ShieldCheck, label: t('info_visa'), value: t('info_visa_val') },
+    { icon: Coffee, label: t('info_pension'), value: t('info_pension_val') },
   ];
 
   return (

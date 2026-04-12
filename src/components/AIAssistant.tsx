@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sparkles, Send, User, Bot, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 interface Message {
   role: "user" | "assistant";
@@ -16,11 +17,12 @@ interface Message {
 }
 
 export function AIAssistant() {
+  const { t, isRtl } = useLanguage();
   const [query, setQuery] = useState("");
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Bonjour ! Je suis votre assistant Alliance Travel. Posez-moi vos questions sur notre voyage en Égypte 2026 (visas, hôtels, programme, etc.).",
+      content: t('ai_welcome'),
     },
   ]);
   const [loading, setLoading] = useState(false);
@@ -39,7 +41,7 @@ export function AIAssistant() {
     } catch (error) {
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "Désolé, j'ai rencontré une erreur. Veuillez réessayer." },
+        { role: "assistant", content: t('ai_error') },
       ]);
     } finally {
       setLoading(false);
@@ -51,7 +53,7 @@ export function AIAssistant() {
       <CardHeader className="border-b border-gold/10 bg-gold/5">
         <CardTitle className="flex items-center gap-2 text-gold">
           <Sparkles className="h-5 w-5" />
-          <span className="font-headline text-2xl">Assistant Voyage IA</span>
+          <span className="font-headline text-2xl">{t('ai_title')}</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col p-0 overflow-hidden">
@@ -62,7 +64,7 @@ export function AIAssistant() {
                 key={i}
                 className={cn(
                   "flex items-start gap-3 max-w-[85%]",
-                  m.role === "user" ? "ml-auto flex-row-reverse" : ""
+                  m.role === "user" ? (isRtl ? "mr-auto flex-row-reverse" : "ml-auto flex-row-reverse") : ""
                 )}
               >
                 <div className={cn(
@@ -95,7 +97,7 @@ export function AIAssistant() {
         </ScrollArea>
         <div className="p-4 border-t border-gold/10 bg-gold/5 flex gap-2">
           <Input
-            placeholder="Posez votre question..."
+            placeholder={t('ai_placeholder')}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}

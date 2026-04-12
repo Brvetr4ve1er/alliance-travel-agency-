@@ -2,18 +2,21 @@
 "use client";
 
 import { ShieldCheck, Award, Users, Star } from "lucide-react";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 export function TrustSection() {
+  const { t } = useLanguage();
+
   const points = [
-    { icon: ShieldCheck, title: "Sérénité Totale", desc: "Plus de 10 ans d'expertise sur la destination Égypte." },
-    { icon: Award, title: "Qualité Garantie", desc: "Hôtels sélectionnés et testés par nos équipes." },
-    { icon: Users, title: "Prise en Charge", desc: "Accompagnateur dédié d'Alger au retour." },
+    { icon: ShieldCheck, title: t('trust_p1_title'), desc: t('trust_p1_desc') },
+    { icon: Award, title: t('trust_p2_title'), desc: t('trust_p2_desc') },
+    { icon: Users, title: t('trust_p3_title'), desc: t('trust_p3_desc') },
   ];
 
   return (
     <div className="space-y-8">
       <div className="glass-panel p-8 rounded-2xl border-gold/10">
-        <h3 className="text-3xl font-headline mb-8">Pourquoi nous choisir ?</h3>
+        <h3 className="text-3xl font-headline mb-8">{t('trust_title')}</h3>
         <div className="space-y-8">
           {points.map((p, i) => (
             <div key={i} className="flex gap-4">
@@ -34,9 +37,9 @@ export function TrustSection() {
           {[1, 2, 3, 4, 5].map((s) => <Star key={s} className="h-4 w-4 fill-emerald-500 text-emerald-500" />)}
         </div>
         <p className="italic text-sm leading-relaxed mb-4">
-          "Un voyage exceptionnel. L'organisation d'Alliance Travel était impeccable, du visa à l'arrivée jusqu'au retour à Alger. Les guides au Caire sont passionnants."
+          {t('trust_quote')}
         </p>
-        <p className="text-xs font-bold uppercase tracking-widest">— Famille Mansouri, Voyage 2024</p>
+        <p className="text-xs font-bold uppercase tracking-widest">— {t('trust_author')}</p>
       </div>
     </div>
   );

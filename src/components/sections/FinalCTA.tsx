@@ -2,9 +2,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { Sparkles, ArrowRight, ArrowLeft } from "lucide-react";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 export function FinalCTA() {
+  const { t, isRtl } = useLanguage();
+
   return (
     <section className="relative rounded-3xl overflow-hidden py-20 px-8 text-center bg-gold/10 border border-gold/20">
       <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
@@ -14,19 +17,19 @@ export function FinalCTA() {
       <div className="relative z-10 max-w-2xl mx-auto space-y-8">
         <Sparkles className="h-12 w-12 text-gold mx-auto animate-pulse" />
         <h2 className="text-4xl md:text-6xl font-headline leading-tight">
-          Prêt pour l'évasion ?
+          {t('final_title')}
         </h2>
         <p className="text-xl text-muted-foreground font-light">
-          Les places pour les départs d'avril sont déjà réservées à 70%. Sécurisez votre voyage dès aujourd'hui.
+          {t('final_desc')}
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button size="lg" className="bg-gold text-gold-foreground h-14 px-10 text-lg font-bold w-full sm:w-auto" asChild>
             <a href="#reservation">
-              Réserver Maintenant <ArrowRight className="ml-2 h-5 w-5" />
+              {t('final_cta_primary')} {isRtl ? <ArrowLeft className="mr-2 h-5 w-5" /> : <ArrowRight className="ml-2 h-5 w-5" />}
             </a>
           </Button>
           <Button size="lg" variant="outline" className="border-gold/30 text-gold h-14 px-10 text-lg w-full sm:w-auto" asChild>
-            <a href="tel:+213550737434">Appeler un conseiller</a>
+            <a href="tel:+213550737434">{t('final_cta_secondary')}</a>
           </Button>
         </div>
       </div>
