@@ -19,7 +19,7 @@ const HOTELS_DATA = [
 ];
 
 export function Hotels() {
-  const { t, isRtl } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <div className="space-y-12">
@@ -40,7 +40,8 @@ export function Hotels() {
                     src={hotelImage.imageUrl}
                     alt={hotelImage.description}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                    priority={idx < 2}
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                     data-ai-hint={hotelImage.imageHint}
                   />
