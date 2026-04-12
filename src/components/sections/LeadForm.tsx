@@ -25,40 +25,51 @@ export function LeadForm() {
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
+    const name = formData.get("fullName") as string;
+    const phone = formData.get("phone") as string;
+    const travelers = formData.get("travelerCount") as string;
+    const message = formData.get("message") as string;
+
     const leadData = {
-      name: formData.get("fullName") as string,
-      phone: formData.get("phone") as string,
+      name,
+      phone,
       date: selectedDate,
-      travelers: Number(formData.get("travelerCount")),
-      message: formData.get("message") as string,
+      travelers: Number(travelers),
+      message,
       destination: "Egypt",
       createdAt: serverTimestamp(),
     };
 
     const leadsRef = collection(db, "leads");
 
-    // Initiate document creation. We chain then/catch to handle UI state
-    // while ensuring the operation is tracked by our global error listener.
     addDoc(leadsRef, leadData)
       .then(() => {
         setLoading(false);
+        
+        // Generate WhatsApp message
+        const whatsappMsg = `Bonjour Alliance Travel! 🇪🇬\n\nJe souhaite réserver l'offre Égypte 2026.\n\n👤 *Nom:* ${name}\n📞 *Tél:* ${phone}\n📅 *Date:* ${selectedDate}\n👥 *Voyageurs:* ${travelers}\n📍 *Destination:* Égypte\n\n💬 *Note:* ${message || "Aucune"}`;
+        
+        const encodedMsg = encodeURIComponent(whatsappMsg);
+        const whatsappUrl = `https://wa.me/213550737434?text=${encodedMsg}`;
+
+        // Open WhatsApp
+        window.open(whatsappUrl, "_blank");
+
         toast({
           title: t('form_toast_title'),
           description: t('form_toast_desc'),
         });
+
         (e.target as HTMLFormElement).reset();
         setSelectedDate("");
       })
       .catch(async (error) => {
         setLoading(false);
-        // Create rich contextual error for the development overlay
         const permissionError = new FirestorePermissionError({
           path: leadsRef.path,
           operation: 'create',
           requestResourceData: leadData,
         });
-        
-        // Emit for the global listener
         errorEmitter.emit('permission-error', permissionError);
       });
   };
