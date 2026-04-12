@@ -2,61 +2,62 @@
 
 This is a premium, high-conversion landing page built with Next.js, Shadcn UI, and Firebase, optimized for lead generation via WhatsApp.
 
-## 🚀 Getting Started with Git
+---
 
-To push this project to your own Git repository (e.g., GitHub), follow these steps in your terminal:
+## 🚀 How to Setup Git & Push Your Project
 
-1. **Initialize the local repository:**
-   ```bash
-   git init
-   ```
+Follow these steps in your terminal to host your code on a platform like GitHub, GitLab, or Bitbucket.
 
-2. **Add all files to the staging area:**
-   ```bash
-   git add .
-   ```
+### 1. Initialize the Local Repository
+Open your terminal in the project root and run:
+```bash
+git init
+```
 
-3. **Commit the changes:**
-   ```bash
-   git commit -m "Initial commit: Egypt 2026 Funnel"
-   ```
+### 2. Add Your Files
+Stage all the project files for the first commit:
+```bash
+git add .
+```
 
-4. **Add your remote repository URL:**
-   *Replace `<your-repository-url>` with your actual repo link (e.g., `https://github.com/username/repo.git`).*
-   ```bash
-   git remote add origin <your-repository-url>
-   ```
+### 3. Create the Initial Commit
+```bash
+git commit -m "Initial commit: Egypt 2026 Landing Page"
+```
 
-5. **Rename the main branch and push:**
-   ```bash
-   git branch -M main
-   git push -u origin main
-   ```
+### 4. Authenticate with GitHub (Login)
+If you haven't logged in to Git on this machine, the easiest way is using the **GitHub CLI**:
+```bash
+# If you have GitHub CLI installed
+gh auth login
+```
+Alternatively, Git will prompt you for your credentials the first time you try to push. You should use a **Personal Access Token (PAT)** instead of your password if using HTTPS.
+
+### 5. Connect to a Remote Repository
+1. Create a **new empty repository** on [GitHub](https://github.com/new).
+2. Copy the repository URL (e.g., `https://github.com/your-username/your-repo.git`).
+3. Run the following command (replacing the URL with yours):
+```bash
+git remote add origin <your-repository-url>
+```
+
+### 6. Push Your Code
+Rename your branch to `main` and push:
+```bash
+git branch -M main
+git push -u origin main
+```
+
+---
 
 ## 🛠 Tech Stack
-
 - **Framework**: Next.js 15 (App Router)
 - **Styling**: Tailwind CSS
-- **UI Components**: Shadcn UI (Radix UI)
+- **UI Components**: Shadcn UI
 - **Backend**: Firebase (Firestore for Leads, Storage for Documents)
 - **Communication**: WhatsApp wa.me integration
 
 ## 📦 Deployment
-
 This project is configured for Firebase Hosting.
-
-1. **Build the project:**
-   ```bash
-   npm run build
-   ```
-
-2. **Deploy to Firebase:**
-   ```bash
-   firebase deploy
-   ```
-
-## 📁 Project Structure
-
-- `src/lib/trip-config.ts`: **Single Source of Truth** for all trip data (prices, dates, hotels).
-- `src/components/sections/`: Modular React components for each section of the page.
-- `src/lib/i18n.ts`: Translation dictionary for French and Arabic support.
+1. `npm run build`
+2. `firebase deploy`
