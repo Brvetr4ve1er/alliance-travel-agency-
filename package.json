@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "git:push": "git add . && git commit -m 'Sync from Studio' && git push origin main"
+    "git:sync": "git init && git remote add origin https://github.com/Brvetr4ve1er/alliance-travel-agency-.git || git remote set-url origin https://github.com/Brvetr4ve1er/alliance-travel-agency-.git && git add . && git commit -m 'Sync from Studio' && git branch -M main && git push -u origin main"
   },
   "dependencies": {
     "@genkit-ai/google-genai": "^1.28.0",
