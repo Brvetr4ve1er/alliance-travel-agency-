@@ -117,15 +117,24 @@ const HOTELS_DATA = [
   },
   { 
     id: "charmillion",
-    name: "Charmillion Club Aqua Park", 
+    name: "Charmillion Garden & Aqua Park", 
     stars: 5, 
     type: "Luxury Aqua Park", 
-    price: "245 000 DA", 
+    price: "250 000 DA", 
     premium: true, 
     imageId: "hotel-5",
+    durationOverride: "10 Jours / 08 Nuits",
+    pricingGrid: {
+      triple: "248 000 DA",
+      double: "250 000 DA",
+      single: "335 000 DA",
+      child1: "115 000 DA",
+      child2: "185 000 DA",
+      baby: "25 000 DA"
+    },
     description: {
-      fr: "Le plus grand parc aquatique 5 étoiles de la région. Un complexe immense offrant une variété gastronomique et des services de classe mondiale.",
-      ar: "أكبر مدينة ملاهي مائية 5 نجوم في المنطقة. مجمع ضخم يقدم تنوعاً في فنون الطهي وخدمات ذات مستوى عالمي."
+      fr: "Le Charmillion Garden Aqua Park est un havre de paix 5 étoiles offrant un mélange parfait de détente et d'amusement aquatique. Idéal pour des vacances mémorables.",
+      ar: "شارميليون جاردن أكوا بارك هو ملاذ 5 نجوم يوفر مزيجًا مثاليًا من الاسترخاء والمتعة المائية. مثالي لقضاء عطلات لا تنسى."
     },
     amenities: ["Mega Aqua Park", "Club Access", "International Buffet", "Modern Gym", "Valet Parking"],
     highlights: ["Wave Pool", "24/7 Service", "Luxury Suites"]
