@@ -24,6 +24,12 @@ export const TRIP_CONFIG = {
   sharmNights: 5,
   cairoNights: 2,
   mainWhatsApp: "0561616267",
+  counselors: [
+    "0561616266",
+    "0561616267",
+    "0561616268",
+    "0561616269"
+  ],
   hotels: [
     { 
       id: "verginia",

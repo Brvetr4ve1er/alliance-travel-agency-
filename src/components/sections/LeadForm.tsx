@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -7,18 +6,20 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Send, FileUp } from "lucide-react";
+import { Loader2, Send, FileUp, UserCheck } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { storage } from "@/lib/firebase";
 import { collection, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useFirestore, addDocumentNonBlocking } from "@/firebase";
+import { TRIP_CONFIG } from "@/lib/trip-config";
 
 export function LeadForm() {
   const { toast } = useToast();
   const { t, language } = useLanguage();
   const [loading, setLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedCounselor, setSelectedCounselor] = useState<string>(TRIP_CONFIG.mainWhatsApp);
   const [file, setFile] = useState<File | null>(null);
   const firestore = useFirestore();
 
@@ -58,6 +59,7 @@ export function LeadForm() {
         travelers: Number(travelers),
         message,
         documentUrl,
+        counselor: selectedCounselor,
         destination: "Egypt",
         createdAt: serverTimestamp(),
       };
@@ -74,7 +76,7 @@ export function LeadForm() {
         ? `مرحباً أليانس ترافل! 🇪🇬\n\nأود حجز عرض مصر 2026.\n\n👤 *الاسم:* ${name}\n📧 *البريد:* ${email}\n📞 *الهاتف:* ${phone}\n📅 *التاريخ:* ${selectedDate}\n👥 *عدد المسافرين:* ${travelers}\n📍 *الوجهة:* مصر${docString}\n\n💬 *ملاحظة:* ${message || "لا يوجد"}`
         : `Bonjour Alliance Travel! 🇪🇬\n\nJe souhaite réserver l'offre Égypte 2026.\n\n👤 *Nom:* ${name}\n📧 *Email:* ${email}\n📞 *Tél:* ${phone}\n📅 *Date:* ${selectedDate}\n👥 *Voyageurs:* ${travelers}\n📍 *Destination:* Égypte${docString}\n\n💬 *Note:* ${message || "Aucune"}`;
       
-      const whatsappUrl = `https://wa.me/213561616267?text=${encodeURIComponent(whatsappMsg)}`;
+      const whatsappUrl = `https://wa.me/213${selectedCounselor.substring(1)}?text=${encodeURIComponent(whatsappMsg)}`;
 
       setLoading(false);
       window.open(whatsappUrl, "_blank");
@@ -139,10 +141,9 @@ export function LeadForm() {
               <SelectValue placeholder={language === 'ar' ? 'اختر التاريخ' : 'Choisir une date'} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="05 Avril 2026">05 Avril 2026</SelectItem>
-              <SelectItem value="19 Avril 2026">19 Avril 2026</SelectItem>
-              <SelectItem value="01 Mai 2026">01 Mai 2026</SelectItem>
-              <SelectItem value="09 Mai 2026">09 Mai 2026</SelectItem>
+              {TRIP_CONFIG.departureDates.map((date) => (
+                <SelectItem key={date.label} value={date.label}>{date.label}</SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -160,18 +161,37 @@ export function LeadForm() {
           />
         </div>
         <div className="space-y-2">
-          <label className="text-xs uppercase tracking-widest font-bold">
-            {language === 'ar' ? 'الوثائق (جواز السفر، إلخ)' : 'Documents (Passeport, etc.)'}
-          </label>
-          <div className="relative group">
-            <Input 
-              type="file"
-              onChange={handleFileChange}
-              className="bg-white/5 border-gold/10 file:bg-gold file:text-gold-foreground file:border-none file:rounded file:px-2 file:py-1 file:mr-4 file:text-xs file:cursor-pointer"
-              accept="image/*,.pdf"
-            />
-            <FileUp className="absolute right-3 top-2.5 h-4 w-4 text-gold/50 group-hover:text-gold transition-colors pointer-events-none" />
-          </div>
+          <label className="text-xs uppercase tracking-widest font-bold">{t('form_counselor')}</label>
+          <Select required onValueChange={setSelectedCounselor} value={selectedCounselor}>
+            <SelectTrigger className="bg-white/5 border-gold/10">
+              <SelectValue placeholder={language === 'ar' ? 'اختر مستشاراً' : 'Choisir un conseiller'} />
+            </SelectTrigger>
+            <SelectContent>
+              {TRIP_CONFIG.counselors.map((num) => (
+                <SelectItem key={num} value={num}>
+                  <div className="flex items-center gap-2">
+                    <UserCheck className="h-3 w-3 text-gold" />
+                    <span>📲 {num}</span>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-xs uppercase tracking-widest font-bold">
+          {language === 'ar' ? 'الوثائق (جواز السفر، إلخ)' : 'Documents (Passeport, etc.)'}
+        </label>
+        <div className="relative group">
+          <Input 
+            type="file"
+            onChange={handleFileChange}
+            className="bg-white/5 border-gold/10 file:bg-gold file:text-gold-foreground file:border-none file:rounded file:px-2 file:py-1 file:mr-4 file:text-xs file:cursor-pointer"
+            accept="image/*,.pdf"
+          />
+          <FileUp className="absolute right-3 top-2.5 h-4 w-4 text-gold/50 group-hover:text-gold transition-colors pointer-events-none" />
         </div>
       </div>
 
