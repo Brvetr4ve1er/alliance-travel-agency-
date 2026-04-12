@@ -30,6 +30,7 @@ export function LeadForm() {
     const travelers = formData.get("travelerCount") as string;
     const message = formData.get("message") as string;
 
+    // 1. Compile data for Firestore
     const leadData = {
       name,
       phone,
@@ -42,25 +43,27 @@ export function LeadForm() {
 
     const leadsRef = collection(db, "leads");
 
+    // 2. Persist to Firestore first
     addDoc(leadsRef, leadData)
       .then(() => {
         setLoading(false);
         
-        // Generate WhatsApp message
+        // 3. Compile data for WhatsApp
         const whatsappMsg = `Bonjour Alliance Travel! 🇪🇬\n\nJe souhaite réserver l'offre Égypte 2026.\n\n👤 *Nom:* ${name}\n📞 *Tél:* ${phone}\n📅 *Date:* ${selectedDate}\n👥 *Voyageurs:* ${travelers}\n📍 *Destination:* Égypte\n\n💬 *Note:* ${message || "Aucune"}`;
         
         const encodedMsg = encodeURIComponent(whatsappMsg);
-        // Updated to the requested primary number: 0561 616 267
         const whatsappUrl = `https://wa.me/213561616267?text=${encodedMsg}`;
 
-        // Open WhatsApp
+        // 4. Open WhatsApp
         window.open(whatsappUrl, "_blank");
 
+        // 5. Provide UI Feedback
         toast({
           title: t('form_toast_title'),
           description: t('form_toast_desc'),
         });
 
+        // 6. Reset Form
         (e.target as HTMLFormElement).reset();
         setSelectedDate("");
       })
