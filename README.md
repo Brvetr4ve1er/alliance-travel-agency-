@@ -6,32 +6,37 @@ This is a premium, high-conversion landing page built with Next.js, Shadcn UI, a
 
 ## 🚀 How to Connect & Push to GitHub
 
-To push your code to your repository (**alliance-travel-agency-**), open the **Terminal** in your editor (usually at the bottom) and follow these steps:
+If you are having trouble committing, it is likely because your Git identity isn't set. Open the **Terminal** in your editor and run these steps in order:
 
 ### 1. Initialize Git
 ```bash
 git init
 ```
 
-### 2. Add Your Files
+### 2. Set your Identity (CRITICAL)
+Replace with your actual info:
+```bash
+git config --global user.email "your-email@example.com"
+git config --global user.name "Your Name"
+```
+
+### 3. Add Your Files
 ```bash
 git add .
 ```
 
-### 3. Create the Initial Commit
+### 4. Create the Initial Commit
 ```bash
 git commit -m "Initial commit: Egypt 2026 Landing Page"
 ```
 
-### 4. Log in to GitHub
-The easiest way is using the GitHub CLI (already installed in most environments):
+### 5. Log in to GitHub
 ```bash
 gh auth login
 ```
-*Follow the prompts to log in via your browser. Select 'GitHub.com', 'HTTPS', and 'Yes' to log in with a web browser.*
+*Follow the prompts: Select 'GitHub.com', 'HTTPS', and 'Yes' to log in with a web browser.*
 
-### 5. Link to your Remote Repo & Push
-Run these commands to connect to your specific repository and push the code:
+### 6. Link to your Remote Repo & Push
 ```bash
 git remote add origin https://github.com/Brvetr4ve1er/alliance-travel-agency-.git
 git branch -M main
