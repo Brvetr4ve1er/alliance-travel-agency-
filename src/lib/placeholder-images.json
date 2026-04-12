@@ -65,6 +65,48 @@
       "description": "Marché traditionnel de Sharm",
       "imageUrl": "https://picsum.photos/seed/sharm-market-stalls/800/600",
       "imageHint": "Old Market"
+    },
+    {
+      "id": "hotel-1",
+      "description": "Verginia Aqua Park Resort",
+      "imageUrl": "https://picsum.photos/seed/hotel-aqua-1/600/400",
+      "imageHint": "Water Park"
+    },
+    {
+      "id": "hotel-2",
+      "description": "Tivoli Aqua Park Resort",
+      "imageUrl": "https://picsum.photos/seed/hotel-aqua-2/600/400",
+      "imageHint": "Hotel Pool"
+    },
+    {
+      "id": "hotel-3",
+      "description": "Rehana Aqua Park",
+      "imageUrl": "https://picsum.photos/seed/hotel-aqua-3/600/400",
+      "imageHint": "Resort Slides"
+    },
+    {
+      "id": "hotel-4",
+      "description": "Rehana Royal Beach",
+      "imageUrl": "https://picsum.photos/seed/hotel-beach-1/600/400",
+      "imageHint": "Beach Resort"
+    },
+    {
+      "id": "hotel-5",
+      "description": "Charmillion Club",
+      "imageUrl": "https://picsum.photos/seed/hotel-luxury-1/600/400",
+      "imageHint": "Luxury Hotel"
+    },
+    {
+      "id": "hotel-6",
+      "description": "Cleopatra Luxury Resort",
+      "imageUrl": "https://picsum.photos/seed/hotel-luxury-2/600/400",
+      "imageHint": "Prestige Complex"
+    },
+    {
+      "id": "hotel-7",
+      "description": "Pickalbatros Laguna Vista",
+      "imageUrl": "https://picsum.photos/seed/hotel-prestige-1/600/400",
+      "imageHint": "Premium Chain"
     }
   ]
 }
