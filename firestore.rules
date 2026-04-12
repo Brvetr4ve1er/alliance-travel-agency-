@@ -1,0 +1,160 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * CORE PHILOSOPHY
+     * This ruleset implements a Public-Read, Admin-Write model for a travel agency catalog.
+     * All travel packages, hotel information, and itinerary details are intended for 
+     * public consumption to facilitate browsing and booking inquiries.
+     *
+     * DATA STRUCTURE
+     * The data is organized hierarchically. The root collection /travel_packages/ contains
+     * the core offers. Detailed sub-data (itineraries, pricing options, flight segments)
+     * are nested within subcollections of the specific package they belong to. 
+     * Standalone data, like global Hotel definitions, resides at the root level.
+     *
+     * KEY SECURITY DECISIONS
+     * 1. Public Read: All 'get' and 'list' operations are permitted for all users to 
+     *    ensure the catalog is accessible without authentication.
+     * 2. Protected Writes: Writing, updating, or deleting data is strictly restricted.
+     *    Since the current schema does not define an 'ownerId' or 'adminId' field, 
+     *    all writes are currently locked to prevent unauthorized modifications.
+     * 3. Denormalization: Child documents (e.g., DepartureOptions) include the 
+     *    parent 'travelPackageId' to ensure relational integrity can be verified 
+     *    directly within the rules if write access is enabled.
+     */
+
+    // --- GLOBAL HELPER FUNCTIONS ---
+
+    /**
+     * @description Placeholder for administrative access. 
+     * In a production environment, this would check for custom claims or a roles collection.
+     * Returns `false` by default, effectively denying all writes for now.
+     */
+    function isAdmin() {
+      return false; // TODO: Implement admin role check (e.g., request.auth.token.admin == true)
+    }
+
+    // --- COLLECTION RULES ---
+
+    /**
+     * @description Primary travel packages representing tours like 'Égypte 2026'.
+     * @path /travel_packages/{travelPackageId}
+     * @allow Public users (get, list).
+     * @deny Any write operation (create, update, delete) until admin fields are defined.
+     * @principle Public catalog access with locked administrative writes.
+     */
+    match /travel_packages/{travelPackageId} {
+      allow get, list: if true;
+      
+      // CRITICAL: Cannot implement owner-only writes. The 'TravelPackage' entity is missing an 'ownerId' or 'authorId' field.
+      // Writes are denied via `isAdmin()` which currently returns false.
+      allow create, update, delete: if isAdmin(); // TODO: Add admin validation once the schema is updated with an ownership/role field.
+
+      /**
+       * @description Departure dates and basic pricing for a specific package.
+       * @path /travel_packages/{travelPackageId}/departure_options/{departureOptionId}
+       * @allow Public users (get, list).
+       * @deny Writes are locked to protect catalog integrity.
+       * @principle Hierarchical data protection for package-specific options.
+       */
+      match /departure_options/{departureOptionId} {
+        allow get, list: if true;
+        allow create, update, delete: if isAdmin(); // TODO: Add admin validation.
+
+        /**
+         * @description Individual flight segments for a specific departure.
+         * @path /.../departure_options/{departureOptionId}/flight_segments/{flightSegmentId}
+         * @allow Public users (get, list).
+         * @deny Writes are locked.
+         */
+        match /flight_segments/{flightSegmentId} {
+          allow get, list: if true;
+          allow create, update, delete: if isAdmin(); // TODO: Add admin validation.
+        }
+      }
+
+      /**
+       * @description Services and items included in the package.
+       * @path /travel_packages/{travelPackageId}/inclusions/{inclusionId}
+       * @allow Public users (get, list).
+       * @deny Writes are locked.
+       */
+      match /inclusions/{inclusionId} {
+        allow get, list: if true;
+        allow create, update, delete: if isAdmin(); // TODO: Add admin validation.
+      }
+
+      /**
+       * @description Groupings of itinerary items by location (e.g., Sharm El Sheikh).
+       * @path /travel_packages/{travelPackageId}/itinerary_blocks/{itineraryLocationBlockId}
+       * @allow Public users (get, list).
+       * @deny Writes are locked.
+       */
+      match /itinerary_blocks/{itineraryLocationBlockId} {
+        allow get, list: if true;
+        allow create, update, delete: if isAdmin(); // TODO: Add admin validation.
+
+        /**
+         * @description Specific activities or points of interest within an itinerary block.
+         * @path /.../itinerary_blocks/{itineraryLocationBlockId}/itinerary_items/{itineraryItemId}
+         * @allow Public users (get, list).
+         * @deny Writes are locked.
+         */
+        match /itinerary_items/{itineraryItemId} {
+          allow get, list: if true;
+          allow create, update, delete: if isAdmin(); // TODO: Add admin validation.
+        }
+      }
+
+      /**
+       * @description Specific pricing details for hotels offered in this package.
+       * @path /travel_packages/{travelPackageId}/package_hotel_options/{packageHotelOptionId}
+       * @allow Public users (get, list).
+       * @deny Writes are locked.
+       */
+      match /package_hotel_options/{packageHotelOptionId} {
+        allow get, list: if true;
+        allow create, update, delete: if isAdmin(); // TODO: Add admin validation.
+      }
+
+      /**
+       * @description Practical advice/info items for the package (e.g., Visa info).
+       * @path /travel_packages/{travelPackageId}/practical_information_items/{practicalInformationItemId}
+       * @allow Public users (get, list).
+       * @deny Writes are locked.
+       */
+      match /practical_information_items/{practicalInformationItemId} {
+        allow get, list: if true;
+        allow create, update, delete: if isAdmin(); // TODO: Add admin validation.
+      }
+
+      /**
+       * @description Specific agency contact details for package inquiries.
+       * @path /travel_packages/{travelPackageId}/agency_contact_infos/{agencyContactInfoId}
+       * @allow Public users (get, list).
+       * @deny Writes are locked.
+       */
+      match /agency_contact_infos/{agencyContactInfoId} {
+        allow get, list: if true;
+        allow create, update, delete: if isAdmin(); // TODO: Add admin validation.
+      }
+    }
+
+    /**
+     * @description General information about hotels, shared across multiple packages.
+     * @path /hotels/{hotelId}
+     * @allow Public users (get, list).
+     * @deny Any write operation (create, update, delete).
+     * @principle Root-level public entities for shared resource data.
+     */
+    match /hotels/{hotelId} {
+      allow get, list: if true;
+      
+      // CRITICAL: Cannot implement owner-only writes. The 'Hotel' entity is missing an 'ownerId' or 'adminId' field.
+      // Writes are denied via `isAdmin()` which currently returns false.
+      allow create, update, delete: if isAdmin(); // TODO: Add admin validation once schema supports roles.
+    }
+  }
+}

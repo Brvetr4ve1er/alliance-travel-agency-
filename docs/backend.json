@@ -1,0 +1,779 @@
+{
+  "entities": {
+    "TravelPackage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "TravelPackage",
+      "type": "object",
+      "description": "Represents a single travel package offer, such as the 'Égypte 2026' tour.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the TravelPackage entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The official name of the travel package, e.g., 'Égypte 2026'."
+        },
+        "destinationDetails": {
+          "type": "string",
+          "description": "A brief description of the destinations included in the package, e.g., 'Caire & Sharm El Sheikh'."
+        },
+        "tagline": {
+          "type": "string",
+          "description": "A catchy phrase or short summary for the travel package, e.g., 'Les Pyramides & la Mer Rouge'."
+        },
+        "heroDescription": {
+          "type": "string",
+          "description": "A detailed description displayed in the hero section, summarizing the package highlights."
+        },
+        "durationNights": {
+          "type": "number",
+          "description": "The total number of nights included in the package."
+        },
+        "durationDays": {
+          "type": "number",
+          "description": "The total number of days included in the package."
+        },
+        "basePriceAmount": {
+          "type": "number",
+          "description": "The starting price amount for the package per person in a double room."
+        },
+        "basePriceCurrency": {
+          "type": "string",
+          "description": "The currency for the base price, e.g., 'DA'."
+        },
+        "keyFeaturePills": {
+          "type": "array",
+          "description": "A list of key features or highlights of the package displayed as 'pills'.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "bookingWhatsappLink": {
+          "type": "string",
+          "description": "A pre-filled WhatsApp link for direct booking inquiries.",
+          "format": "uri"
+        },
+        "whatsappBookingMessageTemplate": {
+          "type": "string",
+          "description": "The pre-filled message template for WhatsApp booking inquiries."
+        },
+        "mainDepartureCity": {
+          "type": "string",
+          "description": "The primary city from which the package departs, e.g., 'Alger'."
+        },
+        "visaSummary": {
+          "type": "string",
+          "description": "A concise summary of the visa requirements and cost, e.g., 'Visa 25$ à l'arrivée'."
+        },
+        "optionalExcursionNote": {
+          "type": "string",
+          "description": "A note regarding optional paid excursions, like the Grand Egyptian Museum."
+        },
+        "accommodationPolicyNote": {
+          "type": "string",
+          "description": "General notes on hotel room capacity and check-in policies for the package."
+        },
+        "tripleSingleRoomEnquiryNote": {
+          "type": "string",
+          "description": "A note directing users to inquire about triple and single room tariffs."
+        },
+        "includedInclusionsIds": {
+          "type": "array",
+          "description": "References to Inclusion entities that are part of this travel package. (Relationship: TravelPackage 1:N Inclusion)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "itineraryBlockIds": {
+          "type": "array",
+          "description": "References to ItineraryLocationBlock entities for this package's detailed program. (Relationship: TravelPackage 1:N ItineraryLocationBlock)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "departureOptionIds": {
+          "type": "array",
+          "description": "References to DepartureOption entities available for this travel package. (Relationship: TravelPackage 1:N DepartureOption)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "packageHotelOptionIds": {
+          "type": "array",
+          "description": "References to PackageHotelOption entities detailing hotels and pricing for this package. (Relationship: TravelPackage 1:N PackageHotelOption)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "practicalInformationItemIds": {
+          "type": "array",
+          "description": "References to PracticalInformationItem entities providing practical advice for the package. (Relationship: TravelPackage 1:N PracticalInformationItem)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "agencyContactInfoIds": {
+          "type": "array",
+          "description": "References to AgencyContactInfo entities relevant for this package. (Relationship: TravelPackage 1:N AgencyContactInfo)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "destinationDetails",
+        "tagline",
+        "heroDescription",
+        "durationNights",
+        "durationDays",
+        "basePriceAmount",
+        "basePriceCurrency",
+        "keyFeaturePills",
+        "bookingWhatsappLink",
+        "whatsappBookingMessageTemplate",
+        "mainDepartureCity",
+        "visaSummary"
+      ]
+    },
+    "DepartureOption": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "DepartureOption",
+      "type": "object",
+      "description": "Represents a specific departure date available for a travel package, including return details.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the DepartureOption entity."
+        },
+        "travelPackageId": {
+          "type": "string",
+          "description": "Reference to the TravelPackage this departure option belongs to. (Relationship: TravelPackage 1:N DepartureOption)"
+        },
+        "departureDateTime": {
+          "type": "string",
+          "description": "The full date and time of departure for this option.",
+          "format": "date-time"
+        },
+        "returnDateTime": {
+          "type": "string",
+          "description": "The full date and time of return for this option.",
+          "format": "date-time"
+        },
+        "departureDateLabel": {
+          "type": "string",
+          "description": "A user-friendly label for the departure date, e.g., '05 Avril 2026'."
+        },
+        "returnDateLabel": {
+          "type": "string",
+          "description": "A user-friendly label for the return date, e.g., 'Retour 12 Avril'."
+        },
+        "flightSegmentIds": {
+          "type": "array",
+          "description": "References to FlightSegment entities associated with this departure option. (Relationship: DepartureOption 1:N FlightSegment)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "travelPackageId",
+        "departureDateTime",
+        "returnDateTime",
+        "departureDateLabel",
+        "returnDateLabel"
+      ]
+    },
+    "Inclusion": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Inclusion",
+      "type": "object",
+      "description": "Defines an item or service included in a travel package.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Inclusion entity."
+        },
+        "travelPackageId": {
+          "type": "string",
+          "description": "Reference to the TravelPackage this inclusion belongs to. (Relationship: TravelPackage 1:N Inclusion)"
+        },
+        "iconEmoji": {
+          "type": "string",
+          "description": "An emoji representing the inclusion, e.g., '✈️'."
+        },
+        "title": {
+          "type": "string",
+          "description": "The main title of the inclusion, e.g., 'Vol international & domestique'."
+        },
+        "description": {
+          "type": "string",
+          "description": "A detailed description of what the inclusion entails."
+        },
+        "category": {
+          "type": "string",
+          "description": "A category for the inclusion, e.g., 'Flight', 'Accommodation', 'Excursion'."
+        }
+      },
+      "required": [
+        "id",
+        "travelPackageId",
+        "iconEmoji",
+        "title",
+        "description",
+        "category"
+      ]
+    },
+    "ItineraryLocationBlock": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ItineraryLocationBlock",
+      "type": "object",
+      "description": "Organizes a set of itinerary items by location and duration within a travel package.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the ItineraryLocationBlock entity."
+        },
+        "travelPackageId": {
+          "type": "string",
+          "description": "Reference to the TravelPackage this itinerary block belongs to. (Relationship: TravelPackage 1:N ItineraryLocationBlock)"
+        },
+        "orderIndex": {
+          "type": "number",
+          "description": "The display order of this block within the overall itinerary."
+        },
+        "locationName": {
+          "type": "string",
+          "description": "The name of the location for this itinerary block, e.g., 'Sharm El Sheikh'."
+        },
+        "durationDescription": {
+          "type": "string",
+          "description": "Description of the duration spent at this location, e.g., '5 nuits'."
+        },
+        "itineraryItemIds": {
+          "type": "array",
+          "description": "References to ItineraryItem entities included in this block. (Relationship: ItineraryLocationBlock 1:N ItineraryItem)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "travelPackageId",
+        "orderIndex",
+        "locationName",
+        "durationDescription"
+      ]
+    },
+    "ItineraryItem": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ItineraryItem",
+      "type": "object",
+      "description": "A specific activity or point of interest within an itinerary location block.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the ItineraryItem entity."
+        },
+        "itineraryLocationBlockId": {
+          "type": "string",
+          "description": "Reference to the ItineraryLocationBlock this item belongs to. (Relationship: ItineraryLocationBlock 1:N ItineraryItem)"
+        },
+        "orderIndex": {
+          "type": "number",
+          "description": "The display order of this item within its itinerary block."
+        },
+        "iconEmoji": {
+          "type": "string",
+          "description": "An emoji representing the itinerary item, e.g., '🏖️'."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the itinerary item, e.g., 'Naama Bay'."
+        },
+        "description": {
+          "type": "string",
+          "description": "A detailed description of the activity or place."
+        },
+        "isOptional": {
+          "type": "boolean",
+          "description": "Indicates if this itinerary item is an optional activity."
+        },
+        "optionalDetails": {
+          "type": "string",
+          "description": "Additional details for optional items, such as extra costs or conditions."
+        }
+      },
+      "required": [
+        "id",
+        "itineraryLocationBlockId",
+        "orderIndex",
+        "iconEmoji",
+        "title",
+        "description",
+        "isOptional"
+      ]
+    },
+    "Hotel": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Hotel",
+      "type": "object",
+      "description": "Represents general information about a hotel, independent of a specific package pricing.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Hotel entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The full name of the hotel, e.g., 'Verginia Aqua Park'."
+        },
+        "locationName": {
+          "type": "string",
+          "description": "The city or region where the hotel is located, e.g., 'Sharm El Sheikh'."
+        },
+        "starRating": {
+          "type": "number",
+          "description": "The star rating of the hotel (e.g., 4 for 4-star)."
+        },
+        "typeDescription": {
+          "type": "string",
+          "description": "A brief description of the hotel's key features or meal plan, e.g., 'All Inclusive Soft · Parc aquatique'."
+        },
+        "isPremiumTier": {
+          "type": "boolean",
+          "description": "Indicates if the hotel is considered a premium option, often with 5-star rating or special features."
+        },
+        "badgeText": {
+          "type": "string",
+          "description": "Optional badge text for the hotel, e.g., '5 étoiles', 'Prestige'."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "locationName",
+        "starRating",
+        "typeDescription",
+        "isPremiumTier"
+      ]
+    },
+    "PackageHotelOption": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "PackageHotelOption",
+      "type": "object",
+      "description": "Details the specific pricing and accommodation type for a given hotel within a particular travel package.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the PackageHotelOption entity."
+        },
+        "travelPackageId": {
+          "type": "string",
+          "description": "Reference to the TravelPackage this hotel option is associated with. (Relationship: TravelPackage 1:N PackageHotelOption)"
+        },
+        "hotelId": {
+          "type": "string",
+          "description": "Reference to the Hotel entity for this option. (Relationship: Hotel 1:N PackageHotelOption)"
+        },
+        "roomType": {
+          "type": "string",
+          "description": "The type of room offered, e.g., 'Double'."
+        },
+        "mealPlan": {
+          "type": "string",
+          "description": "The meal plan included, e.g., 'All Inclusive Soft', 'Petit Déjeuner'."
+        },
+        "pricePerAdultDoubleOccupancy": {
+          "type": "number",
+          "description": "The price per adult when occupying a double room."
+        },
+        "priceFirstChild": {
+          "type": "number",
+          "description": "The price for the first child in the room."
+        },
+        "priceBaby": {
+          "type": "number",
+          "description": "The price for an infant (baby) in the room."
+        },
+        "childAndBabyPriceDescription": {
+          "type": "string",
+          "description": "A user-friendly description of child and baby pricing, e.g., '1er enfant : 115 000 DA · Bébé : 25 000 DA'."
+        },
+        "isIncludedInPackage": {
+          "type": "boolean",
+          "description": "Indicates if this hotel option is the default/included accommodation (e.g., Cairo hotel)."
+        }
+      },
+      "required": [
+        "id",
+        "travelPackageId",
+        "hotelId",
+        "roomType",
+        "mealPlan",
+        "pricePerAdultDoubleOccupancy",
+        "priceFirstChild",
+        "priceBaby",
+        "childAndBabyPriceDescription",
+        "isIncludedInPackage"
+      ]
+    },
+    "FlightSegment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "FlightSegment",
+      "type": "object",
+      "description": "Represents a single leg of a flight within a complete travel plan.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the FlightSegment entity."
+        },
+        "departureOptionId": {
+          "type": "string",
+          "description": "Reference to the DepartureOption this flight segment is part of. (Relationship: DepartureOption 1:N FlightSegment)"
+        },
+        "flightNumber": {
+          "type": "string",
+          "description": "The airline's flight number, e.g., 'MS 846'."
+        },
+        "departureAirportCode": {
+          "type": "string",
+          "description": "The IATA code for the departure airport, e.g., 'ALG'."
+        },
+        "departureCity": {
+          "type": "string",
+          "description": "The city of departure, e.g., 'Alger'."
+        },
+        "arrivalAirportCode": {
+          "type": "string",
+          "description": "The IATA code for the arrival airport, e.g., 'CAI'."
+        },
+        "arrivalCity": {
+          "type": "string",
+          "description": "The city of arrival, e.g., 'Caire'."
+        },
+        "departureDateTime": {
+          "type": "string",
+          "description": "The full date and time of departure for this flight segment.",
+          "format": "date-time"
+        },
+        "arrivalDateTime": {
+          "type": "string",
+          "description": "The full date and time of arrival for this flight segment.",
+          "format": "date-time"
+        },
+        "airlineName": {
+          "type": "string",
+          "description": "The name of the airline operating the flight, e.g., 'Egyptair'."
+        },
+        "orderIndex": {
+          "type": "number",
+          "description": "The sequential order of this flight segment within the overall flight plan for a departure option."
+        }
+      },
+      "required": [
+        "id",
+        "departureOptionId",
+        "flightNumber",
+        "departureAirportCode",
+        "departureCity",
+        "arrivalAirportCode",
+        "arrivalCity",
+        "departureDateTime",
+        "arrivalDateTime",
+        "airlineName",
+        "orderIndex"
+      ]
+    },
+    "PracticalInformationItem": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "PracticalInformationItem",
+      "type": "object",
+      "description": "A single item of practical information relevant to the travel package.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the PracticalInformationItem entity."
+        },
+        "travelPackageId": {
+          "type": "string",
+          "description": "Reference to the TravelPackage this information is for. (Relationship: TravelPackage 1:N PracticalInformationItem)"
+        },
+        "iconEmoji": {
+          "type": "string",
+          "description": "An emoji representing the topic, e.g., '🛂' for visa."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the practical information, e.g., 'Visa Égypte'."
+        },
+        "content": {
+          "type": "string",
+          "description": "The detailed content of the practical information item."
+        }
+      },
+      "required": [
+        "id",
+        "travelPackageId",
+        "iconEmoji",
+        "title",
+        "content"
+      ]
+    },
+    "AgencyContactInfo": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "AgencyContactInfo",
+      "type": "object",
+      "description": "Contact details for the travel agency, specifically listed for a travel package.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the AgencyContactInfo entity."
+        },
+        "travelPackageId": {
+          "type": "string",
+          "description": "Reference to the TravelPackage this contact information is associated with. (Relationship: TravelPackage 1:N AgencyContactInfo)"
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of contact, e.g., 'Whatsapp', 'Phone', 'Address'."
+        },
+        "value": {
+          "type": "string",
+          "description": "The actual contact value, e.g., '0550 737 434' or '05 Rue des Frères Habbache, Sétif'."
+        },
+        "description": {
+          "type": "string",
+          "description": "A short description of the contact purpose, e.g., 'Réservation & renseignements'."
+        },
+        "isMainWhatsappContact": {
+          "type": "boolean",
+          "description": "Indicates if this is the primary WhatsApp contact used for booking links and prominent display."
+        }
+      },
+      "required": [
+        "id",
+        "travelPackageId",
+        "type",
+        "value",
+        "description",
+        "isMainWhatsappContact"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/travel_packages/{travelPackageId}",
+        "definition": {
+          "entityName": "TravelPackage",
+          "schema": {
+            "$ref": "#/backend/entities/TravelPackage"
+          },
+          "description": "Stores primary details for each travel package offer, such as 'Égypte 2026'. All documents in this collection are publicly readable.",
+          "params": [
+            {
+              "name": "travelPackageId",
+              "description": "The unique identifier for a specific TravelPackage."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/travel_packages/{travelPackageId}/departure_options/{departureOptionId}",
+        "definition": {
+          "entityName": "DepartureOption",
+          "schema": {
+            "$ref": "#/backend/entities/DepartureOption"
+          },
+          "description": "Represents specific departure dates available for a travel package. Includes denormalized 'travelPackageId' from the path for clear hierarchical context. All documents are publicly readable.",
+          "params": [
+            {
+              "name": "travelPackageId",
+              "description": "The unique identifier of the parent TravelPackage."
+            },
+            {
+              "name": "departureOptionId",
+              "description": "The unique identifier for a specific DepartureOption."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/travel_packages/{travelPackageId}/departure_options/{departureOptionId}/flight_segments/{flightSegmentId}",
+        "definition": {
+          "entityName": "FlightSegment",
+          "schema": {
+            "$ref": "#/backend/entities/FlightSegment"
+          },
+          "description": "Represents a single leg of a flight within a specific departure option. Includes denormalized 'travelPackageId' and 'departureOptionId' from the path for clear hierarchical context. All documents are publicly readable.",
+          "params": [
+            {
+              "name": "travelPackageId",
+              "description": "The unique identifier of the grandparent TravelPackage."
+            },
+            {
+              "name": "departureOptionId",
+              "description": "The unique identifier of the parent DepartureOption."
+            },
+            {
+              "name": "flightSegmentId",
+              "description": "The unique identifier for a specific FlightSegment."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/travel_packages/{travelPackageId}/inclusions/{inclusionId}",
+        "definition": {
+          "entityName": "Inclusion",
+          "schema": {
+            "$ref": "#/backend/entities/Inclusion"
+          },
+          "description": "Defines an item or service included in a travel package. Includes denormalized 'travelPackageId' from the path for clear hierarchical context. All documents are publicly readable.",
+          "params": [
+            {
+              "name": "travelPackageId",
+              "description": "The unique identifier of the parent TravelPackage."
+            },
+            {
+              "name": "inclusionId",
+              "description": "The unique identifier for a specific Inclusion."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/travel_packages/{travelPackageId}/itinerary_blocks/{itineraryLocationBlockId}",
+        "definition": {
+          "entityName": "ItineraryLocationBlock",
+          "schema": {
+            "$ref": "#/backend/entities/ItineraryLocationBlock"
+          },
+          "description": "Organizes a set of itinerary items by location and duration within a travel package. Includes denormalized 'travelPackageId' from the path for clear hierarchical context. All documents are publicly readable.",
+          "params": [
+            {
+              "name": "travelPackageId",
+              "description": "The unique identifier of the parent TravelPackage."
+            },
+            {
+              "name": "itineraryLocationBlockId",
+              "description": "The unique identifier for a specific ItineraryLocationBlock."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/travel_packages/{travelPackageId}/itinerary_blocks/{itineraryLocationBlockId}/itinerary_items/{itineraryItemId}",
+        "definition": {
+          "entityName": "ItineraryItem",
+          "schema": {
+            "$ref": "#/backend/entities/ItineraryItem"
+          },
+          "description": "A specific activity or point of interest within an itinerary location block. Includes denormalized 'travelPackageId' and 'itineraryLocationBlockId' from the path for clear hierarchical context. All documents are publicly readable.",
+          "params": [
+            {
+              "name": "travelPackageId",
+              "description": "The unique identifier of the grandparent TravelPackage."
+            },
+            {
+              "name": "itineraryLocationBlockId",
+              "description": "The unique identifier of the parent ItineraryLocationBlock."
+            },
+            {
+              "name": "itineraryItemId",
+              "description": "The unique identifier for a specific ItineraryItem."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/hotels/{hotelId}",
+        "definition": {
+          "entityName": "Hotel",
+          "schema": {
+            "$ref": "#/backend/entities/Hotel"
+          },
+          "description": "Represents general information about a hotel, independent of a specific package pricing. Hotels can be referenced by multiple travel packages. All documents are publicly readable.",
+          "params": [
+            {
+              "name": "hotelId",
+              "description": "The unique identifier for a specific Hotel."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/travel_packages/{travelPackageId}/package_hotel_options/{packageHotelOptionId}",
+        "definition": {
+          "entityName": "PackageHotelOption",
+          "schema": {
+            "$ref": "#/backend/entities/PackageHotelOption"
+          },
+          "description": "Details the specific pricing and accommodation type for a given hotel within a particular travel package. Includes denormalized 'travelPackageId' from the path for clear hierarchical context. All documents are publicly readable.",
+          "params": [
+            {
+              "name": "travelPackageId",
+              "description": "The unique identifier of the parent TravelPackage."
+            },
+            {
+              "name": "packageHotelOptionId",
+              "description": "The unique identifier for a specific PackageHotelOption."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/travel_packages/{travelPackageId}/practical_information_items/{practicalInformationItemId}",
+        "definition": {
+          "entityName": "PracticalInformationItem",
+          "schema": {
+            "$ref": "#/backend/entities/PracticalInformationItem"
+          },
+          "description": "A single item of practical information relevant to the travel package. Includes denormalized 'travelPackageId' from the path for clear hierarchical context. All documents are publicly readable.",
+          "params": [
+            {
+              "name": "travelPackageId",
+              "description": "The unique identifier of the parent TravelPackage."
+            },
+            {
+              "name": "practicalInformationItemId",
+              "description": "The unique identifier for a specific PracticalInformationItem."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/travel_packages/{travelPackageId}/agency_contact_infos/{agencyContactInfoId}",
+        "definition": {
+          "entityName": "AgencyContactInfo",
+          "schema": {
+            "$ref": "#/backend/entities/AgencyContactInfo"
+          },
+          "description": "Contact details for the travel agency, specifically listed for a travel package. Includes denormalized 'travelPackageId' from the path for clear hierarchical context. All documents are publicly readable.",
+          "params": [
+            {
+              "name": "travelPackageId",
+              "description": "The unique identifier of the parent TravelPackage."
+            },
+            {
+              "name": "agencyContactInfoId",
+              "description": "The unique identifier for a specific AgencyContactInfo."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to provide public read access to all travel package information, adhering strictly to the core design principles for security, scalability, and debuggability. All data is presumed public, eliminating the need for complex user-based authorization rules like `ownerId` or `members` for read operations. \n\n**Authorization Independence:** This design achieves Authorization Independence by structuring related data hierarchically using subcollections, where the parent document's ID is an explicit part of the child document's path. For instance, `/travel_packages/{travelPackageId}/departure_options/{departureOptionId}` means that `travelPackageId` and `departureOptionId` are directly available in Firestore security rules via wildcards (e.g., `travelPackageId`, `departureOptionId`). This eliminates any need for `get()` operations on parent documents to determine authorization for subcollection documents. Even if write access were to be introduced (e.g., for administrators), rules could validate `request.auth.uid` against a global `admin_roles` collection and then verify `resource.data.travelPackageId == travelPackageId` directly, without needing to `get()` the parent `TravelPackage` document. This keeps rules atomic and highly debuggable.\n\n**Structural Segregation:** All documents within each defined collection share the same security posture – public readability. There are no mixed-access data types (e.g., private drafts alongside public posts) in the same collection. For example, all `TravelPackage` documents are public, and all `DepartureOption` documents under a given `TravelPackage` are also public. The `hotels` collection is kept at the root level because hotel information (e.g., `Hotel` entity) is general and can be referenced by multiple `PackageHotelOption`s across different travel packages, making it a standalone public entity.\n\n**QAPs (Rules are not Filters):** The structure facilitates Query-Able Paths by making the entire dataset publicly readable. For example, to retrieve all departure options for a specific travel package, the client performs a query against `/travel_packages/{travelPackageId}/departure_options`. The security rule for this path simply `allow read: if true;`. This rule is not a filter; it grants access to the entire collection (or subcollection) for the requested path. Any client-side filtering (e.g., finding the cheapest package, or specific dates) is handled by client queries, not by server-side security rule logic that would implicitly filter results. This ensures that a successful read operation always returns a complete and authorized set of data, simplifying debugging and maintaining predictable behavior. The clear, descriptive wildcards like `{travelPackageId}` and `{departureOptionId}` make rule writing and understanding straightforward. IDs within documents are consistent with their corresponding path wildcards for enhanced predictability."
+  }
+}
