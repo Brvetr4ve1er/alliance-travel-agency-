@@ -144,9 +144,18 @@ const HOTELS_DATA = [
     name: "Cleopatra Luxury Resort", 
     stars: 5, 
     type: "Luxury Complex", 
-    price: "250 000 DA", 
+    price: "267 000 DA", 
     premium: true, 
     imageId: "hotel-6",
+    durationOverride: "10 Jours / 08 Nuits",
+    pricingGrid: {
+      triple: "265 000 DA",
+      double: "267 000 DA",
+      single: "355 000 DA",
+      child1: "115 000 DA",
+      child2: "207 000 DA",
+      baby: "25 000 DA"
+    },
     description: {
       fr: "La quintessence du luxe égyptien. Architecture majestueuse, piscines à débordement et service personnalisé pour un séjour d'exception.",
       ar: "جوهر الفخامة المصرية. عمارة مهيبة، مسابح لا متناهية، وخدمة شخصية لإقامة استثنائية."
