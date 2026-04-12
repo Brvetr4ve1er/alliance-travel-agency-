@@ -20,7 +20,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-// Performance hoisting of static data to prevent re-allocation on render
 const HOTELS_DATA = [
   { 
     id: "verginia",
@@ -249,27 +248,28 @@ export function Hotels() {
                         data-ai-hint={hotelImage.imageHint}
                       />
                     )}
-                    <div className="absolute top-4 start-4 z-20 flex flex-col gap-2">
+                    <div className="absolute top-4 start-4 z-20">
                       {hotel.premium && (
                         <Badge className="bg-gold text-gold-foreground border-none text-[10px] uppercase tracking-tighter shadow-xl font-bold px-3 py-1">
                           {t('hotels_premium_badge')}
                         </Badge>
                       )}
-                      <div className="bg-background/80 backdrop-blur-md px-3 py-1 rounded-full border border-gold/20 flex items-center justify-center">
-                        <span className="text-[11px] font-bold text-gold px-2 py-0.5">{hotel.stars} ★</span>
-                      </div>
                     </div>
                   </div>
                   
                   <CardContent className="p-6 space-y-6 flex-1 flex flex-col justify-between">
                     <div className="space-y-4">
                       <div className="flex items-start justify-between gap-4">
-                        <div className="space-y-2">
+                        <div className="space-y-2 flex-1">
                           <h4 className="text-2xl font-headline font-bold text-foreground leading-tight group-hover:text-gold transition-colors">{hotel.name}</h4>
                           <div className="flex items-center gap-2 text-[10px] text-muted-foreground uppercase tracking-[0.2em] font-medium">
                             <Waves className="h-3.5 w-3.5 text-gold" />
                             {hotel.type}
                           </div>
+                        </div>
+                        <div className="shrink-0 flex items-center gap-1.5 bg-gold/10 px-3 py-1.5 rounded-lg border border-gold/20 shadow-sm">
+                          <span className="text-lg font-bold text-gold leading-none">{hotel.stars}</span>
+                          <Star className="h-4 w-4 fill-gold text-gold" />
                         </div>
                       </div>
                     </div>
@@ -306,8 +306,9 @@ export function Hotels() {
                     <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
                     <div className="absolute bottom-6 start-6">
                       <SheetTitle className="text-3xl md:text-4xl font-headline text-white mb-2">{hotel.name}</SheetTitle>
-                      <div className="flex items-center gap-1 text-gold font-bold">
-                        <span>{hotel.stars} ★</span>
+                      <div className="flex items-center gap-2 text-gold font-bold text-xl">
+                        <span>{hotel.stars}</span>
+                        <Star className="h-5 w-5 fill-gold" />
                       </div>
                     </div>
                   </div>
