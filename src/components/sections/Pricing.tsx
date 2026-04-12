@@ -1,30 +1,12 @@
-
 "use client";
 
 import { Check, X, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { TRIP_CONFIG } from "@/lib/trip-config";
 
 export function Pricing() {
   const { t } = useLanguage();
-
-  const inclusions = [
-    "Vols internationaux Alger-Caire (Egyptair)",
-    "Vols domestiques Caire-Sharm El Sheikh",
-    "5 nuits à Sharm en All Inclusive Soft",
-    "2 nuits au Caire avec petit-déjeuner",
-    "Toutes les excursions mentionnées au programme",
-    "Transferts en bus climatisé",
-    "Accompagnateur Alliance Travel dédié",
-    "Lettre de garantie pour le visa",
-  ];
-
-  const exclusions = [
-    "Frais de visa (25 USD à payer sur place)",
-    "Assurance voyage individuelle",
-    "Dépenses personnelles et pourboires",
-    "Entrée au Grand Egyptian Museum (Optionnel)",
-  ];
 
   return (
     <section id="pricing" className="space-y-12">
@@ -41,7 +23,7 @@ export function Pricing() {
                 <Check className="h-5 w-5" /> {t('price_in_title')}
               </h3>
               <ul className="space-y-4 text-sm">
-                {inclusions.map((item, i) => (
+                {TRIP_CONFIG.inclusions.map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <Check className="h-4 w-4 text-emerald-400 mt-0.5" />
                     <span>{item}</span>
@@ -54,7 +36,7 @@ export function Pricing() {
                 <X className="h-5 w-5" /> {t('price_out_title')}
               </h3>
               <ul className="space-y-4 text-sm text-muted-foreground">
-                {exclusions.map((item, i) => (
+                {TRIP_CONFIG.exclusions.map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <X className="h-4 w-4 text-red-400 mt-0.5" />
                     <span>{item}</span>
@@ -71,7 +53,7 @@ export function Pricing() {
           </div>
           <p className="text-sm uppercase tracking-widest font-bold mb-4 opacity-80">{t('price_exclusive')}</p>
           <p className="text-lg mb-2">{t('hero_price_label')}</p>
-          <h4 className="text-5xl md:text-6xl font-headline font-bold mb-8">{t('hero_price_value')}</h4>
+          <h4 className="text-5xl md:text-6xl font-headline font-bold mb-8">{TRIP_CONFIG.basePrice}</h4>
           <Button size="lg" variant="secondary" className="w-full text-lg h-14" asChild>
             <a href="#reservation">{t('price_cta')}</a>
           </Button>

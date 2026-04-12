@@ -1,3 +1,4 @@
+import { TRIP_CONFIG } from './trip-config';
 
 export type Language = 'fr' | 'ar';
 
@@ -10,15 +11,15 @@ export const translations = {
     nav_reserver: "Réserver",
     
     // Hero
-    hero_badge: "Égypte 2026 · Caire & Sharm El Sheikh",
+    hero_badge: `${TRIP_CONFIG.name} · Caire & Sharm El Sheikh`,
     hero_title: "Les <em class='italic text-primary'>Pyramides</em> & <br /> la Mer Rouge",
-    hero_desc: "Sept nuits inoubliables — entre les merveilles du Caire antique et les eaux cristallines de Sharm El Sheikh. Vol Egyptair, hôtels All Inclusive, excursions incluses.",
+    hero_desc: `Sept nuits inoubliables — entre les merveilles du Caire antique et les eaux cristallines de Sharm El Sheikh. Vol Egyptair, hôtels All Inclusive, excursions incluses.`,
     hero_price_label: "À partir de",
-    hero_price_value: "180 000 DA",
+    hero_price_value: TRIP_CONFIG.basePrice,
     
     // Quick Info
     info_duree: "Durée",
-    info_duree_val: "8 Jours / 7 Nuits",
+    info_duree_val: TRIP_CONFIG.duration.label,
     info_hotels: "Hôtels",
     info_hotels_val: "4★ à 5★ Luxe",
     info_vols: "Vols",
@@ -43,12 +44,12 @@ export const translations = {
     // Hotels
     hotels_section_title: "Confort & Prestige",
     hotels_section_desc: "Une sélection rigoureuse d'établissements d'excellence pour un séjour sans compromis.",
-    hotels_note: "Les tarifs indiqués sont par personne en chambre double. Formule All Inclusive Soft à Sharm El Sheikh. Petit déjeuner au Caire.",
+    hotels_note: `Les tarifs indiqués sont par personne en chambre double. Formule All Inclusive Soft à Sharm El Sheikh (${TRIP_CONFIG.sharmNights} nuits). Petit déjeuner au Caire (${TRIP_CONFIG.cairoNights} nuits).`,
     hotels_premium_badge: "Prestige",
     hotels_price_sub: "Double / Pers.",
     hotels_child_price: "1er Enfant : 115 000 DA",
     hotels_cairo_title: "Hébergement au Caire inclus",
-    hotels_cairo_desc: "Le séjour comprend également 2 nuits au Marwa Palace Hotel (4★) en formule petit déjeuner.",
+    hotels_cairo_desc: `Le séjour comprend également ${TRIP_CONFIG.cairoNights} nuits au Marwa Palace Hotel (4★) en formule petit déjeuner.`,
     hotels_drawer_amenities: "Équipements & Services",
     hotels_drawer_highlights: "Points Forts",
     hotels_drawer_cta: "Choisir cet hôtel",
@@ -62,8 +63,8 @@ export const translations = {
     
     // Itinerary
     itin_title: "Votre Itinéraire",
-    itin_sharm: "Sharm El Sheikh — 5 nuits",
-    itin_cairo: "Le Caire — 2 nuits",
+    itin_sharm: `Sharm El Sheikh — ${TRIP_CONFIG.sharmNights} nuits`,
+    itin_cairo: `Le Caire — ${TRIP_CONFIG.cairoNights} nuits`,
     
     // Pricing
     price_title: "Investissez dans vos Souvenirs",
@@ -128,15 +129,15 @@ export const translations = {
     nav_reserver: "احجز الآن",
     
     // Hero
-    hero_badge: "مصر 2026 · القاهرة وشرم الشيخ",
+    hero_badge: `${TRIP_CONFIG.name} · القاهرة وشرم الشيخ`,
     hero_title: "الأهرامات <em class='italic text-primary'>والبحر</em> <br /> الأحمر",
-    hero_desc: "سبع ليالٍ لا تُنسى — بين عجائب القاهرة القديمة ومياه شرم الشيخ الكريستالية. طيران مصر للطيران، فنادق شاملة كلياً، ورحلات متضمنة.",
+    hero_desc: `سبع ليالٍ لا تُنسى — بين عجائب القاهرة القديمة ومياه شرم الشيخ الكريستالية. طيران مصر للطيران، فنادق شاملة كلياً، ورحلات متضمنة.`,
     hero_price_label: "ابتداءً من",
-    hero_price_value: "180,000 دج",
+    hero_price_value: TRIP_CONFIG.basePrice,
     
     // Quick Info
     info_duree: "المدة",
-    info_duree_val: "8 أيام / 7 ليالٍ",
+    info_duree_val: TRIP_CONFIG.duration.labelAr,
     info_hotels: "الفنادق",
     info_hotels_val: "4★ إلى 5★ فاخرة",
     info_vols: "الرحلات",
@@ -161,12 +162,12 @@ export const translations = {
     // Hotels
     hotels_section_title: "الراحة والفخامة",
     hotels_section_desc: "اختيار دقيق للمنشآت المتميزة لإقامة بلا تنازلات.",
-    hotels_note: "الأسعار المذكورة للفرد في غرفة مزدوجة. إقامة شاملة (سوفت) في شرم الشيخ. إفطار في القاهرة.",
+    hotels_note: `الأسعار المذكورة للفرد في غرفة مزدوجة. إقامة شاملة (سوفت) في شرم الشيخ (${TRIP_CONFIG.sharmNights} ليالٍ). إفطار في القاهرة (${TRIP_CONFIG.cairoNights} ليالٍ).`,
     hotels_premium_badge: "فخامة",
     hotels_price_sub: "مزدوجة / للفرد",
     hotels_child_price: "الطفل الأول: 115,000 دج",
     hotels_cairo_title: "الإقامة في القاهرة مشمولة",
-    hotels_cairo_desc: "تشمل الرحلة أيضاً ليلتين في فندق مروة بالاس (4★) مع وجبة الإفطار.",
+    hotels_cairo_desc: `تشمل الرحلة أيضاً ${TRIP_CONFIG.cairoNights} ليالٍ في فندق مروة بالاس (4★) مع وجبة الإفطار.`,
     hotels_drawer_amenities: "المرافق والخدمات",
     hotels_drawer_highlights: "أبرز المميزات",
     hotels_drawer_cta: "اختر هذا الفندق",
@@ -180,8 +181,8 @@ export const translations = {
     
     // Itinerary
     itin_title: "مسار رحلتك",
-    itin_sharm: "شرم الشيخ — 5 ليالٍ",
-    itin_cairo: "القاهرة — ليلتان",
+    itin_sharm: `شرم الشيخ — ${TRIP_CONFIG.sharmNights} ليالٍ`,
+    itin_cairo: `القاهرة — ليلتان`,
     
     // Pricing
     price_title: "استثمر في ذكرياتك",
@@ -209,7 +210,7 @@ export const translations = {
     
     // Form
     form_help_title: "تحتاج لمساعدة ؟",
-    form_help_desc: "ذكاؤنا الاصطناعي متاح 24/7 للإجابة على جميع أسئلتك التقنية حول الرحلة.",
+    form_help_desc: "تحتاج لمساعدة ؟ ذكاؤنا الاصطناعي متاح 24/7 للإجابة على جميع أسئلتك التقنية حول الرحلة.",
     form_section_title: "ابدأ رحلتك",
     form_section_desc: "املأ النموذج أدناه لتلقي عرضك المخصص.",
     form_name: "الاسم الكامل",

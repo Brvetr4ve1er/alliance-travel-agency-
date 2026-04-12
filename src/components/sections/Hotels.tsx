@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from "react";
@@ -9,6 +8,7 @@ import Image from "next/image";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
+import { TRIP_CONFIG } from "@/lib/trip-config";
 import {
   Sheet,
   SheetContent,
@@ -19,174 +19,6 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
-const HOTELS_DATA = [
-  { 
-    id: "verginia",
-    name: "Verginia Sharm Resort & Aqua Park", 
-    stars: 4, 
-    type: "Resort & Aqua Park", 
-    price: "160 000 DA", 
-    imageId: "hotel-1",
-    durationOverride: "10 Jours / 08 Nuits",
-    pricingGrid: {
-      triple: "158 000 DA",
-      double: "160 000 DA",
-      single: "205 000 DA",
-      child1: "110 000 DA",
-      child2: "140 000 DA",
-      baby: "25 000 DA"
-    },
-    description: {
-      fr: "Situé à Sharm El Sheikh, ce complexe dispose d'une grande piscine extérieure avec cascade, d'un spa complet et d'une plage privée accessible par navette gratuite. L'ambiance y est familiale et relaxante.",
-      ar: "يقع هذا المنتجع في شرم الشيخ، ويتميز بمسبح خارجي كبير مع شلال، وسبا كامل، وشاطئ خاص يمكن الوصول إليه عبر حافلة مجانية. الأجواء عائلية ومريحة."
-    },
-    amenities: ["Free Shuttle", "Private Beach", "Aqua Park", "Spa & Wellness", "Fitness Center", "WiFi"],
-    highlights: ["Cascade Pool", "Kid's Club", "Evening Shows"]
-  },
-  { 
-    id: "tivoli",
-    name: "Tivoli Aqua Park", 
-    stars: 4, 
-    type: "Aqua Park", 
-    price: "155 000 DA", 
-    imageId: "hotel-2",
-    durationOverride: "10 Jours / 08 Nuits",
-    pricingGrid: {
-      triple: "150 000 DA",
-      double: "155 000 DA",
-      single: "180 000 DA",
-      child1: "110 000 DA",
-      child2: "130 000 DA",
-      baby: "25 000 DA"
-    },
-    description: {
-      fr: "Un paradis pour les amateurs de glisse ! Le Tivoli offre une expérience dynamique avec ses multiples toboggans et ses activités sportives quotidiennes.",
-      ar: "جنة لعشاق الألعاب المائية! يقدم تيفولي تجربة ديناميكية مع منزلقاته المتعددة وأنشطته الرياضية اليومية."
-    },
-    amenities: ["Aqua Park", "Large Pools", "Restaurants", "Bar", "Animation", "Kids Area"],
-    highlights: ["Multiple Slides", "Central Location", "Family Friendly"]
-  },
-  { 
-    id: "rehana-aqua",
-    name: "Rehana Aqua Park", 
-    stars: 4, 
-    type: "Aqua Park", 
-    price: "185 000 DA", 
-    imageId: "hotel-3",
-    durationOverride: "10 Jours / 08 Nuits",
-    pricingGrid: {
-      triple: "180 000 DA",
-      double: "185 000 DA",
-      single: "220 000 DA",
-      child1: "110 000 DA",
-      child2: "150 000 DA",
-      baby: "25 000 DA"
-    },
-    description: {
-      fr: "Le Rehana Aqua Park combine confort moderne et divertissement aquatique de premier ordre. Idéal pour les familles cherchant un service de qualité.",
-      ar: "يجمع ريحانة أكوا بارك بين الراحة الحديثة والترفيه المائي من الدرجة الأولى. مثالي للعائلات التي تبحث عن خدمة عالية الجودة."
-    },
-    amenities: ["Spa", "Buffet Restaurant", "Aqua Park", "Tennis Courts", "Free WiFi"],
-    highlights: ["Night Life", "Professional Service", "Spacious Rooms"]
-  },
-  { 
-    id: "rehana-royal",
-    name: "Rehana Royal Beach & Aqua Park", 
-    stars: 5, 
-    type: "Sea View", 
-    price: "210 000 DA", 
-    premium: true, 
-    imageId: "hotel-4",
-    durationOverride: "10 Jours / 08 Nuits",
-    pricingGrid: {
-      triple: "205 000 DA",
-      double: "210 000 DA",
-      single: "260 000 DA",
-      child1: "120 000 DA",
-      child2: "160 000 DA",
-      baby: "25 000 DA"
-    },
-    description: {
-      fr: "Une expérience luxueuse en bord de mer. Avec sa plage privée and ses jardins luxuriants, cet établissement 5 étoiles redéfinit l'élégance à Sharm.",
-      ar: "تجربة فاخرة على شاطئ البحر. مع شاطئه الخاص وحدائقه المورقة، يعيد هذا المنتجع ذو الخمس نجوم تعريف الأناقة في شرم الشيخ."
-    },
-    amenities: ["Beach Front", "Luxury Spa", "Gourmet Dining", "VIP Lounge", "Premium WiFi"],
-    highlights: ["Sunset Views", "Private Pier", "Elite Services"]
-  },
-  { 
-    id: "charmillion",
-    name: "Charmillion Garden & Aqua Park", 
-    stars: 5, 
-    type: "Luxury Aqua Park", 
-    price: "250 000 DA", 
-    premium: true, 
-    imageId: "hotel-5",
-    durationOverride: "10 Jours / 08 Nuits",
-    pricingGrid: {
-      triple: "248 000 DA",
-      double: "250 000 DA",
-      single: "335 000 DA",
-      child1: "115 000 DA",
-      child2: "185 000 DA",
-      baby: "25 000 DA"
-    },
-    description: {
-      fr: "Le Charmillion Garden Aqua Park est un havre de paix 5 étoiles offrant un mélange parfait de détente et d'amusement aquatique. Idéal pour des vacances mémorables.",
-      ar: "شارميليون جاردن أكوا بارك هو ملاذ 5 نجوم يوفر مزيجًا مثاليًا من الاسترخاء والمتعة المائية. مثالي لقضاء عطلات لا تنسى."
-    },
-    amenities: ["Mega Aqua Park", "Club Access", "International Buffet", "Modern Gym", "Valet Parking"],
-    highlights: ["Wave Pool", "24/7 Service", "Luxury Suites"]
-  },
-  { 
-    id: "cleopatra",
-    name: "Cleopatra Luxury Resort", 
-    stars: 5, 
-    type: "Luxury Complex", 
-    price: "267 000 DA", 
-    premium: true, 
-    imageId: "hotel-6",
-    durationOverride: "10 Jours / 08 Nuits",
-    pricingGrid: {
-      triple: "265 000 DA",
-      double: "267 000 DA",
-      single: "355 000 DA",
-      child1: "115 000 DA",
-      child2: "207 000 DA",
-      baby: "25 000 DA"
-    },
-    description: {
-      fr: "La quintessence du luxe égyptien. Architecture majestueuse, piscines à débordement et service personnalisé pour un séjour d'exception.",
-      ar: "جوهر الفخامة المصرية. عمارة مهيبة، مسابح لا متناهية، وخدمة شخصية لإقامة استثنائية."
-    },
-    amenities: ["Infinity Pool", "Private Concierge", "Diving Center", "Organic Food", "Luxury Spa"],
-    highlights: ["Panoramic Views", "Fine Dining", "Tranquil Ambiance"]
-  },
-  { 
-    id: "pickalbatros",
-    name: "Pickalbatros Laguna Vista", 
-    stars: 5, 
-    type: "Prestige Chain", 
-    price: "306 000 DA", 
-    premium: true, 
-    imageId: "hotel-7",
-    durationOverride: "10 Jours / 08 Nuits",
-    pricingGrid: {
-      triple: "303 000 DA",
-      double: "306 000 DA",
-      single: "460 000 DA",
-      child1: "115 000 DA",
-      child2: "207 000 DA",
-      baby: "25 000 DA"
-    },
-    description: {
-      fr: "Fleuron de la chaîne Pickalbatros, cet hôtel offre une plage de sable fin unique et un design inspiré des lagons naturels.",
-      ar: "جوهر سلسلة بيك الباتروس، يقدم هذا الفندق شاطئاً رملياً ناعماً فريداً وتصميماً مستوحى من البحيرات الطبيعية."
-    },
-    amenities: ["Sandy Lagoon", "Premium Bedding", "Yoga Studio", "Live Cooking", "Super High-speed WiFi"],
-    highlights: ["Lagoon Beach", "Award Winning Spa", "Best for Couples"]
-  },
-];
 
 const AMENITY_ICONS: Record<string, any> = {
   "Free Shuttle": Wind,
@@ -224,8 +56,12 @@ export function Hotels() {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-        {HOTELS_DATA.map((hotel, idx) => {
+        {TRIP_CONFIG.hotels.map((hotel, idx) => {
           const hotelImage = PlaceHolderImages.find(img => img.id === hotel.imageId);
+          const hotelDescription = language === 'ar' 
+            ? `فندق ${hotel.stars} نجوم في شرم الشيخ، يقدم تجربة ${hotel.type} مميزة.`
+            : `Hôtel ${hotel.stars} étoiles à Sharm El Sheikh, offrant une expérience ${hotel.type} exceptionnelle.`;
+
           return (
             <Sheet key={hotel.id}>
               <SheetTrigger asChild>
@@ -281,7 +117,7 @@ export function Hotels() {
                       </div>
                       <div className="text-end flex flex-col items-end gap-2">
                         <div className="text-[11px] text-teal-400 font-bold uppercase tracking-tight bg-teal-400/10 px-2 py-1 rounded">
-                          {hotel.pricingGrid ? `${t('hotels_child_1')} : ${hotel.pricingGrid.child1}` : t('hotels_child_price')}
+                          {t('hotels_child_1')} : {hotel.pricingGrid.child1}
                         </div>
                         <Button variant="ghost" size="sm" className="text-gold h-auto p-0 hover:bg-transparent hover:text-gold/80 flex items-center gap-1">
                           <Info className="h-4 w-4" />
@@ -320,54 +156,50 @@ export function Hotels() {
                         <h5 className="text-lg font-headline font-bold tracking-wide uppercase">Description</h5>
                       </div>
                       <SheetDescription className="text-base text-muted-foreground leading-relaxed italic border-s-2 border-gold/30 ps-4">
-                        {language === 'ar' ? hotel.description.ar : hotel.description.fr}
+                        {hotelDescription}
                       </SheetDescription>
                     </div>
 
-                    {hotel.durationOverride && (
-                      <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl flex items-center gap-4">
-                        <Clock className="h-6 w-6 text-gold" />
-                        <div>
-                          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Durée du séjour</p>
-                          <p className="text-lg font-bold text-gold">{hotel.durationOverride}</p>
-                        </div>
+                    <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl flex items-center gap-4">
+                      <Clock className="h-6 w-6 text-gold" />
+                      <div>
+                        <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Durée du séjour</p>
+                        <p className="text-lg font-bold text-gold">{TRIP_CONFIG.duration.label}</p>
                       </div>
-                    )}
+                    </div>
 
-                    {hotel.pricingGrid && (
-                      <div className="space-y-6">
-                        <div className="flex items-center gap-2 text-gold">
-                          <ShieldCheck className="h-5 w-5" />
-                          <h5 className="text-lg font-headline font-bold tracking-wide uppercase">{t('hotels_price_grid')}</h5>
+                    <div className="space-y-6">
+                      <div className="flex items-center gap-2 text-gold">
+                        <ShieldCheck className="h-5 w-5" />
+                        <h5 className="text-lg font-headline font-bold tracking-wide uppercase">{t('hotels_price_grid')}</h5>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                          <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Users className="h-3 w-3" /> {t('hotels_triple')}</p>
+                          <p className="text-sm font-bold text-gold">{hotel.pricingGrid.triple}</p>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
-                            <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Users className="h-3 w-3" /> {t('hotels_triple')}</p>
-                            <p className="text-sm font-bold text-gold">{hotel.pricingGrid.triple}</p>
-                          </div>
-                          <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
-                            <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Users className="h-3 w-3" /> {t('hotels_double')}</p>
-                            <p className="text-sm font-bold text-gold">{hotel.pricingGrid.double}</p>
-                          </div>
-                          <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
-                            <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><User className="h-3 w-3" /> {t('hotels_single')}</p>
-                            <p className="text-sm font-bold text-gold">{hotel.pricingGrid.single}</p>
-                          </div>
-                          <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
-                            <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Baby className="h-3 w-3" /> {t('hotels_child_1')}</p>
-                            <p className="text-sm font-bold text-gold">{hotel.pricingGrid.child1}</p>
-                          </div>
-                          <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
-                            <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Baby className="h-3 w-3" /> {t('hotels_child_2')}</p>
-                            <p className="text-sm font-bold text-gold">{hotel.pricingGrid.child2}</p>
-                          </div>
-                          <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
-                            <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Baby className="h-3 w-3" /> {t('hotels_baby')}</p>
-                            <p className="text-sm font-bold text-gold">{hotel.pricingGrid.baby}</p>
-                          </div>
+                        <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                          <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Users className="h-3 w-3" /> {t('hotels_double')}</p>
+                          <p className="text-sm font-bold text-gold">{hotel.pricingGrid.double}</p>
+                        </div>
+                        <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                          <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><User className="h-3 w-3" /> {t('hotels_single')}</p>
+                          <p className="text-sm font-bold text-gold">{hotel.pricingGrid.single}</p>
+                        </div>
+                        <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                          <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Baby className="h-3 w-3" /> {t('hotels_child_1')}</p>
+                          <p className="text-sm font-bold text-gold">{hotel.pricingGrid.child1}</p>
+                        </div>
+                        <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                          <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Baby className="h-3 w-3" /> {t('hotels_child_2')}</p>
+                          <p className="text-sm font-bold text-gold">{hotel.pricingGrid.child2}</p>
+                        </div>
+                        <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                          <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Baby className="h-3 w-3" /> {t('hotels_baby')}</p>
+                          <p className="text-sm font-bold text-gold">{hotel.pricingGrid.baby}</p>
                         </div>
                       </div>
-                    )}
+                    </div>
 
                     <div className="space-y-6">
                       <div className="flex items-center gap-2 text-gold">
