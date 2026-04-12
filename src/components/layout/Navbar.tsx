@@ -76,7 +76,7 @@ export function Navbar() {
           className="hidden sm:flex border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10 hover:text-emerald-500"
         >
           <a 
-            href="https://wa.me/213550737434?text=Bonjour, je souhaite réserver l'offre Égypte 2026" 
+            href="https://wa.me/213561616267?text=Bonjour, je souhaite réserver l'offre Égypte 2026" 
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Navbar } from "@/components/layout/Navbar";
@@ -70,7 +71,7 @@ export default function Home() {
       </footer>
 
       <a 
-        href="https://wa.me/213550737434?text=Bonjour, je souhaite réserver l'offre Égypte 2026" 
+        href="https://wa.me/213561616267?text=Bonjour, je souhaite réserver l'offre Égypte 2026" 
         target="_blank" 
         rel="noopener noreferrer"
         className="fixed bottom-8 right-8 z-[300] bg-emerald-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all group flex items-center gap-3"

@@ -82,7 +82,7 @@ Voici les informations détaillées sur l'offre de voyage "Égypte 2026 - Allian
 - **Check-in hôtels**: Le check-in est toujours à 14h, quelle que soit l'heure d'arrivée.
 - **Chambres familiales**: Capacité max chambre standard : 2 adultes + 2 enfants (1 extra bed). Pour 3 adultes : 2 chambres (ou Family Room sous réserve disponibilité).
 - **Calcul du tarif (exemple famille)**: Configuration type famille : (Double + 1er enfant) + (Single + 1er enfant). Calculé par configuration.
-- **Réservation & renseignements (Contacts WhatsApp)**: 0550 737 434 · 0672 021 651 · 0770 545 737 · 0770 311 099
+- **Réservation & renseignements (Contacts WhatsApp)**: 0561 616 267 · 0672 021 651 · 0770 545 737 · 0770 311 099
 - **Agence Alliance Travel**: 05 Rue des Frères Habbache, Sétif — Face à Park Mall.
 `;
 

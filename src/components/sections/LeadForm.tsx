@@ -50,7 +50,8 @@ export function LeadForm() {
         const whatsappMsg = `Bonjour Alliance Travel! 🇪🇬\n\nJe souhaite réserver l'offre Égypte 2026.\n\n👤 *Nom:* ${name}\n📞 *Tél:* ${phone}\n📅 *Date:* ${selectedDate}\n👥 *Voyageurs:* ${travelers}\n📍 *Destination:* Égypte\n\n💬 *Note:* ${message || "Aucune"}`;
         
         const encodedMsg = encodeURIComponent(whatsappMsg);
-        const whatsappUrl = `https://wa.me/213550737434?text=${encodedMsg}`;
+        // Updated to the requested primary number: 0561 616 267
+        const whatsappUrl = `https://wa.me/213561616267?text=${encodedMsg}`;
 
         // Open WhatsApp
         window.open(whatsappUrl, "_blank");
