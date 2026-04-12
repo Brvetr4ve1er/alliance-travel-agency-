@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Navbar } from "@/components/layout/Navbar";
@@ -7,6 +6,7 @@ import { QuickInfoBar } from "@/components/sections/QuickInfoBar";
 import { Experience } from "@/components/sections/Experience";
 import { Hotels } from "@/components/sections/Hotels";
 import { Itinerary } from "@/components/sections/Itinerary";
+import { Flights } from "@/components/sections/Flights";
 import { Pricing } from "@/components/sections/Pricing";
 import { DocumentsRequired } from "@/components/sections/DocumentsRequired";
 import { TrustSection } from "@/components/sections/TrustSection";
@@ -43,6 +43,14 @@ export default function Home() {
             <p className="text-muted-foreground max-w-2xl mx-auto">{t('exp_desc')}</p>
           </div>
           <Itinerary />
+        </section>
+
+        <section id="vols" className="scroll-mt-24">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-headline mb-4">{t('flights_title')}</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">{t('flights_desc')}</p>
+          </div>
+          <Flights />
         </section>
 
         <Pricing />

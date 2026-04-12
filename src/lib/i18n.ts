@@ -65,6 +65,14 @@ export const translations = {
     itin_title: "Votre Itinéraire",
     itin_sharm: `Sharm El Sheikh — ${TRIP_CONFIG.sharmNights} nuits`,
     itin_cairo: `Le Caire — ${TRIP_CONFIG.cairoNights} nuits`,
+
+    // Flights
+    flights_title: "Vols & Transports",
+    flights_desc: "Voyagez en toute sérénité avec Egyptair. Des liaisons optimisées pour maximiser votre temps de découverte.",
+    flights_depart: "Départ",
+    flights_return: "Retour",
+    flights_direct: "Direct",
+    flights_transit: "Escale",
     
     // Pricing
     price_title: "Investissez dans vos Souvenirs",
@@ -183,6 +191,14 @@ export const translations = {
     itin_title: "مسار رحلتك",
     itin_sharm: `شرم الشيخ — ${TRIP_CONFIG.sharmNights} ليالٍ`,
     itin_cairo: `القاهرة — ليلتان`,
+
+    // Flights
+    flights_title: "الرحلات والنقل",
+    flights_desc: "سافر براحة تامة مع مصر للطيران. رحلات منظمة لضمان أقصى استفادة من وقتك في الاستكشاف.",
+    flights_depart: "الذهاب",
+    flights_return: "العودة",
+    flights_direct: "مباشرة",
+    flights_transit: "توقف",
     
     // Pricing
     price_title: "استثمر في ذكرياتك",
