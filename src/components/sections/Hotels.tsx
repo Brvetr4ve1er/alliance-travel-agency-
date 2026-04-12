@@ -84,12 +84,21 @@ const HOTELS_DATA = [
   },
   { 
     id: "rehana-royal",
-    name: "Rehana Royal Beach", 
+    name: "Rehana Royal Beach & Aqua Park", 
     stars: 5, 
     type: "Sea View", 
-    price: "227 000 DA", 
+    price: "210 000 DA", 
     premium: true, 
     imageId: "hotel-4",
+    durationOverride: "10 Jours / 08 Nuits",
+    pricingGrid: {
+      triple: "205 000 DA",
+      double: "210 000 DA",
+      single: "260 000 DA",
+      child1: "120 000 DA",
+      child2: "160 000 DA",
+      baby: "25 000 DA"
+    },
     description: {
       fr: "Une expérience luxueuse en bord de mer. Avec sa plage privée et ses jardins luxuriants, cet établissement 5 étoiles redéfinit l'élégance à Sharm.",
       ar: "تجربة فاخرة على شاطئ البحر. مع شاطئه الخاص وحدائقه المورقة، يعيد هذا المنتجع ذو الخمس نجوم تعريف الأناقة في شرم الشيخ."
