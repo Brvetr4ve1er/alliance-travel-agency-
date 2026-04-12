@@ -20,7 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-// Performance hoisting of static data
+// Performance hoisting of static data to prevent re-allocation on render
 const HOTELS_DATA = [
   { 
     id: "verginia",
@@ -64,8 +64,17 @@ const HOTELS_DATA = [
     name: "Rehana Aqua Park", 
     stars: 4, 
     type: "Aqua Park", 
-    price: "202 000 DA", 
+    price: "185 000 DA", 
     imageId: "hotel-3",
+    durationOverride: "10 Jours / 08 Nuits",
+    pricingGrid: {
+      triple: "180 000 DA",
+      double: "185 000 DA",
+      single: "220 000 DA",
+      child1: "110 000 DA",
+      child2: "150 000 DA",
+      baby: "25 000 DA"
+    },
     description: {
       fr: "Le Rehana Aqua Park combine confort moderne et divertissement aquatique de premier ordre. Idéal pour les familles cherchant un service de qualité.",
       ar: "يجمع ريحانة أكوا بارك بين الراحة الحديثة والترفيه المائي من الدرجة الأولى. مثالي للعائلات التي تبحث عن خدمة عالية الجودة."
@@ -202,8 +211,12 @@ export function Hotels() {
                         </Badge>
                       )}
                       <div className="bg-background/80 backdrop-blur-md px-3 py-1 rounded-full border border-gold/20 flex items-center gap-1.5">
-                        <Star className="h-3.5 w-3.5 fill-gold text-gold" />
-                        <span className="text-[11px] font-bold text-gold">{hotel.stars} ★</span>
+                        <div className="flex gap-0.5 shrink-0">
+                          {Array.from({ length: hotel.stars }).map((_, i) => (
+                            <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
+                          ))}
+                        </div>
+                        <span className="text-[11px] font-bold text-gold ms-1">{hotel.stars} ★</span>
                       </div>
                     </div>
                   </div>
