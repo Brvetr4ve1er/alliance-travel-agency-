@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Navbar } from "@/components/layout/Navbar";
@@ -29,7 +28,7 @@ export default function Home() {
       <div className="max-w-6xl mx-auto px-6 py-20 space-y-32">
         <Experience />
         
-        <section id="hotels">
+        <section id="hotels" className="scroll-mt-24">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-headline mb-4">{t('hotels_section_title')}</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">{t('hotels_section_desc')}</p>
@@ -37,7 +36,7 @@ export default function Home() {
           <Hotels />
         </section>
 
-        <section id="programme">
+        <section id="programme" className="scroll-mt-24">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-headline mb-4">{t('itin_title')}</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">{t('exp_desc')}</p>
@@ -57,7 +56,9 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-headline mb-4">{t('form_section_title')}</h2>
             <p className="text-muted-foreground">{t('form_section_desc')}</p>
           </div>
-          <LeadForm />
+          <div className="max-w-3xl mx-auto">
+            <LeadForm />
+          </div>
         </section>
 
         <FinalCTA />

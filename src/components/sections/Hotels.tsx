@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,8 +21,8 @@ export function Hotels() {
   ];
 
   return (
-    <div className="space-y-8">
-      <div className="p-4 bg-secondary/10 border-l-4 border-secondary rounded-r-lg text-sm text-foreground/80 leading-relaxed mb-8">
+    <div className="space-y-12">
+      <div className="p-4 bg-primary/5 border-l-4 border-primary rounded-r-lg text-sm text-foreground/80 leading-relaxed max-w-2xl mx-auto">
         <strong>{t('hotels_note').split(':')[0]} :</strong> 
         {t('hotels_note').split(':')[1]}
       </div>
@@ -32,8 +31,8 @@ export function Hotels() {
         {hotels.map((hotel, idx) => {
           const hotelImage = PlaceHolderImages.find(img => img.id === hotel.imageId);
           return (
-            <Card key={idx} className={`glass-panel overflow-hidden transition-all duration-300 hover:shadow-gold/20 flex flex-col h-full ${hotel.premium ? 'border-gold/30' : 'border-gold/10'}`}>
-              <div className="relative w-full aspect-[16/10] shrink-0 group overflow-hidden">
+            <Card key={idx} className={`glass-panel overflow-hidden transition-all duration-300 hover:shadow-gold/20 flex flex-col ${hotel.premium ? 'border-gold/30' : 'border-gold/10'}`}>
+              <div className="relative w-full aspect-square md:aspect-video shrink-0 group overflow-hidden">
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors z-10" />
                 {hotelImage && (
                   <Image
@@ -53,24 +52,23 @@ export function Hotels() {
                 )}
               </div>
               
-              <CardContent className="flex-1 p-6 flex flex-col justify-between">
-                <div className="space-y-4">
-                  <div className="flex items-start justify-between gap-4">
+              <CardContent className="p-6 space-y-6">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-2">
                     <h4 className="text-xl font-headline font-bold text-foreground leading-tight">{hotel.name}</h4>
-                    <div className="flex gap-0.5 shrink-0 mt-1">
-                      {Array.from({ length: hotel.stars }).map((_, i) => (
-                        <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
-                      ))}
+                    <div className="flex items-center gap-2 text-[10px] text-muted-foreground uppercase tracking-[0.2em] font-medium">
+                      <Waves className="h-3.5 w-3.5 text-gold/60" />
+                      {hotel.type}
                     </div>
                   </div>
-                  
-                  <div className="flex items-center gap-2 text-[10px] text-muted-foreground uppercase tracking-[0.2em] font-medium">
-                    <Waves className="h-3.5 w-3.5 text-gold/60" />
-                    {hotel.type}
+                  <div className="flex gap-0.5 shrink-0">
+                    {Array.from({ length: hotel.stars }).map((_, i) => (
+                      <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
+                    ))}
                   </div>
                 </div>
                 
-                <div className="mt-8 pt-6 border-t border-gold/10 flex items-end justify-between">
+                <div className="pt-6 border-t border-gold/10 flex items-end justify-between">
                   <div className="space-y-1">
                     <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">{t('hotels_price_sub')}</div>
                     <div className="text-3xl font-headline font-bold text-gold">{hotel.price}</div>
@@ -87,7 +85,7 @@ export function Hotels() {
         })}
       </div>
       
-      <Card className="bg-gold/5 border-dashed border-gold/40 mt-12">
+      <Card className="bg-gold/5 border-dashed border-gold/40 max-w-2xl mx-auto">
         <CardContent className="p-6 flex items-start gap-4">
           <CheckCircle2 className="h-6 w-6 text-gold flex-shrink-0" />
           <div className="text-sm">
