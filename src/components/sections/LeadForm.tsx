@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -7,10 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Send } from "lucide-react";
+import { Loader2, Send, FileUp } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
-import { db } from "@/lib/firebase";
+import { db, storage } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { errorEmitter } from "@/firebase/error-emitter";
 import { FirestorePermissionError } from "@/firebase/errors";
 
@@ -19,8 +19,15 @@ export function LeadForm() {
   const { t, language } = useLanguage();
   const [loading, setLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [file, setFile] = useState<File | null>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
@@ -30,55 +37,64 @@ export function LeadForm() {
     const travelers = formData.get("travelerCount") as string;
     const message = formData.get("message") as string;
 
-    // 1. Compile data for Firestore
-    const leadData = {
-      name,
-      phone,
-      date: selectedDate,
-      travelers: Number(travelers),
-      message,
-      destination: "Egypt",
-      createdAt: serverTimestamp(),
-    };
+    try {
+      let documentUrl = "";
 
-    const leadsRef = collection(db, "leads");
+      // 1. Handle File Upload if exists
+      if (file) {
+        const storageRef = ref(storage, `leads_documents/${Date.now()}_${file.name}`);
+        const uploadResult = await uploadBytes(storageRef, file);
+        documentUrl = await getDownloadURL(uploadResult.ref);
+      }
 
-    // 2. Persist to Firestore
-    addDoc(leadsRef, leadData)
-      .then(() => {
-        setLoading(false);
-        
-        // 3. Compile data for WhatsApp message
-        const whatsappMsg = language === 'ar' 
-          ? `مرحباً أليانس ترافل! 🇪🇬\n\nأود حجز عرض مصر 2026.\n\n👤 *الاسم:* ${name}\n📞 *الهاتف:* ${phone}\n📅 *التاريخ:* ${selectedDate}\n👥 *عدد المسافرين:* ${travelers}\n📍 *الوجهة:* مصر\n\n💬 *ملاحظة:* ${message || "لا يوجد"}`
-          : `Bonjour Alliance Travel! 🇪🇬\n\nJe souhaite réserver l'offre Égypte 2026.\n\n👤 *Nom:* ${name}\n📞 *Tél:* ${phone}\n📅 *Date:* ${selectedDate}\n👥 *Voyageurs:* ${travelers}\n📍 *Destination:* Égypte\n\n💬 *Note:* ${message || "Aucune"}`;
-        
-        const encodedMsg = encodeURIComponent(whatsappMsg);
-        const whatsappUrl = `https://wa.me/213561616267?text=${encodedMsg}`;
+      // 2. Compile data for Firestore
+      const leadData = {
+        name,
+        phone,
+        date: selectedDate,
+        travelers: Number(travelers),
+        message,
+        documentUrl,
+        destination: "Egypt",
+        createdAt: serverTimestamp(),
+      };
 
-        // 4. Open WhatsApp in a new tab
-        window.open(whatsappUrl, "_blank");
+      const leadsRef = collection(db, "leads");
 
-        // 5. Success UI Feedback
-        toast({
-          title: t('form_toast_title'),
-          description: t('form_toast_desc'),
-        });
+      // 3. Persist to Firestore
+      await addDoc(leadsRef, leadData);
 
-        // 6. Reset Form state
-        (e.target as HTMLFormElement).reset();
-        setSelectedDate("");
-      })
-      .catch(async (error) => {
-        setLoading(false);
-        // Using the project's standardized error handling architecture
-        const permissionError = new FirestorePermissionError({
-          path: leadsRef.path,
-          operation: 'create',
-          requestResourceData: leadData,
-        });
-        errorEmitter.emit('permission-error', permissionError);
+      // 4. Compile data for WhatsApp message
+      const docString = documentUrl ? `\n📄 *Document:* ${documentUrl}` : "";
+      const whatsappMsg = language === 'ar' 
+        ? `مرحباً أليانس ترافل! 🇪🇬\n\nأود حجز عرض مصر 2026.\n\n👤 *الاسم:* ${name}\n📞 *الهاتف:* ${phone}\n📅 *التاريخ:* ${selectedDate}\n👥 *عدد المسافرين:* ${travelers}\n📍 *الوجهة:* مصر${docString}\n\n💬 *ملاحظة:* ${message || "لا يوجد"}`
+        : `Bonjour Alliance Travel! 🇪🇬\n\nJe souhaite réserver l'offre Égypte 2026.\n\n👤 *Nom:* ${name}\n📞 *Tél:* ${phone}\n📅 *Date:* ${selectedDate}\n👥 *Voyageurs:* ${travelers}\n📍 *Destination:* Égypte${docString}\n\n💬 *Note:* ${message || "Aucune"}`;
+      
+      const encodedMsg = encodeURIComponent(whatsappMsg);
+      const whatsappUrl = `https://wa.me/213561616267?text=${encodedMsg}`;
+
+      // 5. Success UI Feedback
+      setLoading(false);
+      window.open(whatsappUrl, "_blank");
+
+      toast({
+        title: t('form_toast_title'),
+        description: t('form_toast_desc'),
       });
+
+      // 6. Reset Form state
+      (e.target as HTMLFormElement).reset();
+      setSelectedDate("");
+      setFile(null);
+
+    } catch (error: any) {
+      setLoading(false);
+      const permissionError = new FirestorePermissionError({
+        path: "leads",
+        operation: 'create',
+      });
+      errorEmitter.emit('permission-error', permissionError);
+    }
   };
 
   return (
@@ -128,6 +144,21 @@ export function LeadForm() {
             defaultValue="2" 
             className="bg-white/5 border-gold/10" 
           />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-xs uppercase tracking-widest font-bold">
+          {language === 'ar' ? 'الوثائق (جواز السفر، إلخ)' : 'Documents (Passeport, etc.)'}
+        </label>
+        <div className="relative group">
+          <Input 
+            type="file"
+            onChange={handleFileChange}
+            className="bg-white/5 border-gold/10 file:bg-gold file:text-gold-foreground file:border-none file:rounded file:px-2 file:py-1 file:mr-4 file:text-xs file:cursor-pointer"
+            accept="image/*,.pdf"
+          />
+          <FileUp className="absolute right-3 top-2.5 h-4 w-4 text-gold/50 group-hover:text-gold transition-colors pointer-events-none" />
         </div>
       </div>
 
