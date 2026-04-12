@@ -109,7 +109,7 @@ const HOTELS_DATA = [
       baby: "25 000 DA"
     },
     description: {
-      fr: "Une expérience luxueuse en bord de mer. Avec sa plage privée et ses jardins luxuriants, cet établissement 5 étoiles redéfinit l'élégance à Sharm.",
+      fr: "Une expérience luxueuse en bord de mer. Avec sa plage privée and ses jardins luxuriants, cet établissement 5 étoiles redéfinit l'élégance à Sharm.",
       ar: "تجربة فاخرة على شاطئ البحر. مع شاطئه الخاص وحدائقه المورقة، يعيد هذا المنتجع ذو الخمس نجوم تعريف الأناقة في شرم الشيخ."
     },
     amenities: ["Beach Front", "Luxury Spa", "Gourmet Dining", "VIP Lounge", "Premium WiFi"],
@@ -255,13 +255,8 @@ export function Hotels() {
                           {t('hotels_premium_badge')}
                         </Badge>
                       )}
-                      <div className="bg-background/80 backdrop-blur-md px-3 py-1 rounded-full border border-gold/20 flex items-center gap-1.5">
-                        <div className="flex gap-0.5 shrink-0">
-                          {Array.from({ length: hotel.stars }).map((_, i) => (
-                            <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />
-                          ))}
-                        </div>
-                        <span className="text-[11px] font-bold text-gold ms-1">{hotel.stars} ★</span>
+                      <div className="bg-background/80 backdrop-blur-md px-3 py-1 rounded-full border border-gold/20 flex items-center justify-center">
+                        <span className="text-[11px] font-bold text-gold px-2 py-0.5">{hotel.stars} ★</span>
                       </div>
                     </div>
                   </div>
@@ -311,10 +306,8 @@ export function Hotels() {
                     <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
                     <div className="absolute bottom-6 start-6">
                       <SheetTitle className="text-3xl md:text-4xl font-headline text-white mb-2">{hotel.name}</SheetTitle>
-                      <div className="flex items-center gap-1">
-                        {Array.from({ length: hotel.stars }).map((_, i) => (
-                          <Star key={i} className="h-4 w-4 fill-gold text-gold" />
-                        ))}
+                      <div className="flex items-center gap-1 text-gold font-bold">
+                        <span>{hotel.stars} ★</span>
                       </div>
                     </div>
                   </div>
@@ -445,4 +438,3 @@ export function Hotels() {
     </div>
   );
 }
-
