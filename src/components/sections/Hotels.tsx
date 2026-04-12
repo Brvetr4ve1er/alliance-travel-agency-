@@ -267,9 +267,9 @@ export function Hotels() {
                             {hotel.type}
                           </div>
                         </div>
-                        <div className="shrink-0 flex items-center gap-1.5 bg-gold/10 px-3 py-1.5 rounded-lg border border-gold/20 shadow-sm">
-                          <span className="text-lg font-bold text-gold leading-none">{hotel.stars}</span>
-                          <Star className="h-4 w-4 fill-gold text-gold" />
+                        <div className="shrink-0 flex items-center gap-2 bg-gold/20 px-4 py-2 rounded-xl border border-gold/30 shadow-md">
+                          <span className="text-xl font-bold text-gold leading-none">{hotel.stars}</span>
+                          <Star className="h-5 w-5 fill-gold text-gold" />
                         </div>
                       </div>
                     </div>
