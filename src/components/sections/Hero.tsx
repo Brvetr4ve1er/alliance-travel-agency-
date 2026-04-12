@@ -43,7 +43,7 @@ export function Hero() {
           </a>
         </Button>
         <Button size="lg" variant="outline" className="border-gold/30 text-gold hover:bg-gold/5 h-14 px-8 text-lg w-full sm:w-auto" asChild>
-          <a href="#expert-ia">
+          <a href="#hotels">
             {t('hero_cta_secondary')}
           </a>
         </Button>

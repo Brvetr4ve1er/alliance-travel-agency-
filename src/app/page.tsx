@@ -13,8 +13,7 @@ import { DocumentsRequired } from "@/components/sections/DocumentsRequired";
 import { TrustSection } from "@/components/sections/TrustSection";
 import { LeadForm } from "@/components/sections/LeadForm";
 import { FinalCTA } from "@/components/sections/FinalCTA";
-import { AIAssistant } from "@/components/AIAssistant";
-import { MessageCircle, Sparkles } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 
 export default function Home() {
@@ -37,18 +36,6 @@ export default function Home() {
             <p className="text-muted-foreground max-w-2xl mx-auto">{t('hotels_section_desc')}</p>
           </div>
           <Hotels />
-        </section>
-
-        {/* AI Assistant Section - Positioned to address technical objections before the form */}
-        <section id="expert-ia" className="scroll-mt-24 max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 text-gold text-xs font-bold uppercase tracking-widest mb-4 border border-gold/20">
-              <Sparkles className="h-3 w-3" /> AI Travel Expert
-            </div>
-            <h2 className="text-4xl md:text-5xl font-headline mb-4">{t('form_help_title')}</h2>
-            <p className="text-muted-foreground">{t('form_help_desc')}</p>
-          </div>
-          <AIAssistant />
         </section>
 
         <section id="programme" className="scroll-mt-24">

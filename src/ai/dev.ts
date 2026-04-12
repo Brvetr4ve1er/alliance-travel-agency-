@@ -1,4 +1,5 @@
+
 import { config } from 'dotenv';
 config();
 
-import '@/ai/flows/ai-travel-assistant.ts';
+// AI Assistant flow removed to focus on direct lead generation funnel.

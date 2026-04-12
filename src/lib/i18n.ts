@@ -1,3 +1,4 @@
+
 import { TRIP_CONFIG } from './trip-config';
 
 export type Language = 'fr' | 'ar';
@@ -17,7 +18,7 @@ export const translations = {
     hero_price_label: "À partir de",
     hero_price_value: TRIP_CONFIG.basePrice,
     hero_cta_primary: "Découvrir l'offre",
-    hero_cta_secondary: "Questions ? Parlez à notre IA",
+    hero_cta_secondary: "Voir les hôtels",
     
     // Quick Info
     info_duree: "Durée",
@@ -101,8 +102,6 @@ export const translations = {
     trust_author: "Famille Mansouri, Voyage 2024",
     
     // Form
-    form_help_title: "Besoin d'aide ?",
-    form_help_desc: "Notre IA est disponible 24/7 pour répondre à toutes vos questions techniques sur le séjour.",
     form_section_title: "Commencez Votre Voyage",
     form_section_desc: "Remplissez le formulaire ci-dessous pour recevoir votre devis personnalisé.",
     form_name: "Nom Complet",
@@ -121,12 +120,6 @@ export const translations = {
     final_desc: "Les places pour les départs d'avril sont déjà réservées à 70%. Sécurisez votre voyage dès aujourd'hui.",
     final_cta_primary: "Réserver Maintenant",
     final_cta_secondary: "Appeler un conseiller",
-    
-    // Assistant
-    ai_title: "Expert Voyage Alliance IA",
-    ai_welcome: "Bonjour ! Je suis votre assistant expert pour ce voyage. Posez-moi vos questions sur les hôtels, les vols ou le programme.",
-    ai_placeholder: "Posez votre question sur le séjour...",
-    ai_error: "Désolé, j'ai rencontré une erreur. Veuillez réessayer.",
     
     // Footer
     footer_copy: "© 2026 Alliance Travel — Licence d'État A. Tous droits réservés.",
@@ -147,7 +140,7 @@ export const translations = {
     hero_price_label: "ابتداءً من",
     hero_price_value: TRIP_CONFIG.basePrice,
     hero_cta_primary: "اكتشف العرض",
-    hero_cta_secondary: "أسئلة؟ تحدث إلى ذكاؤنا الاصطناعي",
+    hero_cta_secondary: "عرض الفنادق",
     
     // Quick Info
     info_duree: "المدة",
@@ -231,8 +224,6 @@ export const translations = {
     trust_author: "عائلة منصوري، رحلة 2024",
     
     // Form
-    form_help_title: "تحتاج لمساعدة ؟",
-    form_help_desc: "تحتاج لمساعدة ؟ ذكاؤنا الاصطناعي متاح 24/7 للإجابة على جميع أسئلتك التقنية حول الرحلة.",
     form_section_title: "ابدأ رحلتك",
     form_section_desc: "املأ النموذج أدناه لتلقي عرضك المخصص.",
     form_name: "الاسم الكامل",
@@ -251,12 +242,6 @@ export const translations = {
     final_desc: "تم حجز 70% من الأماكن لرحلات أفريل. أمن رحلتك اليوم.",
     final_cta_primary: "احجز الآن",
     final_cta_secondary: "اتصل بمستشار",
-    
-    // Assistant
-    ai_title: "مساعد السفر الخبير",
-    ai_welcome: "مرحباً ! أنا خبير السفر الخاص بك. اسألني أي شيء عن الفنادق، الطيران أو البرنامج.",
-    ai_placeholder: "اسأل سؤالك عن الرحلة هنا...",
-    ai_error: "عذراً، حدث خطأ. يرجى المحاولة مرة أخرى.",
     
     // Footer
     footer_copy: "© 2026 أليانس ترافل — رخصة الدولة أ. جميع الحقوق محفوظة.",
