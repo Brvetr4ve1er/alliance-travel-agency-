@@ -4,18 +4,16 @@ This is a premium, high-conversion landing page built with Next.js, Shadcn UI, a
 
 ---
 
-## 🚀 How to Setup Git & Push Your Project
+## 🚀 How to Connect & Push to GitHub
 
-Follow these steps in your terminal to host your code on a platform like GitHub, GitLab, or Bitbucket.
+To push your code, open the **Terminal** in your editor (usually at the bottom) and follow these steps:
 
-### 1. Initialize the Local Repository
-Open your terminal in the project root and run:
+### 1. Initialize Git
 ```bash
 git init
 ```
 
 ### 2. Add Your Files
-Stage all the project files for the first commit:
 ```bash
 git add .
 ```
@@ -25,25 +23,19 @@ git add .
 git commit -m "Initial commit: Egypt 2026 Landing Page"
 ```
 
-### 4. Authenticate with GitHub (Login)
-If you haven't logged in to Git on this machine, the easiest way is using the **GitHub CLI**:
+### 4. Log in to GitHub
+The easiest way is using the GitHub CLI (already installed in most environments):
 ```bash
-# If you have GitHub CLI installed
 gh auth login
 ```
-Alternatively, Git will prompt you for your credentials the first time you try to push. You should use a **Personal Access Token (PAT)** instead of your password if using HTTPS.
+*Follow the prompts to log in via your browser.*
 
-### 5. Connect to a Remote Repository
-1. Create a **new empty repository** on [GitHub](https://github.com/new).
-2. Copy the repository URL (e.g., `https://github.com/your-username/your-repo.git`).
-3. Run the following command (replacing the URL with yours):
+### 5. Create a Remote Repo & Push
+1. Go to [GitHub.com](https://github.com/new) and create a **new empty repository**.
+2. Copy the URL (e.g., `https://github.com/your-username/your-repo.git`).
+3. Run:
 ```bash
 git remote add origin <your-repository-url>
-```
-
-### 6. Push Your Code
-Rename your branch to `main` and push:
-```bash
 git branch -M main
 git push -u origin main
 ```
@@ -55,7 +47,7 @@ git push -u origin main
 - **Styling**: Tailwind CSS
 - **UI Components**: Shadcn UI
 - **Backend**: Firebase (Firestore for Leads, Storage for Documents)
-- **Communication**: WhatsApp wa.me integration
+- **Communication**: WhatsApp integration
 
 ## 📦 Deployment
 This project is configured for Firebase Hosting.
