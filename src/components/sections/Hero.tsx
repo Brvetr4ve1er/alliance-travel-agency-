@@ -1,9 +1,16 @@
 
 "use client";
 
-import { Button } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Plane, Calendar, ShieldCheck, MapPin } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+
+const HERO_INFO_DATA = [
+  { icon: Calendar, key: 'info_duree_val' },
+  { icon: ShieldCheck, key: 'info_pension_val' },
+  { icon: Plane, key: 'info_vols_val' },
+  { icon: MapPin, key: 'info_visa_val' },
+];
 
 export function Hero() {
   const { t } = useLanguage();
@@ -24,15 +31,10 @@ export function Hero() {
       </p>
       
       <div className="animate-fade-up opacity-0 delay-400 flex flex-wrap justify-center gap-3 mb-12">
-        {[
-          { icon: Calendar, label: t('info_duree_val') },
-          { icon: ShieldCheck, label: t('info_pension_val') },
-          { icon: Plane, label: t('info_vols_val') },
-          { icon: MapPin, label: t('info_visa_val') },
-        ].map((item, idx) => (
+        {HERO_INFO_DATA.map((item, idx) => (
           <div key={idx} className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium text-foreground/80">
             <item.icon className="h-4 w-4 text-primary" />
-            {item.label}
+            {t(item.key as any)}
           </div>
         ))}
       </div>

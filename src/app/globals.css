@@ -36,29 +36,28 @@
     @apply bg-background text-foreground font-body antialiased selection:bg-primary/30;
     background-attachment: fixed;
   }
+  
   h1, h2, h3, h4, h5, h6 {
-    @apply font-headline;
+    font-family: var(--font-headline);
   }
 
   .font-arabic {
-    font-family: 'Noto Sans Arabic', 'DM Sans', sans-serif;
-  }
-
-  /* Support for RTL in Tailwind */
-  [dir="rtl"] .font-headline {
-    font-family: 'Noto Sans Arabic', serif;
+    font-family: var(--font-arabic), var(--font-body), sans-serif;
   }
 }
 
 .luxury-gradient-bg {
   background: 
-    radial-gradient(ellipse 90% 60% at 50% -5%, rgba(212, 168, 39, 0.15) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 50% at 0% 80%, rgba(26, 25, 22, 0.8) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 40% at 100% 30%, rgba(229, 173, 159, 0.05) 0%, transparent 50%);
+    radial-gradient(ellipse 90% 60% at 50% -5%, rgba(212, 168, 39, 0.1) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 0% 80%, rgba(26, 25, 22, 0.8) 0%, transparent 55%);
 }
 
 .glass-panel {
-  @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl;
+  @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-2xl;
+}
+
+.animate-fade-up {
+  will-change: transform, opacity;
 }
 
 .text-gold {
