@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useMemo } from "react";
@@ -25,15 +24,30 @@ export default function Home() {
   // Selection States
   const [selectedHotelId, setSelectedHotelId] = useState<string>(TRIP_CONFIG.hotels[0].id);
   const [selectedDate, setSelectedDate] = useState<string>(TRIP_CONFIG.departureDates[0].label);
-  const [travelerCount, setTravelerCount] = useState<number>(2);
+  
+  // Detailed Traveler Composition
+  const [adultCount, setAdultCount] = useState<number>(2);
+  const [child1Count, setChild1Count] = useState<number>(0);
+  const [child2Count, setChild2Count] = useState<number>(0);
+  const [hasBaby, setHasBaby] = useState<boolean>(false);
 
   const selectedHotel = useMemo(() => 
     TRIP_CONFIG.hotels.find(h => h.id === selectedHotelId) || TRIP_CONFIG.hotels[0]
   , [selectedHotelId]);
 
   const totalPrice = useMemo(() => {
-    return selectedHotel.priceNum * travelerCount;
-  }, [selectedHotel, travelerCount]);
+    // Determine base price per adult based on adult count (Single, Double, Triple)
+    let basePricePerAdult = selectedHotel.pricingGridNum.double;
+    if (adultCount === 1) basePricePerAdult = selectedHotel.pricingGridNum.single;
+    else if (adultCount === 3) basePricePerAdult = selectedHotel.pricingGridNum.triple;
+    
+    let total = basePricePerAdult * adultCount;
+    if (child1Count > 0) total += selectedHotel.pricingGridNum.child1;
+    if (child2Count > 0) total += selectedHotel.pricingGridNum.child2;
+    if (hasBaby) total += selectedHotel.pricingGridNum.baby;
+    
+    return total;
+  }, [selectedHotel, adultCount, child1Count, child2Count, hasBaby]);
 
   const formattedTotalPrice = useMemo(() => {
     return new Intl.NumberFormat('fr-DZ').format(totalPrice) + " DA";
@@ -96,8 +110,14 @@ export default function Home() {
             <LeadForm 
               initialDate={selectedDate} 
               initialHotelId={selectedHotelId}
-              initialTravelers={travelerCount}
-              onTravelersChange={setTravelerCount}
+              initialAdults={adultCount}
+              initialChild1={child1Count}
+              initialChild2={child2Count}
+              initialBaby={hasBaby}
+              onAdultsChange={setAdultCount}
+              onChild1Change={setChild1Count}
+              onChild2Change={setChild2Count}
+              onBabyChange={setHasBaby}
             />
           </div>
         </section>
@@ -115,7 +135,11 @@ export default function Home() {
         <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
           <div className="hidden sm:block">
             <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-0.5">Selection : {selectedHotel.name}</p>
-            <p className="text-xs text-foreground/80 font-medium">{selectedDate} · {travelerCount} Voyageurs</p>
+            <p className="text-xs text-foreground/80 font-medium">
+              {selectedDate} · {adultCount} {t('form_v_adults')} 
+              {child1Count + child2Count > 0 && ` + ${child1Count + child2Count} Enfant(s)`}
+              {hasBaby && ` + 1 Bébé`}
+            </p>
           </div>
           <div className="flex-1 flex items-center justify-end gap-6">
             <div className="text-right">
@@ -133,7 +157,7 @@ export default function Home() {
       </div>
 
       <a 
-        href={`https://wa.me/213561616267?text=${encodeURIComponent(`Bonjour, je souhaite réserver l'offre Égypte 2026. Hôtel: ${selectedHotel.name}, Date: ${selectedDate}, Voyageurs: ${travelerCount}. Total: ${formattedTotalPrice}`)}`} 
+        href={`https://wa.me/213561616267?text=${encodeURIComponent(`Bonjour, je souhaite réserver l'offre Égypte 2026. Hôtel: ${selectedHotel.name}, Date: ${selectedDate}, Voyageurs: ${adultCount} Adultes, ${child1Count + child2Count} Enfants, ${hasBaby ? '1' : '0'} Bébé. Total: ${formattedTotalPrice}`)}`} 
         target="_blank" 
         rel="noopener noreferrer"
         className="fixed bottom-24 right-8 z-[300] bg-emerald-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all group flex items-center gap-3"

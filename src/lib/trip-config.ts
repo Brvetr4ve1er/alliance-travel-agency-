@@ -48,6 +48,14 @@ export const TRIP_CONFIG = {
         child2: "145 000 DA",
         baby: "25 000 DA"
       },
+      pricingGridNum: {
+        triple: 178000,
+        double: 180000,
+        single: 225000,
+        child1: 115000,
+        child2: 145000,
+        baby: 25000
+      },
       amenities: ["Free Shuttle", "Private Beach", "Aqua Park", "Spa & Wellness", "WiFi"],
       highlights: ["Cascade Pool", "Kid's Club", "Evening Shows"]
     },
@@ -67,6 +75,14 @@ export const TRIP_CONFIG = {
         child2: "145 000 DA",
         baby: "25 000 DA"
       },
+      pricingGridNum: {
+        triple: 182000,
+        double: 185000,
+        single: 230000,
+        child1: 115000,
+        child2: 145000,
+        baby: 25000
+      },
       amenities: ["Aqua Park", "Large Pools", "Restaurants", "Bar", "Animation"],
       highlights: ["Multiple Slides", "Central Location", "Family Friendly"]
     },
@@ -85,6 +101,14 @@ export const TRIP_CONFIG = {
         child1: "115 000 DA",
         child2: "155 000 DA",
         baby: "25 000 DA"
+      },
+      pricingGridNum: {
+        triple: 198000,
+        double: 202000,
+        single: 255000,
+        child1: 115000,
+        child2: 155000,
+        baby: 25000
       },
       amenities: ["Spa", "Buffet Restaurant", "Aqua Park", "Tennis Courts"],
       highlights: ["Night Life", "Professional Service", "Spacious Rooms"]
@@ -106,6 +130,14 @@ export const TRIP_CONFIG = {
         child2: "175 000 DA",
         baby: "25 000 DA"
       },
+      pricingGridNum: {
+        triple: 222000,
+        double: 227000,
+        single: 290000,
+        child1: 115000,
+        child2: 175000,
+        baby: 25000
+      },
       amenities: ["Beach Front", "Luxury Spa", "Gourmet Dining", "VIP Lounge"],
       highlights: ["Sunset Views", "Private Pier", "Elite Services"]
     },
@@ -125,6 +157,14 @@ export const TRIP_CONFIG = {
         child1: "115 000 DA",
         child2: "185 000 DA",
         baby: "25 000 DA"
+      },
+      pricingGridNum: {
+        triple: 240000,
+        double: 245000,
+        single: 320000,
+        child1: 115000,
+        child2: 185000,
+        baby: 25000
       },
       amenities: ["Mega Aqua Park", "Club Access", "International Buffet", "Modern Gym"],
       highlights: ["Wave Pool", "24/7 Service", "Luxury Suites"]
@@ -146,6 +186,14 @@ export const TRIP_CONFIG = {
         child2: "190 000 DA",
         baby: "25 000 DA"
       },
+      pricingGridNum: {
+        triple: 245000,
+        double: 250000,
+        single: 330000,
+        child1: 115000,
+        child2: 190000,
+        baby: 25000
+      },
       amenities: ["Infinity Pool", "Private Concierge", "Diving Center", "Organic Food"],
       highlights: ["Panoramic Views", "Fine Dining", "Tranquil Ambiance"]
     },
@@ -165,6 +213,14 @@ export const TRIP_CONFIG = {
         child1: "115 000 DA",
         child2: "205 000 DA",
         baby: "25 000 DA"
+      },
+      pricingGridNum: {
+        triple: 260000,
+        double: 265000,
+        single: 360000,
+        child1: 115000,
+        child2: 205000,
+        baby: 25000
       },
       amenities: ["Sandy Lagoon", "Premium Bedding", "Yoga Studio", "Live Cooking"],
       highlights: ["Lagoon Beach", "Award Winning Spa", "Best for Couples"]
