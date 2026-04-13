@@ -1,7 +1,6 @@
 
 "use client";
 
-import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { QuickInfoBar } from "@/components/sections/QuickInfoBar";
@@ -13,14 +12,12 @@ import { useLanguage } from "@/components/providers/LanguageProvider";
 import { TRIP_CONFIG } from "@/lib/trip-config";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, ArrowRight, AlertTriangle } from "lucide-react";
-
-// Dynamically import only strictly interactive/heavy leaf components
-const Hotels = dynamic(() => import("@/components/sections/Hotels").then(m => m.Hotels), { ssr: true });
-const Flights = dynamic(() => import("@/components/sections/Flights").then(m => m.Flights), { ssr: true });
-const LeadForm = dynamic(() => import("@/components/sections/LeadForm").then(m => m.LeadForm), { ssr: true });
-const DocumentsRequired = dynamic(() => import("@/components/sections/DocumentsRequired").then(m => m.DocumentsRequired), { ssr: true });
-const TrustSection = dynamic(() => import("@/components/sections/TrustSection").then(m => m.TrustSection), { ssr: true });
-const FinalCTA = dynamic(() => import("@/components/sections/FinalCTA").then(m => m.FinalCTA), { ssr: true });
+import { Hotels } from "@/components/sections/Hotels";
+import { Flights } from "@/components/sections/Flights";
+import { LeadForm } from "@/components/sections/LeadForm";
+import { DocumentsRequired } from "@/components/sections/DocumentsRequired";
+import { TrustSection } from "@/components/sections/TrustSection";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 
 function PriceSummaryBar() {
   const { t } = useLanguage();
