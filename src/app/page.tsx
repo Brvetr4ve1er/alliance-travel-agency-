@@ -1,24 +1,27 @@
 
 "use client";
 
-import React, { memo } from "react";
+import React, { memo, Suspense } from "react";
 import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { QuickInfoBar } from "@/components/sections/QuickInfoBar";
 import { BookingProvider } from "@/components/providers/BookingProvider";
 
-// Static informational sections - No state required
-const Experience = dynamic(() => import("@/components/sections/Experience").then(mod => mod.Experience), { ssr: false });
-const Itinerary = dynamic(() => import("@/components/sections/Itinerary").then(mod => mod.Itinerary), { ssr: false });
-const DocumentsRequired = dynamic(() => import("@/components/sections/DocumentsRequired").then(mod => mod.DocumentsRequired), { ssr: false });
-const TrustSection = dynamic(() => import("@/components/sections/TrustSection").then(mod => mod.TrustSection), { ssr: false });
-const FinalCTA = dynamic(() => import("@/components/sections/FinalCTA").then(mod => mod.FinalCTA), { ssr: false });
+// Static Sections - SSR enabled for LCP
+import { Experience } from "@/components/sections/Experience";
+import { Itinerary } from "@/components/sections/Itinerary";
+import { Pricing } from "@/components/sections/Pricing";
+import { DocumentsRequired } from "@/components/sections/DocumentsRequired";
+import { TrustSection } from "@/components/sections/TrustSection";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 
-// Interactive sections - Requiring Booking Context
-const Hotels = dynamic(() => import("@/components/sections/Hotels").then(mod => mod.Hotels), { ssr: false });
+// Interactive Sections - Deferred for TBT
+const Hotels = dynamic(() => import("@/components/sections/Hotels").then(mod => mod.Hotels), { 
+  ssr: false,
+  loading: () => <div className="h-96 animate-pulse bg-white/5 rounded-2xl" />
+});
 const Flights = dynamic(() => import("@/components/sections/Flights").then(mod => mod.Flights), { ssr: false });
-const Pricing = dynamic(() => import("@/components/sections/Pricing").then(mod => mod.Pricing), { ssr: false });
 const LeadForm = dynamic(() => import("@/components/sections/LeadForm").then(mod => mod.LeadForm), { ssr: false });
 const PriceSummaryBar = dynamic(() => import("@/components/sections/PriceSummaryBar").then(mod => mod.PriceSummaryBar), { ssr: false });
 const WhatsAppFAB = dynamic(() => import("@/components/sections/WhatsAppFAB").then(mod => mod.WhatsAppFAB), { ssr: false });
@@ -39,14 +42,14 @@ export default function Home() {
       <QuickInfoBar />
       
       <div className="max-w-6xl mx-auto px-6 py-20 space-y-32">
-        {/* Static Content - Decoupled from Booking State */}
         <Experience />
         
-        {/* Interactive Booking Flow - Isolated Context to minimize hydration blocks */}
         <BookingProvider>
           <section id="hotels">
             <SectionHeader title="Confort & Prestige" desc="Une sélection rigoureuse d'établissements d'excellence pour un séjour sans compromis." />
-            <Hotels />
+            <Suspense fallback={<div className="h-96 animate-pulse bg-white/5 rounded-2xl" />}>
+              <Hotels />
+            </Suspense>
           </section>
 
           <section id="programme">
@@ -56,7 +59,9 @@ export default function Home() {
 
           <section id="vols">
             <SectionHeader title="Vols & Transports" desc="Voyagez en toute sérénité avec Turkish Airlines." />
-            <Flights />
+            <Suspense fallback={<div className="h-64 animate-pulse bg-white/5 rounded-2xl" />}>
+              <Flights />
+            </Suspense>
           </section>
 
           <Pricing />
@@ -68,7 +73,9 @@ export default function Home() {
 
           <section id="reservation" className="max-w-4xl mx-auto">
             <SectionHeader title="Commencez Votre Voyage" desc="Remplissez le formulaire ci-dessous pour recevoir votre devis personnalisé." />
-            <LeadForm />
+            <Suspense fallback={<div className="h-[600px] animate-pulse bg-white/5 rounded-2xl" />}>
+              <LeadForm />
+            </Suspense>
           </section>
 
           <PriceSummaryBar />

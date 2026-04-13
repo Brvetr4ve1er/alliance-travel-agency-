@@ -11,15 +11,14 @@ import { useBooking } from "@/components/providers/BookingProvider";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
 import { TRIP_CONFIG } from "@/lib/trip-config";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import dynamic from "next/dynamic";
+
+const Sheet = dynamic(() => import("@/components/ui/sheet").then(mod => mod.Sheet), { ssr: false });
+const SheetContent = dynamic(() => import("@/components/ui/sheet").then(mod => mod.SheetContent), { ssr: false });
+const SheetDescription = dynamic(() => import("@/components/ui/sheet").then(mod => mod.SheetDescription), { ssr: false });
+const SheetTitle = dynamic(() => import("@/components/ui/sheet").then(mod => mod.SheetTitle), { ssr: false });
 
 const AMENITY_ICONS: Record<string, any> = {
   "Free Shuttle": Wind, "Private Beach": Waves, "Aqua Park": Waves, "Spa & Wellness": ShieldCheck, "Fitness Center": ShieldCheck, "WiFi": Wifi, "Beach Front": Waves, "Luxury Spa": ShieldCheck, "Gourmet Dining": Utensils, "VIP Lounge": Info, "Premium WiFi": Wifi, "Mega Aqua Park": Waves, "International Buffet": Utensils, "Modern Gym": ShieldCheck, "Infinity Pool": Waves, "Private Concierge": Info, "Diving Center": Waves, "Organic Food": Coffee, "Sandy Lagoon": Waves, "Premium Bedding": Info, "Yoga Studio": ShieldCheck, "Live Cooking": Utensils,
@@ -27,11 +26,13 @@ const AMENITY_ICONS: Record<string, any> = {
 
 const HotelCard = memo(({ hotel, isSelected, onSelect, onOpenDetails, t, hotelImage }: any) => {
   const handleDetailsClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     onOpenDetails(hotel);
   }, [hotel, onOpenDetails]);
 
   const handleSelectClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     onSelect(hotel.id);
   }, [hotel.id, onSelect]);
@@ -52,7 +53,6 @@ const HotelCard = memo(({ hotel, isSelected, onSelect, onOpenDetails, t, hotelIm
             fill 
             sizes="(max-width: 768px) 100vw, 50vw" 
             className="object-cover transition-transform duration-1000 group-hover:scale-110" 
-            loading="lazy"
           />
         )}
         <div className="absolute top-4 start-4 z-20 flex gap-2">
@@ -133,7 +133,6 @@ export const Hotels = memo(() => {
         </CardContent>
       </Card>
 
-      {/* Conditionally rendering the Sheet content to defer its hydration and DOM overhead */}
       {detailHotel && (
         <Sheet open={!!detailHotel} onOpenChange={(open) => !open && setDetailHotel(null)}>
           <SheetContent side={isRtl ? "left" : "right"} className="glass-panel border-gold/20 w-full sm:max-w-xl p-0">
