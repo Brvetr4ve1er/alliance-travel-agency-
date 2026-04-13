@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Star, Waves, CheckCircle2, Info, MapPin, Wind, ShieldCheck, Clock, Users, User, Baby, Check, Utensils, Wifi, Coffee } from "lucide-react";
 import Image from "next/image";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { useBooking } from "@/components/providers/BookingProvider";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
 import { TRIP_CONFIG } from "@/lib/trip-config";
@@ -88,8 +89,9 @@ const HotelCard = memo(({ hotel, isSelected, onSelect, onOpenDetails, t, hotelIm
 });
 HotelCard.displayName = "HotelCard";
 
-export const Hotels = memo(({ selectedId, onSelect }: any) => {
+export const Hotels = memo(() => {
   const { t, language, isRtl } = useLanguage();
+  const { selectedHotelId, setSelectedHotelId } = useBooking();
   const [detailHotel, setDetailHotel] = useState<any>(null);
 
   const hotelImageMap = useMemo(() => {
@@ -114,8 +116,8 @@ export const Hotels = memo(({ selectedId, onSelect }: any) => {
           <HotelCard 
             key={hotel.id} 
             hotel={hotel} 
-            isSelected={selectedId === hotel.id} 
-            onSelect={onSelect} 
+            isSelected={selectedHotelId === hotel.id} 
+            onSelect={setSelectedHotelId} 
             onOpenDetails={setDetailHotel}
             t={t} 
             hotelImage={hotelImageMap[hotel.id]}
@@ -183,10 +185,10 @@ export const Hotels = memo(({ selectedId, onSelect }: any) => {
                 </div>
                 <div className="pt-8 border-t border-gold/10">
                   <Button 
-                    onClick={() => { onSelect(detailHotel.id); setDetailHotel(null); }} 
-                    className={cn("w-full h-14 text-lg font-bold", selectedId === detailHotel.id ? "bg-emerald-500 hover:bg-emerald-600 text-white" : "bg-gold hover:bg-gold/80 text-gold-foreground")}
+                    onClick={() => { setSelectedHotelId(detailHotel.id); setDetailHotel(null); }} 
+                    className={cn("w-full h-14 text-lg font-bold", selectedHotelId === detailHotel.id ? "bg-emerald-500 hover:bg-emerald-600 text-white" : "bg-gold hover:bg-gold/80 text-gold-foreground")}
                   >
-                    {selectedId === detailHotel.id ? <><Check className="h-5 w-5 me-2" /> Sélectionné</> : t('hotels_drawer_cta')}
+                    {selectedHotelId === detailHotel.id ? <><Check className="h-5 w-5 me-2" /> Sélectionné</> : t('hotels_drawer_cta')}
                   </Button>
                 </div>
               </div>

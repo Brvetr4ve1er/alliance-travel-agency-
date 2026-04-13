@@ -2,6 +2,7 @@
 "use client";
 
 import React, { memo } from "react";
+import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { QuickInfoBar } from "@/components/sections/QuickInfoBar";
@@ -13,12 +14,24 @@ import { useLanguage } from "@/components/providers/LanguageProvider";
 import { TRIP_CONFIG } from "@/lib/trip-config";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, ArrowRight, AlertTriangle } from "lucide-react";
-import { Hotels } from "@/components/sections/Hotels";
-import { Flights } from "@/components/sections/Flights";
-import { LeadForm } from "@/components/sections/LeadForm";
 import { DocumentsRequired } from "@/components/sections/DocumentsRequired";
 import { TrustSection } from "@/components/sections/TrustSection";
 import { FinalCTA } from "@/components/sections/FinalCTA";
+
+// Dynamic imports for heavy components to improve TBT and FCP
+const Hotels = dynamic(() => import("@/components/sections/Hotels").then(mod => mod.Hotels), { 
+  ssr: false,
+  loading: () => <div className="h-96 w-full animate-pulse bg-gold/5 rounded-2xl" />
+});
+
+const Flights = dynamic(() => import("@/components/sections/Flights").then(mod => mod.Flights), { 
+  ssr: false,
+  loading: () => <div className="h-64 w-full animate-pulse bg-gold/5 rounded-2xl" />
+});
+
+const LeadForm = dynamic(() => import("@/components/sections/LeadForm").then(mod => mod.LeadForm), { 
+  ssr: false 
+});
 
 const PriceSummaryBar = memo(() => {
   const { t } = useLanguage();
@@ -91,7 +104,6 @@ WhatsAppFAB.displayName = "WhatsAppFAB";
 
 const InteractiveSections = memo(() => {
   const { t } = useLanguage();
-  const { selectedHotelId, setSelectedHotelId, selectedDate, setSelectedDate } = useBooking();
 
   return (
     <>
@@ -102,7 +114,7 @@ const InteractiveSections = memo(() => {
           <h2 className="text-4xl md:text-5xl font-headline mb-4">{t('hotels_section_title')}</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">{t('hotels_section_desc')}</p>
         </div>
-        <Hotels selectedId={selectedHotelId} onSelect={setSelectedHotelId} />
+        <Hotels />
       </section>
 
       <section id="programme" className="scroll-mt-24">
@@ -118,7 +130,7 @@ const InteractiveSections = memo(() => {
           <h2 className="text-4xl md:text-5xl font-headline mb-4">{t('flights_title')}</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">{t('flights_desc')}</p>
         </div>
-        <Flights selectedDate={selectedDate} onSelect={setSelectedDate} />
+        <Flights />
       </section>
 
       <Pricing />

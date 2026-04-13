@@ -5,6 +5,7 @@ import React, { memo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plane, ArrowRight, Clock, MapPin, ShieldCheck, Check } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { useBooking } from "@/components/providers/BookingProvider";
 import { Badge } from "@/components/ui/badge";
 import { TRIP_CONFIG } from "@/lib/trip-config";
 import { cn } from "@/lib/utils";
@@ -28,8 +29,10 @@ const FlightRow = memo(({ flight, isSelected, t, isRtl }: any) => (
 ));
 FlightRow.displayName = "FlightRow";
 
-export const Flights = memo(({ selectedDate, onSelect }: any) => {
+export const Flights = memo(() => {
   const { t, isRtl } = useLanguage();
+  const { selectedDate, setSelectedDate } = useBooking();
+  
   const flightDetails = [
     { no: "TK 1412", route: ["Constantine", "Istanbul"], type: "direct", time: "13:55 → 19:05" },
     { no: "TK 698", route: ["Istanbul", "Sharm"], type: "transit", time: "02:10 → 05:00 (+1)" },
@@ -43,7 +46,7 @@ export const Flights = memo(({ selectedDate, onSelect }: any) => {
         {TRIP_CONFIG.departureDates.map((dep, idx) => {
           const isSelected = selectedDate === dep.label;
           return (
-            <Card key={idx} onClick={() => onSelect(dep.label)} className={cn("glass-panel overflow-hidden transition-all duration-500 cursor-pointer relative", isSelected ? "border-gold ring-2 ring-gold shadow-2xl shadow-gold/20" : "border-gold/10 hover:border-gold/30")}>
+            <Card key={idx} onClick={() => setSelectedDate(dep.label)} className={cn("glass-panel overflow-hidden transition-all duration-500 cursor-pointer relative", isSelected ? "border-gold ring-2 ring-gold shadow-2xl shadow-gold/20" : "border-gold/10 hover:border-gold/30")}>
               {isSelected && <div className="absolute top-4 end-4 z-30 bg-gold text-gold-foreground p-1 rounded-full shadow-xl"><Check className="h-4 w-4" /></div>}
               <CardHeader className={cn("border-b border-gold/10 p-6 transition-colors", isSelected ? "bg-gold/15" : "bg-gold/5")}>
                 <div className="flex items-center justify-between mb-2">
