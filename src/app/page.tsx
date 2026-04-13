@@ -1,23 +1,25 @@
+
 "use client";
 
 import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { QuickInfoBar } from "@/components/sections/QuickInfoBar";
+import { Experience } from "@/components/sections/Experience";
+import { Itinerary } from "@/components/sections/Itinerary";
+import { Pricing } from "@/components/sections/Pricing";
 import { BookingProvider, useBooking } from "@/components/providers/BookingProvider";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { TRIP_CONFIG } from "@/lib/trip-config";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, ArrowRight, AlertTriangle } from "lucide-react";
 
-const Experience = dynamic(() => import("@/components/sections/Experience").then(m => m.Experience), { ssr: true });
+// Dynamically import only strictly interactive/heavy leaf components
 const Hotels = dynamic(() => import("@/components/sections/Hotels").then(m => m.Hotels), { ssr: true });
-const Itinerary = dynamic(() => import("@/components/sections/Itinerary").then(m => m.Itinerary), { ssr: true });
 const Flights = dynamic(() => import("@/components/sections/Flights").then(m => m.Flights), { ssr: true });
-const Pricing = dynamic(() => import("@/components/sections/Pricing").then(m => m.Pricing), { ssr: true });
+const LeadForm = dynamic(() => import("@/components/sections/LeadForm").then(m => m.LeadForm), { ssr: true });
 const DocumentsRequired = dynamic(() => import("@/components/sections/DocumentsRequired").then(m => m.DocumentsRequired), { ssr: true });
 const TrustSection = dynamic(() => import("@/components/sections/TrustSection").then(m => m.TrustSection), { ssr: true });
-const LeadForm = dynamic(() => import("@/components/sections/LeadForm").then(m => m.LeadForm), { ssr: true });
 const FinalCTA = dynamic(() => import("@/components/sections/FinalCTA").then(m => m.FinalCTA), { ssr: true });
 
 function PriceSummaryBar() {
@@ -143,19 +145,19 @@ function BookingSections() {
 
 export default function Home() {
   return (
-    <BookingProvider>
-      <main className="min-h-screen relative overflow-x-hidden pb-24">
-        <Navbar />
-        <Hero />
-        <QuickInfoBar />
+    <main className="min-h-screen relative overflow-x-hidden pb-24">
+      <Navbar />
+      <Hero />
+      <QuickInfoBar />
+      <BookingProvider>
         <BookingSections />
         <PriceSummaryBar />
         <WhatsAppFAB />
-        <footer className="border-t border-gold/10 py-12 px-6 text-center text-sm text-muted-foreground bg-background/80 backdrop-blur-md">
-          <p className="mb-2">© 2026 Alliance Travel — Licence d'État A. Tous droits réservés.</p>
-          <p className="font-headline italic text-gold">L'expertise au service de vos émotions.</p>
-        </footer>
-      </main>
-    </BookingProvider>
+      </BookingProvider>
+      <footer className="border-t border-gold/10 py-12 px-6 text-center text-sm text-muted-foreground bg-background/80 backdrop-blur-md">
+        <p className="mb-2">© 2026 Alliance Travel — Licence d'État A. Tous droits réservés.</p>
+        <p className="font-headline italic text-gold">L'expertise au service de vos émotions.</p>
+      </footer>
+    </main>
   );
 }

@@ -1,6 +1,7 @@
+
 "use client";
 
-import React, { createContext, useContext, useState, useMemo, ReactNode } from "react";
+import React, { createContext, useContext, useState, useMemo, ReactNode, useCallback } from "react";
 import { TRIP_CONFIG } from "@/lib/trip-config";
 
 type RoomType = "single" | "double" | "triple";
@@ -43,18 +44,16 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     let total = 0;
     let error = null;
 
-    try {
-      if (selectedRoomType === "single" && adultCount !== 1) throw new Error("Single room = 1 adulte");
-      if (selectedRoomType === "double" && adultCount > 2) throw new Error("Double room = max 2 adultes");
-      if (selectedRoomType === "triple" && adultCount > 3) throw new Error("Triple room = max 3 adultes");
-      if ((child1Count > 0 ? 1 : 0) + (child2Count > 0 ? 1 : 0) > 2) throw new Error("Max 2 enfants");
+    if (selectedRoomType === "single" && adultCount !== 1) error = "Single room = 1 adulte";
+    else if (selectedRoomType === "double" && adultCount > 2) error = "Double room = max 2 adultes";
+    else if (selectedRoomType === "triple" && adultCount > 3) error = "Triple room = max 3 adultes";
+    else if ((child1Count > 0 ? 1 : 0) + (child2Count > 0 ? 1 : 0) > 2) error = "Max 2 enfants";
 
+    if (!error) {
       total += adultCount * p[selectedRoomType];
       if (child1Count > 0) total += p.child1;
       if (child2Count > 0) total += p.child2;
       total += babyCount * p.baby;
-    } catch (e: any) {
-      error = e.message;
     }
 
     return { total, error };
