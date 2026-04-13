@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Send, FileUp, UserCheck, Calculator, Users, Baby, Hotel, AlertCircle } from "lucide-react";
+import { Loader2, Send, FileUp, UserCheck, Calculator, Users, Baby, Hotel, AlertCircle, ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { collection, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -75,7 +75,7 @@ export function LeadForm({
 
   const selectedHotel = TRIP_CONFIG.hotels.find(h => h.id === selectedHotelId) || TRIP_CONFIG.hotels[0];
   
-  // Logical Calculation & Validation Engine
+  // Logical Calculation & Validation Engine (Strictly following the provided snippet)
   const priceCalculation = useMemo(() => {
     const p = selectedHotel.pricingGridNum;
     let total = 0;
@@ -84,29 +84,28 @@ export function LeadForm({
     try {
       // 🔒 Validation (CRITICAL)
       if (roomType === "single" && adultCount !== 1) {
-        throw new Error("Single room = 1 adulte فقط");
+        throw new Error(language === 'ar' ? "غرفة فردية = 1 بالغ فقط" : "Chambre Single = 1 adulte seulement");
       }
       if (roomType === "double" && adultCount > 2) {
-        throw new Error("Double room = max 2 adultes");
+        throw new Error(language === 'ar' ? "غرفة مزدوجة = 2 بالغين كحد أقصى" : "Chambre Double = max 2 adultes");
       }
       if (roomType === "triple" && adultCount > 3) {
-        throw new Error("Triple room = max 3 adultes");
+        throw new Error(language === 'ar' ? "غرفة ثلاثية = 3 بالغين كحد أقصى" : "Chambre Triple = max 3 adultes");
       }
       
       const children = (child1Count > 0 ? 1 : 0) + (child2Count > 0 ? 1 : 0);
       if (children > 2) {
-        throw new Error("Maximum 2 enfants autorisés");
+        throw new Error(language === 'ar' ? "الحد الأقصى طفلين" : "Maximum 2 enfants autorisés");
       }
 
-      // 🧮 Calculation
-      // Adults (Snippet logic)
+      // 🧮 Calculation: [ room type price * number of adults ] + children price + baby price
       total += adultCount * p[roomType];
 
-      // Children
+      // Children supplements
       if (child1Count > 0) total += p.child1;
       if (child2Count > 0) total += p.child2;
 
-      // Infants (Snippet logic)
+      // Infants supplement (multiplied by count as per standard agency logic)
       total += babyCount * p.baby;
 
     } catch (e: any) {
@@ -114,7 +113,7 @@ export function LeadForm({
     }
 
     return { total, error };
-  }, [selectedHotel, roomType, adultCount, child1Count, child2Count, babyCount]);
+  }, [selectedHotel, roomType, adultCount, child1Count, child2Count, babyCount, language]);
 
   const formattedTotal = new Intl.NumberFormat('fr-DZ').format(priceCalculation.total) + " DA";
 
@@ -129,7 +128,7 @@ export function LeadForm({
     if (priceCalculation.error) {
       toast({
         variant: "destructive",
-        title: "Validation Error",
+        title: language === 'ar' ? "خطأ في التحقق" : "Erreur de validation",
         description: priceCalculation.error,
       });
       return;
@@ -145,12 +144,14 @@ export function LeadForm({
     try {
       let documentUrl = "";
 
+      // 1. Upload File to Storage if exists
       if (file && storage) {
         const storageRef = ref(storage, `leads_documents/${Date.now()}_${file.name}`);
         const uploadResult = await uploadBytes(storageRef, file);
         documentUrl = await getDownloadURL(uploadResult.ref);
       }
 
+      // 2. Prepare Lead Data
       const leadData = {
         name,
         email,
@@ -160,32 +161,40 @@ export function LeadForm({
         hotelName: selectedHotel.name,
         roomType,
         adults: adultCount,
-        child1: child1Count,
-        child2: child2Count,
+        child1: child1Count > 0 ? 1 : 0,
+        child2: child2Count > 0 ? 1 : 0,
         babyCount,
         totalPrice: priceCalculation.total,
         message,
         documentUrl,
         counselor: selectedCounselor,
         destination: "Egypt",
+        status: "pending",
         createdAt: serverTimestamp(),
       };
 
+      // 3. Save to Firestore (Non-blocking)
       if (firestore) {
         const leadsRef = collection(firestore, "leads");
         addDocumentNonBlocking(leadsRef, leadData);
       }
 
+      // 4. Construct Structured WhatsApp Message
       const docString = documentUrl ? `\n📄 *Document:* ${documentUrl}` : "";
-      const travelersString = `${adultCount} Adultes, ${(child1Count > 0 ? 1 : 0) + (child2Count > 0 ? 1 : 0)} Enfants, ${babyCount} Bébé`;
+      const childrenTotal = (child1Count > 0 ? 1 : 0) + (child2Count > 0 ? 1 : 0);
+      
+      const travelersFR = `${adultCount} Adultes${childrenTotal > 0 ? `, ${childrenTotal} Enfant(s)` : ""}${babyCount > 0 ? `, ${babyCount} Bébé(s)` : ""}`;
+      const travelersAR = `${adultCount} بالغين${childrenTotal > 0 ? `، ${childrenTotal} أطفال` : ""}${babyCount > 0 ? `، ${babyCount} رضع` : ""}`;
       
       const whatsappMsg = language === 'ar' 
-        ? `مرحباً أليانس ترافل! 🇪🇬\n\nأود حجز عرض مصر 2026.\n\n👤 *الاسم:* ${name}\n🏨 *الفندق:* ${selectedHotel.name}\n🛏️ *الغرفة:* ${roomType}\n📅 *التاريخ:* ${selectedDate}\n👥 *المسافرين:* ${travelersString}\n💰 *الإجمالي:* ${formattedTotal}\n📍 *الوجهة:* مصر${docString}\n\n💬 *ملاحظة:* ${message || "لا يوجد"}`
-        : `Bonjour Alliance Travel! 🇪🇬\n\nJe souhaite réserver l'offre Égypte 2026.\n\n👤 *Nom:* ${name}\n🏨 *Hôtel:* ${selectedHotel.name}\n🛏️ *Chambre:* ${roomType}\n📅 *Date:* ${selectedDate}\n👥 *Voyageurs:* ${travelersString}\n💰 *Total Estimé:* ${formattedTotal}\n📍 *Destination:* Égypte${docString}\n\n💬 *Note:* ${message || "Aucune"}`;
+        ? `مرحباً أليانس ترافل! 🇪🇬\n\nأود حجز عرض مصر 2026.\n\n👤 *الاسم:* ${name}\n📞 *الهاتف:* ${phone}\n🏨 *الفندق:* ${selectedHotel.name}\n🛏️ *نوع الغرفة:* ${roomType}\n📅 *التاريخ:* ${selectedDate}\n👥 *المسافرين:* ${travelersAR}\n💰 *السعر الإجمالي:* ${formattedTotal}\n📍 *الوجهة:* مصر${docString}\n\n💬 *ملاحظة:* ${message || "لا يوجد"}`
+        : `Bonjour Alliance Travel! 🇪🇬\n\nJe souhaite réserver l'offre Égypte 2026.\n\n👤 *Nom:* ${name}\n📞 *Tél:* ${phone}\n🏨 *Hôtel:* ${selectedHotel.name}\n🛏️ *Chambre:* ${roomType}\n📅 *Date:* ${selectedDate}\n👥 *Voyageurs:* ${travelersFR}\n💰 *Estimation Totale:* ${formattedTotal}\n📍 *Destination:* Égypte${docString}\n\n💬 *Note:* ${message || "Aucune"}`;
       
       const whatsappUrl = `https://wa.me/213${selectedCounselor.substring(1)}?text=${encodeURIComponent(whatsappMsg)}`;
 
       setLoading(false);
+      
+      // Redirect to WhatsApp
       window.open(whatsappUrl, "_blank");
 
       toast({
@@ -211,18 +220,18 @@ export function LeadForm({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="text-xs uppercase tracking-widest font-bold">{t('form_name')}</label>
-          <Input name="fullName" required placeholder="Ex: Jean Dupont" className="bg-white/5 border-gold/10" />
+          <Input name="fullName" required placeholder="Ex: Jean Dupont" className="bg-white/5 border-gold/10 focus-visible:ring-gold" />
         </div>
         <div className="space-y-2">
           <label className="text-xs uppercase tracking-widest font-bold">{t('form_email')}</label>
-          <Input name="email" type="email" required placeholder="Ex: jean@example.com" className="bg-white/5 border-gold/10" />
+          <Input name="email" type="email" required placeholder="Ex: jean@example.com" className="bg-white/5 border-gold/10 focus-visible:ring-gold" />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="text-xs uppercase tracking-widest font-bold">{t('form_phone')}</label>
-          <Input name="phone" required placeholder="WhatsApp (Ex: 0550...)" className="bg-white/5 border-gold/10" />
+          <Input name="phone" required placeholder="WhatsApp (Ex: 0550...)" className="bg-white/5 border-gold/10 focus-visible:ring-gold" />
         </div>
         <div className="space-y-2">
           <label className="text-xs uppercase tracking-widest font-bold">{t('form_date')}</label>
@@ -239,6 +248,7 @@ export function LeadForm({
         </div>
       </div>
 
+      {/* Dynamic Group Configuration Section */}
       <div className="space-y-4 p-6 bg-white/5 border border-gold/10 rounded-xl">
         <div className="flex items-center gap-2 text-gold mb-4">
           <Users className="h-5 w-5" />
@@ -341,14 +351,14 @@ export function LeadForm({
         {priceCalculation.error && (
           <div className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg flex items-center gap-3 text-red-400">
             <AlertCircle className="h-4 w-4 shrink-0" />
-            <p className="text-xs font-bold uppercase tracking-widest">{priceCalculation.error}</p>
+            <p className="text-xs font-bold uppercase tracking-widest leading-none">{priceCalculation.error}</p>
           </div>
         )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label className="text-xs uppercase tracking-widest font-bold">Hôtel</label>
+          <label className="text-xs uppercase tracking-widest font-bold">Hôtel Sélectionné</label>
           <Select required onValueChange={setSelectedHotelId} value={selectedHotelId}>
             <SelectTrigger className="bg-white/5 border-gold/10">
               <SelectValue placeholder="Choisir un hôtel" />
@@ -382,34 +392,46 @@ export function LeadForm({
         </div>
       </div>
 
-      <div className="p-4 bg-gold/10 border border-gold/30 rounded-xl flex items-center justify-between">
+      {/* Dynamic Summary Panel */}
+      <div className="p-6 bg-gold/10 border border-gold/30 rounded-xl flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <Calculator className="h-5 w-5 text-gold" />
-          <div className="text-xs uppercase tracking-widest font-bold text-gold">Estimation Totale</div>
+          <div className="h-10 w-10 rounded-full bg-gold/20 flex items-center justify-center">
+            <Calculator className="h-5 w-5 text-gold" />
+          </div>
+          <div>
+            <div className="text-[10px] uppercase tracking-widest font-bold text-gold">Estimation Totale du Séjour</div>
+            <p className="text-xs text-muted-foreground italic">Calculé selon vos options</p>
+          </div>
         </div>
-        <div className="text-2xl font-headline font-bold text-foreground">
+        <div className="text-3xl font-headline font-bold text-foreground">
           {priceCalculation.error ? "--- DA" : formattedTotal}
         </div>
       </div>
 
       <div className="space-y-2">
         <label className="text-xs uppercase tracking-widest font-bold">
-          {language === 'ar' ? 'الوثائق (جواز السفر، إلخ)' : 'Documents (Passeport, etc.)'}
+          {language === 'ar' ? 'الوثائق (صورة جواز السفر)' : 'Documents (Photo du Passeport)'}
         </label>
         <div className="relative group">
-          <Input type="file" onChange={handleFileChange} className="bg-white/5 border-gold/10 file:bg-gold file:text-gold-foreground file:border-none file:rounded file:px-2 file:py-1 file:mr-4 file:text-xs file:cursor-pointer" accept="image/*,.pdf" />
+          <Input type="file" onChange={handleFileChange} className="bg-white/5 border-gold/10 file:bg-gold file:text-gold-foreground file:border-none file:rounded file:px-2 file:py-1 file:mr-4 file:text-xs file:cursor-pointer focus-visible:ring-gold" accept="image/*,.pdf" />
           <FileUp className="absolute right-3 top-2.5 h-4 w-4 text-gold/50 group-hover:text-gold transition-colors pointer-events-none" />
         </div>
       </div>
 
       <div className="space-y-2">
         <label className="text-xs uppercase tracking-widest font-bold">{t('form_message')}</label>
-        <Textarea name="message" placeholder={language === 'ar' ? 'أسئلة إضافية...' : 'Questions supplémentaires...'} className="bg-white/5 border-gold/10 min-h-[120px]" />
+        <Textarea name="message" placeholder={language === 'ar' ? 'هل لديك طلبات خاصة؟' : 'Demandes particulières, allergies, etc.'} className="bg-white/5 border-gold/10 min-h-[100px] focus-visible:ring-gold" />
       </div>
 
-      <Button type="submit" disabled={loading || !!priceCalculation.error} className="w-full bg-gold hover:bg-gold/80 text-gold-foreground h-14 text-lg font-bold">
-        {loading ? <Loader2 className="animate-spin" /> : <><Send className="h-5 w-5 mx-2" /> {t('form_cta')}</>}
-      </Button>
+      <div className="pt-4">
+        <Button type="submit" disabled={loading || !!priceCalculation.error} className="w-full bg-gold hover:bg-gold/80 text-gold-foreground h-16 text-xl font-bold shadow-2xl shadow-gold/20 transition-all active:scale-[0.98]">
+          {loading ? <Loader2 className="animate-spin" /> : <><Send className="h-5 w-5 me-2" /> {t('form_cta')}</>}
+        </Button>
+        <div className="mt-4 flex items-center justify-center gap-2 text-[10px] text-muted-foreground uppercase tracking-widest">
+          <ShieldCheck className="h-3 w-3 text-emerald-500" />
+          Données sécurisées par Alliance Travel
+        </div>
+      </div>
     </form>
   );
 }
