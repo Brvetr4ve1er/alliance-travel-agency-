@@ -7,10 +7,10 @@ import { Plane, Calendar, ShieldCheck, MapPin, Sparkles } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 
 const HERO_INFO_DATA = [
-  { icon: Calendar, key: 'info_duree_val' },
-  { icon: ShieldCheck, key: 'info_pension_val' },
-  { icon: Plane, key: 'info_vols_val' },
-  { icon: MapPin, key: 'info_visa_val' },
+  { icon: Calendar, key: 'info_duree' },
+  { icon: ShieldCheck, key: 'info_pension' },
+  { icon: Plane, key: 'info_vols' },
+  { icon: MapPin, key: 'info_visa' },
 ];
 
 export function Hero() {
@@ -52,7 +52,7 @@ export function Hero() {
         ))}
       </div>
 
-      <div className="relative z-10 animate-fade-up opacity-0 delay-[600ms] text-2xl md:text-3xl font-headline text-primary bg-primary/5 px-6 py-2 rounded-full border border-primary/20">
+      <div className="relative z-10 animate-fade-up opacity-0 [animation-delay:600ms] text-2xl md:text-3xl font-headline text-primary bg-primary/5 px-6 py-2 rounded-full border border-primary/20">
         {t('hero_price_label')} <span className="font-bold text-4xl md:text-5xl mx-2">{t('hero_price_value')}</span>
       </div>
     </section>
