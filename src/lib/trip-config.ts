@@ -8,20 +8,21 @@ export const TRIP_CONFIG = {
   name: "Égypte 2026",
   tagline: "Les Pyramides & la Mer Rouge",
   duration: {
-    days: 8,
-    nights: 7,
-    label: "8 Jours / 7 Nuits",
-    labelAr: "8 أيام / 7 ليالٍ"
+    days: 10,
+    nights: 8,
+    label: "10 Jours / 8 Nuits",
+    labelAr: "10 أيام / 8 ليالٍ"
   },
   basePrice: "180 000 DA",
   visaFee: "25 USD",
   departureDates: [
-    { label: "05 Avril 2026", return: "12 Avril" },
-    { label: "19 Avril 2026", return: "26 Avril" },
-    { label: "01 Mai 2026", return: "08 Mai" },
-    { label: "09 Mai 2026", return: "16 Mai" },
+    { label: "09 Avril 2026", return: "18 Avril" },
+    { label: "23 Avril 2026", return: "02 Mai" },
+    { label: "07 Mai 2026", return: "16 Mai" },
+    { label: "04 Juin 2026", return: "13 Juin" },
+    { label: "18 Juin 2026", return: "27 Juin" },
   ],
-  sharmNights: 5,
+  sharmNights: 6,
   cairoNights: 2,
   mainWhatsApp: "0561616267",
   counselors: [
@@ -165,7 +166,7 @@ export const TRIP_CONFIG = {
   inclusions: [
     "Vols internationaux Alger-Caire (Egyptair)",
     "Vols domestiques Caire-Sharm El Sheikh",
-    "5 nuits à Sharm en All Inclusive Soft",
+    "6 nuits à Sharm en All Inclusive Soft",
     "2 nuits au Caire avec petit-déjeuner",
     "Toutes les excursions mentionnées au programme",
     "Transferts en bus climatisé",

@@ -10,8 +10,10 @@ export function Flights() {
 
   const departures = [
     { 
-      date: "05 Avril 2026",
+      date: "09 Avril au 18 Avril 2026",
       airline: "Egyptair",
+      duration: "10 Jours / 8 Nuits",
+      checkIn: "10 Avril 2026",
       flights: [
         { no: "MS 846", route: ["Alger", "Caire"], type: "direct", time: "12:55 → 17:40" },
         { no: "MS 028", route: ["Caire", "Sharm"], type: "direct", time: "19:50 → 20:50" },
@@ -20,8 +22,46 @@ export function Flights() {
       ]
     },
     { 
-      date: "19 Avril 2026",
+      date: "23 Avril au 02 Mai 2026",
       airline: "Egyptair",
+      duration: "10 Jours / 8 Nuits",
+      checkIn: "24 Avril 2026",
+      flights: [
+        { no: "MS 846", route: ["Alger", "Caire"], type: "direct", time: "12:55 → 17:40" },
+        { no: "MS 028", route: ["Caire", "Sharm"], type: "direct", time: "19:50 → 20:50" },
+        { no: "MS 025", route: ["Sharm", "Caire"], type: "direct", time: "08:40 → 09:40" },
+        { no: "MS 845", route: ["Caire", "Alger"], type: "direct", time: "09:45 → 11:55" },
+      ]
+    },
+    { 
+      date: "07 Mai au 16 Mai 2026",
+      airline: "Egyptair",
+      duration: "10 Jours / 8 Nuits",
+      checkIn: "08 Mai 2026",
+      flights: [
+        { no: "MS 846", route: ["Alger", "Caire"], type: "direct", time: "12:55 → 17:40" },
+        { no: "MS 028", route: ["Caire", "Sharm"], type: "direct", time: "19:50 → 20:50" },
+        { no: "MS 025", route: ["Sharm", "Caire"], type: "direct", time: "08:40 → 09:40" },
+        { no: "MS 845", route: ["Caire", "Alger"], type: "direct", time: "09:45 → 11:55" },
+      ]
+    },
+    { 
+      date: "04 Juin au 13 Juin 2026",
+      airline: "Egyptair",
+      duration: "10 Jours / 8 Nuits",
+      checkIn: "05 Juin 2026",
+      flights: [
+        { no: "MS 846", route: ["Alger", "Caire"], type: "direct", time: "12:55 → 17:40" },
+        { no: "MS 028", route: ["Caire", "Sharm"], type: "direct", time: "19:50 → 20:50" },
+        { no: "MS 025", route: ["Sharm", "Caire"], type: "direct", time: "08:40 → 09:40" },
+        { no: "MS 845", route: ["Caire", "Alger"], type: "direct", time: "09:45 → 11:55" },
+      ]
+    },
+    { 
+      date: "18 Juin au 27 Juin 2026",
+      airline: "Egyptair",
+      duration: "10 Jours / 8 Nuits",
+      checkIn: "19 Juin 2026",
       flights: [
         { no: "MS 846", route: ["Alger", "Caire"], type: "direct", time: "12:55 → 17:40" },
         { no: "MS 028", route: ["Caire", "Sharm"], type: "direct", time: "19:50 → 20:50" },
@@ -43,14 +83,19 @@ export function Flights() {
                 </Badge>
                 <div className="text-xs text-muted-foreground flex items-center gap-1">
                   <Clock className="h-3 w-3" />
-                  {t('info_vols_val')}
+                  {dep.duration}
                 </div>
               </div>
-              <CardTitle className="text-foreground font-headline text-2xl flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-gold/10 flex items-center justify-center text-gold group-hover:scale-110 transition-transform">
-                  <Plane className="h-5 w-5" />
+              <CardTitle className="text-foreground font-headline text-xl md:text-2xl flex flex-col gap-2">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-gold/10 flex items-center justify-center text-gold group-hover:scale-110 transition-transform">
+                    <Plane className="h-5 w-5" />
+                  </div>
+                  {dep.date}
                 </div>
-                {dep.date}
+                <div className="text-xs text-primary font-medium uppercase tracking-wider ps-13">
+                  Check-in : {dep.checkIn}
+                </div>
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
