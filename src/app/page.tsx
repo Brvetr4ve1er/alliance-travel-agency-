@@ -13,13 +13,13 @@ import { DocumentsRequired } from "@/components/sections/DocumentsRequired";
 import { TrustSection } from "@/components/sections/TrustSection";
 import { LeadForm } from "@/components/sections/LeadForm";
 import { FinalCTA } from "@/components/sections/FinalCTA";
-import { MessageCircle, ShoppingBag, ArrowRight } from "lucide-react";
+import { MessageCircle, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { TRIP_CONFIG } from "@/lib/trip-config";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  const { t, isRtl } = useLanguage();
+  const { t } = useLanguage();
   
   // Selection States
   const [selectedHotelId, setSelectedHotelId] = useState<string>(TRIP_CONFIG.hotels[0].id);
@@ -36,11 +36,12 @@ export default function Home() {
   , [selectedHotelId]);
 
   const totalPrice = useMemo(() => {
-    // Determine base price per adult based on adult count (Single, Double, Triple)
+    // Determine the trip price PER ADULT based on room type
     let basePricePerAdult = selectedHotel.pricingGridNum.double;
     if (adultCount === 1) basePricePerAdult = selectedHotel.pricingGridNum.single;
     else if (adultCount === 3) basePricePerAdult = selectedHotel.pricingGridNum.triple;
     
+    // Formula: [ room type price * number of adults ] + children supplements + baby supplement
     let total = basePricePerAdult * adultCount;
     if (child1Count > 0) total += selectedHotel.pricingGridNum.child1;
     if (child2Count > 0) total += selectedHotel.pricingGridNum.child2;
@@ -143,7 +144,7 @@ export default function Home() {
           </div>
           <div className="flex-1 flex items-center justify-end gap-6">
             <div className="text-right">
-              <p className="text-[10px] uppercase tracking-widest text-gold font-bold">Total Estimation</p>
+              <p className="text-[10px] uppercase tracking-widest text-gold font-bold">Total Séjour</p>
               <p className="text-2xl font-headline font-bold text-foreground">{formattedTotalPrice}</p>
             </div>
             <Button className="bg-gold hover:bg-gold/80 text-gold-foreground font-bold px-8 h-12 shadow-lg shadow-gold/20" asChild>

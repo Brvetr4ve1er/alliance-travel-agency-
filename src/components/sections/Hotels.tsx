@@ -1,10 +1,9 @@
-
 "use client";
 
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Waves, CheckCircle2, Info, MapPin, Coffee, Utensils, Wifi, Wind, ShieldCheck, Clock, Users, User, Baby, Check } from "lucide-react";
+import { Star, Waves, CheckCircle2, Info, MapPin, Wind, ShieldCheck, Clock, Users, User, Baby, Check, Utensils, Wifi, Coffee } from "lucide-react";
 import Image from "next/image";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
@@ -126,7 +125,7 @@ export function Hotels({ selectedId, onSelect }: HotelsProps) {
                 
                 <div className="pt-6 border-t border-gold/10 flex items-end justify-between">
                   <div className="space-y-1">
-                    <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">{t('hotels_price_sub')}</div>
+                    <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Trip Total / Per Person</div>
                     <div className="text-3xl font-headline font-bold text-gold">{hotel.price}</div>
                   </div>
                   <div className="flex flex-col gap-2 items-end">
@@ -191,6 +190,7 @@ export function Hotels({ selectedId, onSelect }: HotelsProps) {
                                   <ShieldCheck className="h-5 w-5" />
                                   <h5 className="text-lg font-headline font-bold tracking-wide uppercase">{t('hotels_price_grid')}</h5>
                                 </div>
+                                <p className="text-xs text-muted-foreground mb-4">Prices represent the total trip cost per person for this hotel choice.</p>
                                 <div className="grid grid-cols-2 gap-4">
                                   <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
                                     <p className="text-[10px] text-muted-foreground uppercase flex items-center gap-1"><Users className="h-3 w-3" /> {t('hotels_triple')}</p>
