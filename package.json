@@ -10,6 +10,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "deploy": "npm run build && firebase deploy",
     "git:sync": "git init && (git remote add origin https://github.com/Brvetr4ve1er/alliance-travel-agency-.git || git remote set-url origin https://github.com/Brvetr4ve1er/alliance-travel-agency-.git) && git add . && (git commit -m 'Sync from Studio' || echo 'Nothing new to commit') && git branch -M main && git push -u origin main"
   },
   "dependencies": {

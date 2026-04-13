@@ -56,3 +56,10 @@ git push -u origin main
 This project is configured for Firebase Hosting.
 1. `npm run build`
 2. `firebase deploy`
+
+---
+
+## 📋 Project Structure
+- `src/lib/trip-config.ts`: **Single Source of Truth** for pricing, dates, and hotel data. Update this file to change trip details globally.
+- `src/components/sections/`: Modular React components for each section of the page.
+- `src/lib/i18n.ts`: Translations for French and Arabic.
