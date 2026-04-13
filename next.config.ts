@@ -1,11 +1,8 @@
-
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   output: 'export',
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -40,7 +37,6 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   experimental: {
-    // Correcting the experimental flag placement and naming for Next.js 15
     serverActions: {
       allowedOrigins: [
         '9000-firebase-studio-1775550348200.cluster-cbeiita7rbe7iuwhvjs5zww2i4.cloudworkstations.dev',
