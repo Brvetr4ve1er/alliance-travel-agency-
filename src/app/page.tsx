@@ -7,8 +7,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { QuickInfoBar } from "@/components/sections/QuickInfoBar";
 import { BookingProvider } from "@/components/providers/BookingProvider";
-
-// Static Sections - SSR enabled for LCP
 import { Experience } from "@/components/sections/Experience";
 import { Itinerary } from "@/components/sections/Itinerary";
 import { Pricing } from "@/components/sections/Pricing";
@@ -16,7 +14,7 @@ import { DocumentsRequired } from "@/components/sections/DocumentsRequired";
 import { TrustSection } from "@/components/sections/TrustSection";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 
-// Interactive Sections - Deferred for TBT
+// Dynamic imports for interactive/heavy components to reduce TBT
 const Hotels = dynamic(() => import("@/components/sections/Hotels").then(mod => mod.Hotels), { 
   ssr: false,
   loading: () => <div className="h-96 animate-pulse bg-white/5 rounded-2xl" />
@@ -34,6 +32,47 @@ const SectionHeader = memo(({ title, desc, id }: { title: string; desc?: string;
 ));
 SectionHeader.displayName = "SectionHeader";
 
+const BookingSections = memo(() => (
+  <BookingProvider>
+    <section id="hotels">
+      <SectionHeader title="Confort & Prestige" desc="Une sélection rigoureuse d'établissements d'excellence pour un séjour sans compromis." />
+      <Suspense fallback={<div className="h-96 animate-pulse bg-white/5 rounded-2xl" />}>
+        <Hotels />
+      </Suspense>
+    </section>
+
+    <section id="programme">
+      <SectionHeader title="Votre Itinéraire" desc="Plus qu'un simple voyage, nous vous offrons une immersion sensorielle." />
+      <Itinerary />
+    </section>
+
+    <section id="vols">
+      <SectionHeader title="Vols & Transports" desc="Voyagez en toute sérénité avec Turkish Airlines." />
+      <Suspense fallback={<div className="h-64 animate-pulse bg-white/5 rounded-2xl" />}>
+        <Flights />
+      </Suspense>
+    </section>
+
+    <Pricing />
+
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <DocumentsRequired />
+      <TrustSection />
+    </div>
+
+    <section id="reservation" className="max-w-4xl mx-auto">
+      <SectionHeader title="Commencez Votre Voyage" desc="Remplissez le formulaire ci-dessous pour recevoir votre devis personnalisé." />
+      <Suspense fallback={<div className="h-[600px] animate-pulse bg-white/5 rounded-2xl" />}>
+        <LeadForm />
+      </Suspense>
+    </section>
+
+    <PriceSummaryBar />
+    <WhatsAppFAB />
+  </BookingProvider>
+));
+BookingSections.displayName = "BookingSections";
+
 export default function Home() {
   return (
     <main className="min-h-screen relative overflow-x-hidden pb-24">
@@ -43,45 +82,7 @@ export default function Home() {
       
       <div className="max-w-6xl mx-auto px-6 py-20 space-y-32">
         <Experience />
-        
-        <BookingProvider>
-          <section id="hotels">
-            <SectionHeader title="Confort & Prestige" desc="Une sélection rigoureuse d'établissements d'excellence pour un séjour sans compromis." />
-            <Suspense fallback={<div className="h-96 animate-pulse bg-white/5 rounded-2xl" />}>
-              <Hotels />
-            </Suspense>
-          </section>
-
-          <section id="programme">
-            <SectionHeader title="Votre Itinéraire" desc="Plus qu'un simple voyage, nous vous offrons une immersion sensorielle." />
-            <Itinerary />
-          </section>
-
-          <section id="vols">
-            <SectionHeader title="Vols & Transports" desc="Voyagez en toute sérénité avec Turkish Airlines." />
-            <Suspense fallback={<div className="h-64 animate-pulse bg-white/5 rounded-2xl" />}>
-              <Flights />
-            </Suspense>
-          </section>
-
-          <Pricing />
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <DocumentsRequired />
-            <TrustSection />
-          </div>
-
-          <section id="reservation" className="max-w-4xl mx-auto">
-            <SectionHeader title="Commencez Votre Voyage" desc="Remplissez le formulaire ci-dessous pour recevoir votre devis personnalisé." />
-            <Suspense fallback={<div className="h-[600px] animate-pulse bg-white/5 rounded-2xl" />}>
-              <LeadForm />
-            </Suspense>
-          </section>
-
-          <PriceSummaryBar />
-          <WhatsAppFAB />
-        </BookingProvider>
-
+        <BookingSections />
         <FinalCTA />
       </div>
 

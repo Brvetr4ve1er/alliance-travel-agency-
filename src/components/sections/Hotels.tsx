@@ -25,18 +25,6 @@ const AMENITY_ICONS: Record<string, any> = {
 };
 
 const HotelCard = memo(({ hotel, isSelected, onSelect, onOpenDetails, t, hotelImage }: any) => {
-  const handleDetailsClick = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onOpenDetails(hotel);
-  }, [hotel, onOpenDetails]);
-
-  const handleSelectClick = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onSelect(hotel.id);
-  }, [hotel.id, onSelect]);
-
   return (
     <Card className={cn(
       "glass-panel overflow-hidden transition-all duration-500 flex flex-col h-full group relative",
@@ -77,8 +65,8 @@ const HotelCard = memo(({ hotel, isSelected, onSelect, onOpenDetails, t, hotelIm
             <div className="text-3xl font-headline font-bold text-gold">{hotel.price}</div>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={handleDetailsClick} className="border-gold/30 text-gold hover:bg-gold/5 h-9"><Info className="h-4 w-4" /></Button>
-            <Button variant={isSelected ? "default" : "secondary"} size="sm" onClick={handleSelectClick} className={cn("h-9 font-bold uppercase tracking-tighter transition-all", isSelected ? "bg-emerald-500 hover:bg-emerald-600 text-white" : "bg-gold/10 text-gold hover:bg-gold hover:text-gold-foreground")}>{isSelected ? <Check className="h-4 w-4" /> : t('hotels_drawer_cta')}</Button>
+            <Button variant="outline" size="sm" onClick={(e) => { e.stopPropagation(); onOpenDetails(hotel); }} className="border-gold/30 text-gold hover:bg-gold/5 h-9"><Info className="h-4 w-4" /></Button>
+            <Button variant={isSelected ? "default" : "secondary"} size="sm" onClick={(e) => { e.stopPropagation(); onSelect(hotel.id); }} className={cn("h-9 font-bold uppercase tracking-tighter transition-all", isSelected ? "bg-emerald-500 hover:bg-emerald-600 text-white" : "bg-gold/10 text-gold hover:bg-gold hover:text-gold-foreground")}>{isSelected ? <Check className="h-4 w-4" /> : t('hotels_drawer_cta')}</Button>
           </div>
         </div>
       </CardContent>
