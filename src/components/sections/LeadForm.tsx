@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -8,10 +9,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Send, FileUp, UserCheck } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
-import { storage } from "@/lib/firebase";
 import { collection, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { useFirestore, addDocumentNonBlocking } from "@/firebase";
+import { useFirestore, useStorage, addDocumentNonBlocking } from "@/firebase";
 import { TRIP_CONFIG } from "@/lib/trip-config";
 
 export function LeadForm() {
@@ -22,6 +22,7 @@ export function LeadForm() {
   const [selectedCounselor, setSelectedCounselor] = useState<string>(TRIP_CONFIG.mainWhatsApp);
   const [file, setFile] = useState<File | null>(null);
   const firestore = useFirestore();
+  const storage = useStorage();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -43,14 +44,12 @@ export function LeadForm() {
     try {
       let documentUrl = "";
 
-      // 1. Handle File Upload to Firebase Storage
       if (file && storage) {
         const storageRef = ref(storage, `leads_documents/${Date.now()}_${file.name}`);
         const uploadResult = await uploadBytes(storageRef, file);
         documentUrl = await getDownloadURL(uploadResult.ref);
       }
 
-      // 2. Prepare Firestore Lead Data
       const leadData = {
         name,
         email,
@@ -64,13 +63,11 @@ export function LeadForm() {
         createdAt: serverTimestamp(),
       };
 
-      // 3. Persist to Firestore
       if (firestore) {
         const leadsRef = collection(firestore, "leads");
         addDocumentNonBlocking(leadsRef, leadData);
       }
 
-      // 4. Construct WhatsApp Message
       const docString = documentUrl ? `\n📄 *Document:* ${documentUrl}` : "";
       const whatsappMsg = language === 'ar' 
         ? `مرحباً أليانس ترافل! 🇪🇬\n\nأود حجز عرض مصر 2026.\n\n👤 *الاسم:* ${name}\n📧 *البريد:* ${email}\n📞 *الهاتف:* ${phone}\n📅 *التاريخ:* ${selectedDate}\n👥 *عدد المسافرين:* ${travelers}\n📍 *الوجهة:* مصر${docString}\n\n💬 *ملاحظة:* ${message || "لا يوجد"}`

@@ -40,10 +40,13 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   experimental: {
-    allowedDevOrigins: [
-      '9000-firebase-studio-1775550348200.cluster-cbeiita7rbe7iuwhvjs5zww2i4.cloudworkstations.dev',
-      '6000-firebase-studio-1775550348200.cluster-cbeiita7rbe7iuwhvjs5zww2i4.cloudworkstations.dev'
-    ]
+    // Correcting the experimental flag placement and naming for Next.js 15
+    serverActions: {
+      allowedOrigins: [
+        '9000-firebase-studio-1775550348200.cluster-cbeiita7rbe7iuwhvjs5zww2i4.cloudworkstations.dev',
+        '6000-firebase-studio-1775550348200.cluster-cbeiita7rbe7iuwhvjs5zww2i4.cloudworkstations.dev'
+      ]
+    }
   }
 };
 
