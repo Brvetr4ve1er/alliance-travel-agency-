@@ -7,20 +7,23 @@ import { Cormorant_Garamond, DM_Sans, Noto_Sans_Arabic } from 'next/font/google'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: ['300', '400', '600', '700'],
+  weight: ['400', '700'],
   variable: '--font-headline',
+  display: 'swap',
 });
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
-  weight: ['300', '400', '500'],
+  weight: ['400', '500'],
   variable: '--font-body',
+  display: 'swap',
 });
 
 const notoArabic = Noto_Sans_Arabic({
   subsets: ['arabic'],
-  weight: ['300', '400', '500', '700'],
+  weight: ['400', '700'],
   variable: '--font-arabic',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {

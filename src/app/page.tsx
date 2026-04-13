@@ -1,6 +1,7 @@
 
 "use client";
 
+import React, { memo } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { QuickInfoBar } from "@/components/sections/QuickInfoBar";
@@ -19,7 +20,7 @@ import { DocumentsRequired } from "@/components/sections/DocumentsRequired";
 import { TrustSection } from "@/components/sections/TrustSection";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 
-function PriceSummaryBar() {
+const PriceSummaryBar = memo(() => {
   const { t } = useLanguage();
   const { selectedHotelId, selectedDate, selectedRoomType, adultCount, child1Count, child2Count, babyCount, priceData } = useBooking();
   
@@ -27,7 +28,7 @@ function PriceSummaryBar() {
   const formattedPrice = new Intl.NumberFormat('fr-DZ').format(priceData.total) + " DA";
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[250] bg-background/80 backdrop-blur-xl border-t border-gold/20 p-4 animate-in slide-in-from-bottom duration-500">
+    <div className="fixed bottom-0 left-0 right-0 z-[250] bg-background/90 backdrop-blur-md border-t border-gold/20 p-4 animate-in slide-in-from-bottom duration-500">
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
         <div className="hidden sm:block">
           {priceData.error ? (
@@ -63,9 +64,10 @@ function PriceSummaryBar() {
       </div>
     </div>
   );
-}
+});
+PriceSummaryBar.displayName = "PriceSummaryBar";
 
-function WhatsAppFAB() {
+const WhatsAppFAB = memo(() => {
   const { t } = useLanguage();
   const { selectedHotelId, selectedDate, selectedRoomType, adultCount, child1Count, child2Count, babyCount, priceData } = useBooking();
   const hotel = TRIP_CONFIG.hotels.find(h => h.id === selectedHotelId) || TRIP_CONFIG.hotels[0];
@@ -84,14 +86,15 @@ function WhatsAppFAB() {
       <MessageCircle className="h-6 w-6" />
     </a>
   );
-}
+});
+WhatsAppFAB.displayName = "WhatsAppFAB";
 
-function BookingSections() {
+const InteractiveSections = memo(() => {
   const { t } = useLanguage();
   const { selectedHotelId, setSelectedHotelId, selectedDate, setSelectedDate } = useBooking();
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-20 space-y-32">
+    <>
       <Experience />
       
       <section id="hotels" className="scroll-mt-24">
@@ -136,9 +139,12 @@ function BookingSections() {
       </section>
 
       <FinalCTA />
-    </div>
+      <PriceSummaryBar />
+      <WhatsAppFAB />
+    </>
   );
-}
+});
+InteractiveSections.displayName = "InteractiveSections";
 
 export default function Home() {
   return (
@@ -146,11 +152,11 @@ export default function Home() {
       <Navbar />
       <Hero />
       <QuickInfoBar />
-      <BookingProvider>
-        <BookingSections />
-        <PriceSummaryBar />
-        <WhatsAppFAB />
-      </BookingProvider>
+      <div className="max-w-6xl mx-auto px-6 py-20 space-y-32">
+        <BookingProvider>
+          <InteractiveSections />
+        </BookingProvider>
+      </div>
       <footer className="border-t border-gold/10 py-12 px-6 text-center text-sm text-muted-foreground bg-background/80 backdrop-blur-md">
         <p className="mb-2">© 2026 Alliance Travel — Licence d'État A. Tous droits réservés.</p>
         <p className="font-headline italic text-gold">L'expertise au service de vos émotions.</p>

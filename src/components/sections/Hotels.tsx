@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { memo, useState, useMemo } from "react";
+import React, { memo, useState, useMemo, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star, Waves, CheckCircle2, Info, MapPin, Wind, ShieldCheck, Clock, Users, User, Baby, Check, Utensils, Wifi, Coffee } from "lucide-react";
@@ -24,49 +24,68 @@ const AMENITY_ICONS: Record<string, any> = {
   "Free Shuttle": Wind, "Private Beach": Waves, "Aqua Park": Waves, "Spa & Wellness": ShieldCheck, "Fitness Center": ShieldCheck, "WiFi": Wifi, "Beach Front": Waves, "Luxury Spa": ShieldCheck, "Gourmet Dining": Utensils, "VIP Lounge": Info, "Premium WiFi": Wifi, "Mega Aqua Park": Waves, "International Buffet": Utensils, "Modern Gym": ShieldCheck, "Infinity Pool": Waves, "Private Concierge": Info, "Diving Center": Waves, "Organic Food": Coffee, "Sandy Lagoon": Waves, "Premium Bedding": Info, "Yoga Studio": ShieldCheck, "Live Cooking": Utensils,
 };
 
-const HotelCard = memo(({ hotel, isSelected, onSelect, onOpenDetails, t, hotelImage }: any) => (
-  <Card className={cn(
-    "glass-panel overflow-hidden transition-all duration-500 flex flex-col h-full group relative",
-    isSelected ? 'border-gold ring-2 ring-gold shadow-2xl shadow-gold/20' : 'border-gold/10 hover:border-gold/30',
-    hotel.premium && !isSelected ? 'bg-gold/5' : ''
-  )}>
-    {isSelected && <div className="absolute top-4 end-4 z-30 bg-gold text-gold-foreground p-1 rounded-full shadow-xl"><Check className="h-4 w-4" /></div>}
-    <div className="relative w-full aspect-video md:aspect-[16/10] shrink-0 overflow-hidden">
-      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors z-10" />
-      {hotelImage && (
-        <Image src={hotelImage.imageUrl} alt={hotelImage.description} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover transition-transform duration-1000 group-hover:scale-110" />
-      )}
-      <div className="absolute top-4 start-4 z-20 flex gap-2">
-        {hotel.premium && <Badge className="bg-gold text-gold-foreground border-none text-[10px] uppercase tracking-tighter shadow-xl font-bold px-3 py-1">{t('hotels_premium_badge')}</Badge>}
-      </div>
-    </div>
-    <CardContent className="p-6 space-y-6 flex-1 flex flex-col justify-between">
-      <div className="space-y-4">
-        <div className="flex items-start justify-between gap-4">
-          <div className="space-y-2 flex-1">
-            <h4 className="text-2xl font-headline font-bold text-foreground leading-tight group-hover:text-gold transition-colors">{hotel.name}</h4>
-            <div className="flex items-center gap-2 text-[10px] text-muted-foreground uppercase tracking-[0.2em] font-medium"><Waves className="h-3.5 w-3.5 text-gold" />{hotel.type}</div>
-          </div>
-          <div className="shrink-0 flex items-center gap-2 bg-gold/20 px-4 py-2 rounded-xl border border-gold/30 shadow-md">
-            <span className="text-xl font-bold text-gold leading-none">{hotel.stars}</span><Star className="h-5 w-5 fill-gold text-gold" />
-          </div>
+const HotelCard = memo(({ hotel, isSelected, onSelect, onOpenDetails, t, hotelImage }: any) => {
+  const handleDetailsClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    onOpenDetails(hotel);
+  }, [hotel, onOpenDetails]);
+
+  const handleSelectClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    onSelect(hotel.id);
+  }, [hotel.id, onSelect]);
+
+  return (
+    <Card className={cn(
+      "glass-panel overflow-hidden transition-all duration-500 flex flex-col h-full group relative",
+      isSelected ? 'border-gold ring-2 ring-gold shadow-2xl shadow-gold/20' : 'border-gold/10 hover:border-gold/30',
+      hotel.premium && !isSelected ? 'bg-gold/5' : ''
+    )}>
+      {isSelected && <div className="absolute top-4 end-4 z-30 bg-gold text-gold-foreground p-1 rounded-full shadow-xl"><Check className="h-4 w-4" /></div>}
+      <div className="relative w-full aspect-video md:aspect-[16/10] shrink-0 overflow-hidden">
+        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors z-10" />
+        {hotelImage && (
+          <Image 
+            src={hotelImage.imageUrl} 
+            alt={hotelImage.description} 
+            fill 
+            sizes="(max-width: 768px) 100vw, 50vw" 
+            className="object-cover transition-transform duration-1000 group-hover:scale-110" 
+            loading="lazy"
+          />
+        )}
+        <div className="absolute top-4 start-4 z-20 flex gap-2">
+          {hotel.premium && <Badge className="bg-gold text-gold-foreground border-none text-[10px] uppercase tracking-tighter shadow-xl font-bold px-3 py-1">{t('hotels_premium_badge')}</Badge>}
         </div>
       </div>
-      <div className="pt-6 border-t border-gold/10 flex items-end justify-between">
-        <div className="space-y-1">
-          <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Trip Total / Per Person</div>
-          <div className="text-3xl font-headline font-bold text-gold">{hotel.price}</div>
-        </div>
-        <div className="flex flex-col gap-2 items-end">
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={() => onOpenDetails(hotel)} className="border-gold/30 text-gold hover:bg-gold/5 h-9"><Info className="h-4 w-4" /></Button>
-            <Button variant={isSelected ? "default" : "secondary"} size="sm" onClick={() => onSelect(hotel.id)} className={cn("h-9 font-bold uppercase tracking-tighter transition-all", isSelected ? "bg-emerald-500 hover:bg-emerald-600 text-white" : "bg-gold/10 text-gold hover:bg-gold hover:text-gold-foreground")}>{isSelected ? <Check className="h-4 w-4" /> : t('hotels_drawer_cta')}</Button>
+      <CardContent className="p-6 space-y-6 flex-1 flex flex-col justify-between">
+        <div className="space-y-4">
+          <div className="flex items-start justify-between gap-4">
+            <div className="space-y-2 flex-1">
+              <h4 className="text-2xl font-headline font-bold text-foreground leading-tight group-hover:text-gold transition-colors">{hotel.name}</h4>
+              <div className="flex items-center gap-2 text-[10px] text-muted-foreground uppercase tracking-[0.2em] font-medium"><Waves className="h-3.5 w-3.5 text-gold" />{hotel.type}</div>
+            </div>
+            <div className="shrink-0 flex items-center gap-2 bg-gold/20 px-4 py-2 rounded-xl border border-gold/30 shadow-md">
+              <span className="text-xl font-bold text-gold leading-none">{hotel.stars}</span><Star className="h-5 w-5 fill-gold text-gold" />
+            </div>
           </div>
         </div>
-      </div>
-    </CardContent>
-  </Card>
-));
+        <div className="pt-6 border-t border-gold/10 flex items-end justify-between">
+          <div className="space-y-1">
+            <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Trip Total / Per Person</div>
+            <div className="text-3xl font-headline font-bold text-gold">{hotel.price}</div>
+          </div>
+          <div className="flex flex-col gap-2 items-end">
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm" onClick={handleDetailsClick} className="border-gold/30 text-gold hover:bg-gold/5 h-9"><Info className="h-4 w-4" /></Button>
+              <Button variant={isSelected ? "default" : "secondary"} size="sm" onClick={handleSelectClick} className={cn("h-9 font-bold uppercase tracking-tighter transition-all", isSelected ? "bg-emerald-500 hover:bg-emerald-600 text-white" : "bg-gold/10 text-gold hover:bg-gold hover:text-gold-foreground")}>{isSelected ? <Check className="h-4 w-4" /> : t('hotels_drawer_cta')}</Button>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+});
 HotelCard.displayName = "HotelCard";
 
 export const Hotels = memo(({ selectedId, onSelect }: any) => {
@@ -99,7 +118,6 @@ export const Hotels = memo(({ selectedId, onSelect }: any) => {
             onSelect={onSelect} 
             onOpenDetails={setDetailHotel}
             t={t} 
-            isRtl={isRtl} 
             hotelImage={hotelImageMap[hotel.id]}
           />
         ))}
