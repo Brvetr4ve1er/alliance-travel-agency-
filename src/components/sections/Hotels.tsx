@@ -76,11 +76,9 @@ const HotelCard = memo(({ hotel, isSelected, onSelect, onOpenDetails, t, hotelIm
             <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Trip Total / Per Person</div>
             <div className="text-3xl font-headline font-bold text-gold">{hotel.price}</div>
           </div>
-          <div className="flex flex-col gap-2 items-end">
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm" onClick={handleDetailsClick} className="border-gold/30 text-gold hover:bg-gold/5 h-9"><Info className="h-4 w-4" /></Button>
-              <Button variant={isSelected ? "default" : "secondary"} size="sm" onClick={handleSelectClick} className={cn("h-9 font-bold uppercase tracking-tighter transition-all", isSelected ? "bg-emerald-500 hover:bg-emerald-600 text-white" : "bg-gold/10 text-gold hover:bg-gold hover:text-gold-foreground")}>{isSelected ? <Check className="h-4 w-4" /> : t('hotels_drawer_cta')}</Button>
-            </div>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" onClick={handleDetailsClick} className="border-gold/30 text-gold hover:bg-gold/5 h-9"><Info className="h-4 w-4" /></Button>
+            <Button variant={isSelected ? "default" : "secondary"} size="sm" onClick={handleSelectClick} className={cn("h-9 font-bold uppercase tracking-tighter transition-all", isSelected ? "bg-emerald-500 hover:bg-emerald-600 text-white" : "bg-gold/10 text-gold hover:bg-gold hover:text-gold-foreground")}>{isSelected ? <Check className="h-4 w-4" /> : t('hotels_drawer_cta')}</Button>
           </div>
         </div>
       </CardContent>
@@ -135,9 +133,10 @@ export const Hotels = memo(() => {
         </CardContent>
       </Card>
 
-      <Sheet open={!!detailHotel} onOpenChange={(open) => !open && setDetailHotel(null)}>
-        <SheetContent side={isRtl ? "left" : "right"} className="glass-panel border-gold/20 w-full sm:max-w-xl p-0">
-          {detailHotel && (
+      {/* Conditionally rendering the Sheet to defer its hydration and DOM overhead */}
+      {detailHotel && (
+        <Sheet open={!!detailHotel} onOpenChange={(open) => !open && setDetailHotel(null)}>
+          <SheetContent side={isRtl ? "left" : "right"} className="glass-panel border-gold/20 w-full sm:max-w-xl p-0">
             <ScrollArea className="h-full">
               <div className="relative h-64 w-full">
                 {detailHotelImage && <Image src={detailHotelImage.imageUrl} alt={detailHotelImage.description} fill className="object-cover" />}
@@ -193,9 +192,9 @@ export const Hotels = memo(() => {
                 </div>
               </div>
             </ScrollArea>
-          )}
-        </SheetContent>
-      </Sheet>
+          </SheetContent>
+        </Sheet>
+      )}
     </div>
   );
 });

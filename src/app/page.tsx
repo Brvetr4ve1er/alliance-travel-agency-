@@ -1,162 +1,33 @@
 
 "use client";
 
-import React, { memo } from "react";
+import React, { memo, Suspense } from "react";
 import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { QuickInfoBar } from "@/components/sections/QuickInfoBar";
-import { Experience } from "@/components/sections/Experience";
-import { Itinerary } from "@/components/sections/Itinerary";
-import { Pricing } from "@/components/sections/Pricing";
-import { BookingProvider, useBooking } from "@/components/providers/BookingProvider";
-import { useLanguage } from "@/components/providers/LanguageProvider";
-import { TRIP_CONFIG } from "@/lib/trip-config";
-import { Button } from "@/components/ui/button";
-import { MessageCircle, ArrowRight, AlertTriangle } from "lucide-react";
-import { DocumentsRequired } from "@/components/sections/DocumentsRequired";
-import { TrustSection } from "@/components/sections/TrustSection";
-import { FinalCTA } from "@/components/sections/FinalCTA";
+import { BookingProvider } from "@/components/providers/BookingProvider";
 
-// Dynamic imports for heavy components to improve TBT and FCP
-const Hotels = dynamic(() => import("@/components/sections/Hotels").then(mod => mod.Hotels), { 
-  ssr: false,
-  loading: () => <div className="h-96 w-full animate-pulse bg-gold/5 rounded-2xl" />
-});
+// All non-critical sections are dynamically imported with SSR disabled to minimize TBT
+const Experience = dynamic(() => import("@/components/sections/Experience").then(mod => mod.Experience), { ssr: false });
+const Itinerary = dynamic(() => import("@/components/sections/Itinerary").then(mod => mod.Itinerary), { ssr: false });
+const Pricing = dynamic(() => import("@/components/sections/Pricing").then(mod => mod.Pricing), { ssr: false });
+const DocumentsRequired = dynamic(() => import("@/components/sections/DocumentsRequired").then(mod => mod.DocumentsRequired), { ssr: false });
+const TrustSection = dynamic(() => import("@/components/sections/TrustSection").then(mod => mod.TrustSection), { ssr: false });
+const FinalCTA = dynamic(() => import("@/components/sections/FinalCTA").then(mod => mod.FinalCTA), { ssr: false });
+const Hotels = dynamic(() => import("@/components/sections/Hotels").then(mod => mod.Hotels), { ssr: false });
+const Flights = dynamic(() => import("@/components/sections/Flights").then(mod => mod.Flights), { ssr: false });
+const LeadForm = dynamic(() => import("@/components/sections/LeadForm").then(mod => mod.LeadForm), { ssr: false });
+const PriceSummaryBar = dynamic(() => import("@/components/sections/PriceSummaryBar").then(mod => mod.PriceSummaryBar), { ssr: false });
+const WhatsAppFAB = dynamic(() => import("@/components/sections/WhatsAppFAB").then(mod => mod.WhatsAppFAB), { ssr: false });
 
-const Flights = dynamic(() => import("@/components/sections/Flights").then(mod => mod.Flights), { 
-  ssr: false,
-  loading: () => <div className="h-64 w-full animate-pulse bg-gold/5 rounded-2xl" />
-});
-
-const LeadForm = dynamic(() => import("@/components/sections/LeadForm").then(mod => mod.LeadForm), { 
-  ssr: false 
-});
-
-const PriceSummaryBar = memo(() => {
-  const { t } = useLanguage();
-  const { selectedHotelId, selectedDate, selectedRoomType, adultCount, child1Count, child2Count, babyCount, priceData } = useBooking();
-  
-  const hotel = TRIP_CONFIG.hotels.find(h => h.id === selectedHotelId) || TRIP_CONFIG.hotels[0];
-  const formattedPrice = new Intl.NumberFormat('fr-DZ').format(priceData.total) + " DA";
-
-  return (
-    <div className="fixed bottom-0 left-0 right-0 z-[250] bg-background/90 backdrop-blur-md border-t border-gold/20 p-4 animate-in slide-in-from-bottom duration-500">
-      <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-        <div className="hidden sm:block">
-          {priceData.error ? (
-            <div className="flex items-center gap-2 text-red-400">
-              <AlertTriangle className="h-4 w-4" />
-              <p className="text-xs font-bold uppercase tracking-widest">{priceData.error}</p>
-            </div>
-          ) : (
-            <>
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-0.5">Selection : {hotel.name}</p>
-              <p className="text-xs text-foreground/80 font-medium capitalize">
-                {selectedDate} · {selectedRoomType} · {adultCount} {t('form_v_adults')} 
-                {child1Count + child2Count > 0 && ` + ${(child1Count > 0 ? 1 : 0) + (child2Count > 0 ? 1 : 0)} Enfant(s)`}
-                {babyCount > 0 && ` + ${babyCount} Bébé(s)`}
-              </p>
-            </>
-          )}
-        </div>
-        <div className="flex-1 flex items-center justify-end gap-6">
-          {!priceData.error && (
-            <div className="text-right">
-              <p className="text-[10px] uppercase tracking-widest text-gold font-bold">Total Séjour</p>
-              <p className="text-2xl font-headline font-bold text-foreground">{formattedPrice}</p>
-            </div>
-          )}
-          <Button className="bg-gold hover:bg-gold/80 text-gold-foreground font-bold px-8 h-12 shadow-lg shadow-gold/20" asChild>
-            <a href="#reservation">
-              {t('nav_reserver')}
-              <ArrowRight className="h-4 w-4 ms-2" />
-            </a>
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-});
-PriceSummaryBar.displayName = "PriceSummaryBar";
-
-const WhatsAppFAB = memo(() => {
-  const { t } = useLanguage();
-  const { selectedHotelId, selectedDate, selectedRoomType, adultCount, child1Count, child2Count, babyCount, priceData } = useBooking();
-  const hotel = TRIP_CONFIG.hotels.find(h => h.id === selectedHotelId) || TRIP_CONFIG.hotels[0];
-  const formattedPrice = new Intl.NumberFormat('fr-DZ').format(priceData.total) + " DA";
-  
-  const msg = `Bonjour, je souhaite réserver l'offre Égypte 2026. Hôtel: ${hotel.name}, Chambre: ${selectedRoomType}, Date: ${selectedDate}, Voyageurs: ${adultCount} Adultes, ${(child1Count > 0 ? 1 : 0) + (child2Count > 0 ? 1 : 0)} Enfants, ${babyCount} Bébé. Total: ${formattedPrice}`;
-
-  return (
-    <a 
-      href={`https://wa.me/213561616267?text=${encodeURIComponent(msg)}`} 
-      target="_blank" 
-      rel="noopener noreferrer"
-      className="fixed bottom-24 right-8 z-[300] bg-emerald-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all group flex items-center gap-3"
-    >
-      <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 ease-in-out font-medium">{t('whatsapp_cta')}</span>
-      <MessageCircle className="h-6 w-6" />
-    </a>
-  );
-});
-WhatsAppFAB.displayName = "WhatsAppFAB";
-
-const InteractiveSections = memo(() => {
-  const { t } = useLanguage();
-
-  return (
-    <>
-      <Experience />
-      
-      <section id="hotels" className="scroll-mt-24">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-headline mb-4">{t('hotels_section_title')}</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">{t('hotels_section_desc')}</p>
-        </div>
-        <Hotels />
-      </section>
-
-      <section id="programme" className="scroll-mt-24">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-headline mb-4">{t('itin_title')}</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">{t('exp_desc')}</p>
-        </div>
-        <Itinerary />
-      </section>
-
-      <section id="vols" className="scroll-mt-24">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-headline mb-4">{t('flights_title')}</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">{t('flights_desc')}</p>
-        </div>
-        <Flights />
-      </section>
-
-      <Pricing />
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-        <DocumentsRequired />
-        <TrustSection />
-      </div>
-
-      <section id="reservation" className="scroll-mt-24 max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-headline mb-4">{t('form_section_title')}</h2>
-          <p className="text-muted-foreground">{t('form_section_desc')}</p>
-        </div>
-        <div className="max-w-3xl mx-auto">
-          <LeadForm />
-        </div>
-      </section>
-
-      <FinalCTA />
-      <PriceSummaryBar />
-      <WhatsAppFAB />
-    </>
-  );
-});
-InteractiveSections.displayName = "InteractiveSections";
+const SectionHeader = memo(({ title, desc, id }: { title: string; desc?: string; id?: string }) => (
+  <div id={id} className="text-center mb-16 scroll-mt-24">
+    <h2 className="text-4xl md:text-5xl font-headline mb-4">{title}</h2>
+    {desc && <p className="text-muted-foreground max-w-2xl mx-auto">{desc}</p>}
+  </div>
+));
+SectionHeader.displayName = "SectionHeader";
 
 export default function Home() {
   return (
@@ -164,11 +35,47 @@ export default function Home() {
       <Navbar />
       <Hero />
       <QuickInfoBar />
+      
       <div className="max-w-6xl mx-auto px-6 py-20 space-y-32">
+        {/* Static Content - Decoupled from Booking State */}
+        <Experience />
+        
+        {/* Interactive Booking Flow */}
         <BookingProvider>
-          <InteractiveSections />
+          <section id="hotels">
+            <SectionHeader title="Confort & Prestige" desc="Une sélection rigoureuse d'établissements d'excellence pour un séjour sans compromis." />
+            <Hotels />
+          </section>
+
+          <section id="programme">
+            <SectionHeader title="Votre Itinéraire" desc="Plus qu'un simple voyage, nous vous offrons une immersion sensorielle." />
+            <Itinerary />
+          </section>
+
+          <section id="vols">
+            <SectionHeader title="Vols & Transports" desc="Voyagez en toute sérénité avec Turkish Airlines." />
+            <Flights />
+          </section>
+
+          <Pricing />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <DocumentsRequired />
+            <TrustSection />
+          </div>
+
+          <section id="reservation" className="max-w-4xl mx-auto">
+            <SectionHeader title="Commencez Votre Voyage" desc="Remplissez le formulaire ci-dessous pour recevoir votre devis personnalisé." />
+            <LeadForm />
+          </section>
+
+          <PriceSummaryBar />
+          <WhatsAppFAB />
         </BookingProvider>
+
+        <FinalCTA />
       </div>
+
       <footer className="border-t border-gold/10 py-12 px-6 text-center text-sm text-muted-foreground bg-background/80 backdrop-blur-md">
         <p className="mb-2">© 2026 Alliance Travel — Licence d'État A. Tous droits réservés.</p>
         <p className="font-headline italic text-gold">L'expertise au service de vos émotions.</p>
