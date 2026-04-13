@@ -1,4 +1,3 @@
-
 import { TRIP_CONFIG } from './trip-config';
 
 export type Language = 'fr' | 'ar';
@@ -14,7 +13,7 @@ export const translations = {
     // Hero
     hero_badge: `${TRIP_CONFIG.name} · Caire & Sharm El Sheikh`,
     hero_title: "Les <em class='italic text-primary'>Pyramides</em> & <br /> la Mer Rouge",
-    hero_desc: `Sept nuits inoubliables — entre les merveilles du Caire antique et les eaux cristallines de Sharm El Sheikh. Vol Egyptair, hôtels All Inclusive, excursions incluses.`,
+    hero_desc: `Sept nuits inoubliables — entre les merveilles du Caire antique et les eaux cristallines de Sharm El Sheikh. Vol Turkish Airlines, hôtels All Inclusive, excursions incluses.`,
     hero_price_label: "À partir de",
     hero_price_value: TRIP_CONFIG.basePrice,
     hero_cta_primary: "Découvrir l'offre",
@@ -26,7 +25,7 @@ export const translations = {
     info_hotels: "Hôtels",
     info_hotels_val: "4★ à 5★ Luxe",
     info_vols: "Vols",
-    info_vols_val: "Egyptair Inclus",
+    info_vols_val: "Turkish Airlines Inclus",
     info_visa: "Visa",
     info_visa_val: "Support Inclus",
     info_pension: "Pension",
@@ -71,7 +70,7 @@ export const translations = {
 
     // Flights
     flights_title: "Vols & Transports",
-    flights_desc: "Voyagez en toute sérénité avec Egyptair. Des liaisons optimisées pour maximiser votre temps de découverte.",
+    flights_desc: "Voyagez en toute sérénité avec Turkish Airlines. Des liaisons optimisées pour maximiser votre temps de découverte.",
     flights_depart: "Départ",
     flights_return: "Retour",
     flights_direct: "Direct",
@@ -97,8 +96,8 @@ export const translations = {
     trust_p2_title: "Qualité Garantie",
     trust_p2_desc: "Hôtels sélectionnés et testés par nos équipes.",
     trust_p3_title: "Prise en Charge",
-    trust_p3_desc: "Accompagnateur dédié d'Alger au retour.",
-    trust_quote: "\"Un voyage exceptionnel. L'organisation d'Alliance Travel était impeccable, du visa à l'arrivée jusqu'au retour à Alger.\"",
+    trust_p3_desc: "Accompagnateur dédié de Constantine au retour.",
+    trust_quote: "\"Un voyage exceptionnel. L'organisation d'Alliance Travel était impeccable, du visa à l'arrivée jusqu'au retour.\"",
     trust_author: "Famille Mansouri, Voyage 2024",
     
     // Form
@@ -136,7 +135,7 @@ export const translations = {
     // Hero
     hero_badge: `${TRIP_CONFIG.name} · القاهرة وشرم الشيخ`,
     hero_title: "الأهرامات <em class='italic text-primary'>والبحر</em> <br /> الأحمر",
-    hero_desc: `سبع ليالٍ لا تُنسى — بين عجائب القاهرة القديمة ومياه شرم الشيخ الكريستالية. طيران مصر للطيران، فنادق شاملة كلياً، ورحلات متضمنة.`,
+    hero_desc: `سبع ليالٍ لا تُنسى — بين عجائب القاهرة القديمة ومياه شرم الشيخ الكريستالية. طيران الخطوط التركية، فنادق شاملة كلياً، ورحلات متضمنة.`,
     hero_price_label: "ابتداءً من",
     hero_price_value: TRIP_CONFIG.basePrice,
     hero_cta_primary: "اكتشف العرض",
@@ -148,7 +147,7 @@ export const translations = {
     info_hotels: "الفنادق",
     info_hotels_val: "4★ إلى 5★ فاخرة",
     info_vols: "الرحلات",
-    info_vols_val: "مصر للطيران مشمولة",
+    info_vols_val: "الخطوط التركية مشمولة",
     info_visa: "التأشيرة",
     info_visa_val: "الدعم مشمول",
     info_pension: "الإقامة",
@@ -193,7 +192,7 @@ export const translations = {
 
     // Flights
     flights_title: "الرحلات والنقل",
-    flights_desc: "سافر براحة تامة مع مصر للطيران. رحلات منظمة لضمان أقصى استفادة من وقتك في الاستكشاف.",
+    flights_desc: "سافر براحة تامة مع الخطوط التركية. رحلات منظمة لضمان أقصى استفادة من وقتك في الاستكشاف.",
     flights_depart: "الذهاب",
     flights_return: "العودة",
     flights_direct: "مباشرة",
@@ -219,8 +218,8 @@ export const translations = {
     trust_p2_title: "جودة مضمونة",
     trust_p2_desc: "فنادق مختارة ومختبرة من قبل فرقنا.",
     trust_p3_title: "رعاية كاملة",
-    trust_p3_desc: "مرافق مخصص من الجزائر حتى العودة.",
-    trust_quote: "\"رحلة استثنائية. كان تنظيم أليانس ترافل مثالياً، من التأشيرة عند الوصول حتى العودة إلى الجزائر.\"",
+    trust_p3_desc: "مرافق مخصص من قسنطينة حتى العودة.",
+    trust_quote: "\"رحلة استثنائية. كان تنظيم أليانس ترافل مثالياً، من التأشيرة عند الوصول حتى العودة.\"",
     trust_author: "عائلة منصوري، رحلة 2024",
     
     // Form

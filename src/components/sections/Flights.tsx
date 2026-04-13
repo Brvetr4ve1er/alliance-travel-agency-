@@ -11,62 +11,62 @@ export function Flights() {
   const departures = [
     { 
       date: "09 Avril au 18 Avril 2026",
-      airline: "Egyptair",
+      airline: "Turkish Airlines",
       duration: "10 Jours / 8 Nuits",
       checkIn: "10 Avril 2026",
       flights: [
-        { no: "MS 846", route: ["Alger", "Caire"], type: "direct", time: "12:55 → 17:40" },
-        { no: "MS 028", route: ["Caire", "Sharm"], type: "direct", time: "19:50 → 20:50" },
-        { no: "MS 029", route: ["Sharm", "Caire"], type: "direct", time: "21:30 → 22:30" },
-        { no: "MS 845", route: ["Caire", "Alger"], type: "direct", time: "08:45 → 11:55" },
+        { no: "TK 1412", route: ["Constantine", "Istanbul"], type: "direct", time: "13:55 → 19:05" },
+        { no: "TK 698", route: ["Istanbul", "Sharm"], type: "transit", time: "02:10 → 05:00 (+1)" },
+        { no: "TK 699", route: ["Sharm", "Istanbul"], type: "direct", time: "05:45 → 08:35" },
+        { no: "TK 1411", route: ["Istanbul", "Constantine"], type: "direct", time: "11:30 → 13:00" },
       ]
     },
     { 
       date: "23 Avril au 02 Mai 2026",
-      airline: "Egyptair",
+      airline: "Turkish Airlines",
       duration: "10 Jours / 8 Nuits",
       checkIn: "24 Avril 2026",
       flights: [
-        { no: "MS 846", route: ["Alger", "Caire"], type: "direct", time: "12:55 → 17:40" },
-        { no: "MS 028", route: ["Caire", "Sharm"], type: "direct", time: "19:50 → 20:50" },
-        { no: "MS 025", route: ["Sharm", "Caire"], type: "direct", time: "08:40 → 09:40" },
-        { no: "MS 845", route: ["Caire", "Alger"], type: "direct", time: "09:45 → 11:55" },
+        { no: "TK 1412", route: ["Constantine", "Istanbul"], type: "direct", time: "13:55 → 19:05" },
+        { no: "TK 698", route: ["Istanbul", "Sharm"], type: "transit", time: "02:10 → 05:00 (+1)" },
+        { no: "TK 699", route: ["Sharm", "Istanbul"], type: "direct", time: "05:45 → 08:35" },
+        { no: "TK 1411", route: ["Istanbul", "Constantine"], type: "direct", time: "11:30 → 13:00" },
       ]
     },
     { 
       date: "07 Mai au 16 Mai 2026",
-      airline: "Egyptair",
+      airline: "Turkish Airlines",
       duration: "10 Jours / 8 Nuits",
       checkIn: "08 Mai 2026",
       flights: [
-        { no: "MS 846", route: ["Alger", "Caire"], type: "direct", time: "12:55 → 17:40" },
-        { no: "MS 028", route: ["Caire", "Sharm"], type: "direct", time: "19:50 → 20:50" },
-        { no: "MS 025", route: ["Sharm", "Caire"], type: "direct", time: "08:40 → 09:40" },
-        { no: "MS 845", route: ["Caire", "Alger"], type: "direct", time: "09:45 → 11:55" },
+        { no: "TK 1412", route: ["Constantine", "Istanbul"], type: "direct", time: "13:55 → 19:05" },
+        { no: "TK 698", route: ["Istanbul", "Sharm"], type: "transit", time: "02:10 → 05:00 (+1)" },
+        { no: "TK 699", route: ["Sharm", "Istanbul"], type: "direct", time: "05:45 → 08:35" },
+        { no: "TK 1411", route: ["Istanbul", "Constantine"], type: "direct", time: "11:30 → 13:00" },
       ]
     },
     { 
       date: "04 Juin au 13 Juin 2026",
-      airline: "Egyptair",
+      airline: "Turkish Airlines",
       duration: "10 Jours / 8 Nuits",
       checkIn: "05 Juin 2026",
       flights: [
-        { no: "MS 846", route: ["Alger", "Caire"], type: "direct", time: "12:55 → 17:40" },
-        { no: "MS 028", route: ["Caire", "Sharm"], type: "direct", time: "19:50 → 20:50" },
-        { no: "MS 025", route: ["Sharm", "Caire"], type: "direct", time: "08:40 → 09:40" },
-        { no: "MS 845", route: ["Caire", "Alger"], type: "direct", time: "09:45 → 11:55" },
+        { no: "TK 1412", route: ["Constantine", "Istanbul"], type: "direct", time: "13:55 → 19:05" },
+        { no: "TK 698", route: ["Istanbul", "Sharm"], type: "transit", time: "02:10 → 05:00 (+1)" },
+        { no: "TK 699", route: ["Sharm", "Istanbul"], type: "direct", time: "05:45 → 08:35" },
+        { no: "TK 1411", route: ["Istanbul", "Constantine"], type: "direct", time: "11:30 → 13:00" },
       ]
     },
     { 
       date: "18 Juin au 27 Juin 2026",
-      airline: "Egyptair",
+      airline: "Turkish Airlines",
       duration: "10 Jours / 8 Nuits",
       checkIn: "19 Juin 2026",
       flights: [
-        { no: "MS 846", route: ["Alger", "Caire"], type: "direct", time: "12:55 → 17:40" },
-        { no: "MS 028", route: ["Caire", "Sharm"], type: "direct", time: "19:50 → 20:50" },
-        { no: "MS 025", route: ["Sharm", "Caire"], type: "direct", time: "08:40 → 09:40" },
-        { no: "MS 845", route: ["Caire", "Alger"], type: "direct", time: "09:45 → 11:55" },
+        { no: "TK 1412", route: ["Constantine", "Istanbul"], type: "direct", time: "13:55 → 19:05" },
+        { no: "TK 698", route: ["Istanbul", "Sharm"], type: "transit", time: "02:10 → 05:00 (+1)" },
+        { no: "TK 699", route: ["Sharm", "Istanbul"], type: "direct", time: "05:45 → 08:35" },
+        { no: "TK 1411", route: ["Istanbul", "Constantine"], type: "direct", time: "11:30 → 13:00" },
       ]
     }
   ];
@@ -133,7 +133,7 @@ export function Flights() {
       <div className="max-w-2xl mx-auto p-4 bg-emerald-500/5 border border-emerald-500/20 rounded-xl flex items-center gap-4">
         <ShieldCheck className="h-6 w-6 text-emerald-500 shrink-0" />
         <p className="text-xs text-muted-foreground leading-relaxed italic">
-          * Les horaires sont donnés à titre indicatif et peuvent être sujets à des modifications mineures par la compagnie aérienne Egyptair.
+          * Les horaires sont donnés à titre indicatif et peuvent être sujets à des modifications mineures par la compagnie aérienne Turkish Airlines.
         </p>
       </div>
     </div>
