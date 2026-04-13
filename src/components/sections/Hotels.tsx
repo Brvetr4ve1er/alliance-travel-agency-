@@ -133,7 +133,7 @@ export const Hotels = memo(() => {
         </CardContent>
       </Card>
 
-      {/* Conditionally rendering the Sheet to defer its hydration and DOM overhead */}
+      {/* Conditionally rendering the Sheet content to defer its hydration and DOM overhead */}
       {detailHotel && (
         <Sheet open={!!detailHotel} onOpenChange={(open) => !open && setDetailHotel(null)}>
           <SheetContent side={isRtl ? "left" : "right"} className="glass-panel border-gold/20 w-full sm:max-w-xl p-0">

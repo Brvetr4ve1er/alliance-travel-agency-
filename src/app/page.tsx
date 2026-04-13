@@ -1,22 +1,24 @@
 
 "use client";
 
-import React, { memo, Suspense } from "react";
+import React, { memo } from "react";
 import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { QuickInfoBar } from "@/components/sections/QuickInfoBar";
 import { BookingProvider } from "@/components/providers/BookingProvider";
 
-// All non-critical sections are dynamically imported with SSR disabled to minimize TBT
+// Static informational sections - No state required
 const Experience = dynamic(() => import("@/components/sections/Experience").then(mod => mod.Experience), { ssr: false });
 const Itinerary = dynamic(() => import("@/components/sections/Itinerary").then(mod => mod.Itinerary), { ssr: false });
-const Pricing = dynamic(() => import("@/components/sections/Pricing").then(mod => mod.Pricing), { ssr: false });
 const DocumentsRequired = dynamic(() => import("@/components/sections/DocumentsRequired").then(mod => mod.DocumentsRequired), { ssr: false });
 const TrustSection = dynamic(() => import("@/components/sections/TrustSection").then(mod => mod.TrustSection), { ssr: false });
 const FinalCTA = dynamic(() => import("@/components/sections/FinalCTA").then(mod => mod.FinalCTA), { ssr: false });
+
+// Interactive sections - Requiring Booking Context
 const Hotels = dynamic(() => import("@/components/sections/Hotels").then(mod => mod.Hotels), { ssr: false });
 const Flights = dynamic(() => import("@/components/sections/Flights").then(mod => mod.Flights), { ssr: false });
+const Pricing = dynamic(() => import("@/components/sections/Pricing").then(mod => mod.Pricing), { ssr: false });
 const LeadForm = dynamic(() => import("@/components/sections/LeadForm").then(mod => mod.LeadForm), { ssr: false });
 const PriceSummaryBar = dynamic(() => import("@/components/sections/PriceSummaryBar").then(mod => mod.PriceSummaryBar), { ssr: false });
 const WhatsAppFAB = dynamic(() => import("@/components/sections/WhatsAppFAB").then(mod => mod.WhatsAppFAB), { ssr: false });
@@ -40,7 +42,7 @@ export default function Home() {
         {/* Static Content - Decoupled from Booking State */}
         <Experience />
         
-        {/* Interactive Booking Flow */}
+        {/* Interactive Booking Flow - Isolated Context to minimize hydration blocks */}
         <BookingProvider>
           <section id="hotels">
             <SectionHeader title="Confort & Prestige" desc="Une sélection rigoureuse d'établissements d'excellence pour un séjour sans compromis." />
