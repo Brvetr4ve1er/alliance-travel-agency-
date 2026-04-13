@@ -1,6 +1,7 @@
 
 "use client";
 
+import { useState, useMemo } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { QuickInfoBar } from "@/components/sections/QuickInfoBar";
@@ -13,14 +14,33 @@ import { DocumentsRequired } from "@/components/sections/DocumentsRequired";
 import { TrustSection } from "@/components/sections/TrustSection";
 import { LeadForm } from "@/components/sections/LeadForm";
 import { FinalCTA } from "@/components/sections/FinalCTA";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, ShoppingBag, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { TRIP_CONFIG } from "@/lib/trip-config";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { t, isRtl } = useLanguage();
+  
+  // Selection States
+  const [selectedHotelId, setSelectedHotelId] = useState<string>(TRIP_CONFIG.hotels[0].id);
+  const [selectedDate, setSelectedDate] = useState<string>(TRIP_CONFIG.departureDates[0].label);
+  const [travelerCount, setTravelerCount] = useState<number>(2);
+
+  const selectedHotel = useMemo(() => 
+    TRIP_CONFIG.hotels.find(h => h.id === selectedHotelId) || TRIP_CONFIG.hotels[0]
+  , [selectedHotelId]);
+
+  const totalPrice = useMemo(() => {
+    return selectedHotel.priceNum * travelerCount;
+  }, [selectedHotel, travelerCount]);
+
+  const formattedTotalPrice = useMemo(() => {
+    return new Intl.NumberFormat('fr-DZ').format(totalPrice) + " DA";
+  }, [totalPrice]);
 
   return (
-    <main className="min-h-screen relative overflow-x-hidden">
+    <main className="min-h-screen relative overflow-x-hidden pb-24">
       <Navbar />
       
       <Hero />
@@ -35,7 +55,10 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-headline mb-4">{t('hotels_section_title')}</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">{t('hotels_section_desc')}</p>
           </div>
-          <Hotels />
+          <Hotels 
+            selectedId={selectedHotelId} 
+            onSelect={setSelectedHotelId} 
+          />
         </section>
 
         <section id="programme" className="scroll-mt-24">
@@ -51,7 +74,10 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-headline mb-4">{t('flights_title')}</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">{t('flights_desc')}</p>
           </div>
-          <Flights />
+          <Flights 
+            selectedDate={selectedDate} 
+            onSelect={setSelectedDate} 
+          />
         </section>
 
         <Pricing />
@@ -67,7 +93,12 @@ export default function Home() {
             <p className="text-muted-foreground">{t('form_section_desc')}</p>
           </div>
           <div className="max-w-3xl mx-auto">
-            <LeadForm />
+            <LeadForm 
+              initialDate={selectedDate} 
+              initialHotelId={selectedHotelId}
+              initialTravelers={travelerCount}
+              onTravelersChange={setTravelerCount}
+            />
           </div>
         </section>
 
@@ -79,11 +110,33 @@ export default function Home() {
         <p className="font-headline italic text-gold">{t('footer_slogan')}</p>
       </footer>
 
+      {/* Sticky Price Summary Bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-[250] bg-background/80 backdrop-blur-xl border-t border-gold/20 p-4 animate-in slide-in-from-bottom duration-500">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+          <div className="hidden sm:block">
+            <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-0.5">Selection : {selectedHotel.name}</p>
+            <p className="text-xs text-foreground/80 font-medium">{selectedDate} · {travelerCount} Voyageurs</p>
+          </div>
+          <div className="flex-1 flex items-center justify-end gap-6">
+            <div className="text-right">
+              <p className="text-[10px] uppercase tracking-widest text-gold font-bold">Total Estimation</p>
+              <p className="text-2xl font-headline font-bold text-foreground">{formattedTotalPrice}</p>
+            </div>
+            <Button className="bg-gold hover:bg-gold/80 text-gold-foreground font-bold px-8 h-12 shadow-lg shadow-gold/20" asChild>
+              <a href="#reservation">
+                {t('nav_reserver')}
+                <ArrowRight className="h-4 w-4 ms-2" />
+              </a>
+            </Button>
+          </div>
+        </div>
+      </div>
+
       <a 
-        href={`https://wa.me/213561616267?text=${encodeURIComponent("Bonjour, je souhaite réserver l'offre Égypte 2026")}`} 
+        href={`https://wa.me/213561616267?text=${encodeURIComponent(`Bonjour, je souhaite réserver l'offre Égypte 2026. Hôtel: ${selectedHotel.name}, Date: ${selectedDate}, Voyageurs: ${travelerCount}. Total: ${formattedTotalPrice}`)}`} 
         target="_blank" 
         rel="noopener noreferrer"
-        className="fixed bottom-8 right-8 z-[300] bg-emerald-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all group flex items-center gap-3"
+        className="fixed bottom-24 right-8 z-[300] bg-emerald-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all group flex items-center gap-3"
       >
         <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 ease-in-out font-medium">{t('whatsapp_cta')}</span>
         <MessageCircle className="h-6 w-6" />

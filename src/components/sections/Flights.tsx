@@ -1,133 +1,109 @@
+
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plane, ArrowRight, Clock, MapPin, ShieldCheck } from "lucide-react";
+import { Plane, ArrowRight, Clock, MapPin, ShieldCheck, Check } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { Badge } from "@/components/ui/badge";
+import { TRIP_CONFIG } from "@/lib/trip-config";
+import { cn } from "@/lib/utils";
 
-export function Flights() {
+interface FlightsProps {
+  selectedDate: string;
+  onSelect: (date: string) => void;
+}
+
+export function Flights({ selectedDate, onSelect }: FlightsProps) {
   const { t, isRtl } = useLanguage();
 
-  const departures = [
-    { 
-      date: "09 Avril au 18 Avril 2026",
-      airline: "Turkish Airlines",
-      duration: "10 Jours / 8 Nuits",
-      checkIn: "10 Avril 2026",
-      flights: [
-        { no: "TK 1412", route: ["Constantine", "Istanbul"], type: "direct", time: "13:55 → 19:05" },
-        { no: "TK 698", route: ["Istanbul", "Sharm"], type: "transit", time: "02:10 → 05:00 (+1)" },
-        { no: "TK 699", route: ["Sharm", "Istanbul"], type: "direct", time: "05:45 → 08:35" },
-        { no: "TK 1411", route: ["Istanbul", "Constantine"], type: "direct", time: "11:30 → 13:00" },
-      ]
-    },
-    { 
-      date: "23 Avril au 02 Mai 2026",
-      airline: "Turkish Airlines",
-      duration: "10 Jours / 8 Nuits",
-      checkIn: "24 Avril 2026",
-      flights: [
-        { no: "TK 1412", route: ["Constantine", "Istanbul"], type: "direct", time: "13:55 → 19:05" },
-        { no: "TK 698", route: ["Istanbul", "Sharm"], type: "transit", time: "02:10 → 05:00 (+1)" },
-        { no: "TK 699", route: ["Sharm", "Istanbul"], type: "direct", time: "05:45 → 08:35" },
-        { no: "TK 1411", route: ["Istanbul", "Constantine"], type: "direct", time: "11:30 → 13:00" },
-      ]
-    },
-    { 
-      date: "07 Mai au 16 Mai 2026",
-      airline: "Turkish Airlines",
-      duration: "10 Jours / 8 Nuits",
-      checkIn: "08 Mai 2026",
-      flights: [
-        { no: "TK 1412", route: ["Constantine", "Istanbul"], type: "direct", time: "13:55 → 19:05" },
-        { no: "TK 698", route: ["Istanbul", "Sharm"], type: "transit", time: "02:10 → 05:00 (+1)" },
-        { no: "TK 699", route: ["Sharm", "Istanbul"], type: "direct", time: "05:45 → 08:35" },
-        { no: "TK 1411", route: ["Istanbul", "Constantine"], type: "direct", time: "11:30 → 13:00" },
-      ]
-    },
-    { 
-      date: "04 Juin au 13 Juin 2026",
-      airline: "Turkish Airlines",
-      duration: "10 Jours / 8 Nuits",
-      checkIn: "05 Juin 2026",
-      flights: [
-        { no: "TK 1412", route: ["Constantine", "Istanbul"], type: "direct", time: "13:55 → 19:05" },
-        { no: "TK 698", route: ["Istanbul", "Sharm"], type: "transit", time: "02:10 → 05:00 (+1)" },
-        { no: "TK 699", route: ["Sharm", "Istanbul"], type: "direct", time: "05:45 → 08:35" },
-        { no: "TK 1411", route: ["Istanbul", "Constantine"], type: "direct", time: "11:30 → 13:00" },
-      ]
-    },
-    { 
-      date: "18 Juin au 27 Juin 2026",
-      airline: "Turkish Airlines",
-      duration: "10 Jours / 8 Nuits",
-      checkIn: "19 Juin 2026",
-      flights: [
-        { no: "TK 1412", route: ["Constantine", "Istanbul"], type: "direct", time: "13:55 → 19:05" },
-        { no: "TK 698", route: ["Istanbul", "Sharm"], type: "transit", time: "02:10 → 05:00 (+1)" },
-        { no: "TK 699", route: ["Sharm", "Istanbul"], type: "direct", time: "05:45 → 08:35" },
-        { no: "TK 1411", route: ["Istanbul", "Constantine"], type: "direct", time: "11:30 → 13:00" },
-      ]
-    }
+  const flightDetails = [
+    { no: "TK 1412", route: ["Constantine", "Istanbul"], type: "direct", time: "13:55 → 19:05" },
+    { no: "TK 698", route: ["Istanbul", "Sharm"], type: "transit", time: "02:10 → 05:00 (+1)" },
+    { no: "TK 699", route: ["Sharm", "Istanbul"], type: "direct", time: "05:45 → 08:35" },
+    { no: "TK 1411", route: ["Istanbul", "Constantine"], type: "direct", time: "11:30 → 13:00" },
   ];
 
   return (
     <div className="space-y-12">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {departures.map((dep, idx) => (
-          <Card key={idx} className="glass-panel border-gold/10 overflow-hidden group hover:border-gold/30 transition-all duration-500">
-            <CardHeader className="border-b border-gold/10 bg-gold/5 p-6">
-              <div className="flex items-center justify-between mb-2">
-                <Badge variant="outline" className="border-gold/30 text-gold uppercase tracking-widest text-[10px]">
-                  {dep.airline}
-                </Badge>
-                <div className="text-xs text-muted-foreground flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  {dep.duration}
+        {TRIP_CONFIG.departureDates.map((dep, idx) => {
+          const isSelected = selectedDate === dep.label;
+          return (
+            <Card 
+              key={idx} 
+              onClick={() => onSelect(dep.label)}
+              className={cn(
+                "glass-panel overflow-hidden transition-all duration-500 cursor-pointer relative",
+                isSelected ? "border-gold ring-2 ring-gold shadow-2xl shadow-gold/20" : "border-gold/10 hover:border-gold/30"
+              )}
+            >
+              {isSelected && (
+                <div className="absolute top-4 end-4 z-30 bg-gold text-gold-foreground p-1 rounded-full shadow-xl">
+                  <Check className="h-4 w-4" />
                 </div>
-              </div>
-              <CardTitle className="text-foreground font-headline text-xl md:text-2xl flex flex-col gap-2">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-gold/10 flex items-center justify-center text-gold group-hover:scale-110 transition-transform">
-                    <Plane className="h-5 w-5" />
+              )}
+              <CardHeader className={cn(
+                "border-b border-gold/10 p-6 transition-colors",
+                isSelected ? "bg-gold/15" : "bg-gold/5"
+              )}>
+                <div className="flex items-center justify-between mb-2">
+                  <Badge variant="outline" className="border-gold/30 text-gold uppercase tracking-widest text-[10px]">
+                    Turkish Airlines
+                  </Badge>
+                  <div className="text-xs text-muted-foreground flex items-center gap-1">
+                    <Clock className="h-3 w-3" />
+                    {TRIP_CONFIG.duration.label}
                   </div>
-                  {dep.date}
                 </div>
-                <div className="text-xs text-primary font-medium uppercase tracking-wider ps-13">
-                  Check-in : {dep.checkIn}
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-              <div className="divide-y divide-gold/10">
-                {dep.flights.map((flight, i) => (
-                  <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 gap-4 hover:bg-gold/5 transition-colors">
-                    <div className="flex flex-col gap-2">
-                      <div className="flex items-center gap-3">
-                        <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/20">
-                          {flight.no}
-                        </span>
-                        <Badge variant="ghost" className="text-[10px] text-teal-400 p-0 font-medium">
-                          {flight.type === 'direct' ? t('flights_direct') : t('flights_transit')}
-                        </Badge>
+                <CardTitle className="text-foreground font-headline text-xl md:text-2xl flex flex-col gap-2">
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "h-10 w-10 rounded-full flex items-center justify-center transition-transform",
+                      isSelected ? "bg-gold text-gold-foreground scale-110" : "bg-gold/10 text-gold"
+                    )}>
+                      <Plane className="h-5 w-5" />
+                    </div>
+                    {dep.label}
+                  </div>
+                  <div className="text-xs text-primary font-medium uppercase tracking-wider ps-13">
+                    Check-in : {dep.checkIn}
+                  </div>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                <div className="divide-y divide-gold/10">
+                  {flightDetails.map((flight, i) => (
+                    <div key={i} className={cn(
+                      "flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 gap-4 transition-colors",
+                      isSelected ? "bg-gold/5" : "hover:bg-gold/5"
+                    )}>
+                      <div className="flex flex-col gap-2">
+                        <div className="flex items-center gap-3">
+                          <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/20">
+                            {flight.no}
+                          </span>
+                          <Badge variant="ghost" className="text-[10px] text-teal-400 p-0 font-medium">
+                            {flight.type === 'direct' ? t('flights_direct') : t('flights_transit')}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm font-bold text-foreground">
+                          <MapPin className="h-3 w-3 text-gold" />
+                          {flight.route[0]} 
+                          <ArrowRight className={isRtl ? "h-3 w-3 text-muted-foreground rotate-180" : "h-3 w-3 text-muted-foreground"} /> 
+                          {flight.route[1]}
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2 text-sm font-bold text-foreground">
-                        <MapPin className="h-3 w-3 text-gold" />
-                        {flight.route[0]} 
-                        <ArrowRight className={isRtl ? "h-3 w-3 text-muted-foreground rotate-180" : "h-3 w-3 text-muted-foreground"} /> 
-                        {flight.route[1]}
+                      <div className="flex flex-col items-end gap-1 w-full sm:w-auto">
+                        <span className="text-lg font-headline font-bold text-gold">{flight.time}</span>
+                        <span className="text-[10px] uppercase tracking-widest text-muted-foreground">{t('info_vols_val')}</span>
                       </div>
                     </div>
-                    <div className="flex flex-col items-end gap-1 w-full sm:w-auto">
-                      <span className="text-lg font-headline font-bold text-gold">{flight.time}</span>
-                      <span className="text-[10px] uppercase tracking-widest text-muted-foreground">{t('info_vols_val')}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
       
       <div className="max-w-2xl mx-auto p-4 bg-emerald-500/5 border border-emerald-500/20 rounded-xl flex items-center gap-4">

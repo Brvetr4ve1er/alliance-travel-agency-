@@ -16,11 +16,11 @@ export const TRIP_CONFIG = {
   basePrice: "180 000 DA",
   visaFee: "25 USD",
   departureDates: [
-    { label: "09 Avril au 18 Avril 2026", return: "18 Avril" },
-    { label: "23 Avril au 02 Mai 2026", return: "02 Mai" },
-    { label: "07 Mai au 16 Mai 2026", return: "16 Mai" },
-    { label: "04 Juin au 13 Juin 2026", return: "13 Juin" },
-    { label: "18 Juin au 27 Juin 2026", return: "27 Juin" },
+    { label: "09 Avril au 18 Avril 2026", return: "18 Avril", checkIn: "10 Avril 2026" },
+    { label: "23 Avril au 02 Mai 2026", return: "02 Mai", checkIn: "24 Avril 2026" },
+    { label: "07 Mai au 16 Mai 2026", return: "16 Mai", checkIn: "08 Mai 2026" },
+    { label: "04 Juin au 13 Juin 2026", return: "13 Juin", checkIn: "05 Juin 2026" },
+    { label: "18 Juin au 27 Juin 2026", return: "27 Juin", checkIn: "19 Juin 2026" },
   ],
   sharmNights: 6,
   cairoNights: 2,
@@ -38,6 +38,7 @@ export const TRIP_CONFIG = {
       stars: 4, 
       type: "Resort & Aqua Park", 
       price: "180 000 DA", 
+      priceNum: 180000,
       imageId: "hotel-1",
       pricingGrid: {
         triple: "178 000 DA",
@@ -56,6 +57,7 @@ export const TRIP_CONFIG = {
       stars: 4, 
       type: "Aqua Park", 
       price: "185 000 DA", 
+      priceNum: 185000,
       imageId: "hotel-2",
       pricingGrid: {
         triple: "182 000 DA",
@@ -74,6 +76,7 @@ export const TRIP_CONFIG = {
       stars: 4, 
       type: "Aqua Park", 
       price: "202 000 DA", 
+      priceNum: 202000,
       imageId: "hotel-3",
       pricingGrid: {
         triple: "198 000 DA",
@@ -92,6 +95,7 @@ export const TRIP_CONFIG = {
       stars: 5, 
       type: "Sea View", 
       price: "227 000 DA", 
+      priceNum: 227000,
       premium: true, 
       imageId: "hotel-4",
       pricingGrid: {
@@ -111,6 +115,7 @@ export const TRIP_CONFIG = {
       stars: 5, 
       type: "Luxury Aqua Park", 
       price: "245 000 DA", 
+      priceNum: 245000,
       premium: true, 
       imageId: "hotel-5",
       pricingGrid: {
@@ -130,6 +135,7 @@ export const TRIP_CONFIG = {
       stars: 5, 
       type: "Luxury Complex", 
       price: "250 000 DA", 
+      priceNum: 250000,
       premium: true, 
       imageId: "hotel-6",
       pricingGrid: {
@@ -149,6 +155,7 @@ export const TRIP_CONFIG = {
       stars: 5, 
       type: "Prestige Chain", 
       price: "265 000 DA", 
+      priceNum: 265000,
       premium: true, 
       imageId: "hotel-7",
       pricingGrid: {
