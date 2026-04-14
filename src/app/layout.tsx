@@ -4,6 +4,7 @@ import './globals.css';
 import { LanguageProvider } from '@/components/providers/LanguageProvider';
 import { FirebaseClientProvider } from '@/firebase';
 import { Cormorant_Garamond, DM_Sans, Noto_Sans_Arabic } from 'next/font/google';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -45,6 +46,7 @@ export default function RootLayout({
             {children}
           </LanguageProvider>
         </FirebaseClientProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
